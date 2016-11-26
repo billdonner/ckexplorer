@@ -9,4 +9,4 @@ Sends N Images to Cloudkit in Background. IOS only
 ### download
 Retrieve all Images in Background, IOS and TVOS
 ### delete
-Deletes all Images from Cloudkit
+Deletes all Images from Cloudkit, IOS only
