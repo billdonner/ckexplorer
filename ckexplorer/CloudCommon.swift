@@ -71,7 +71,7 @@ class Conduit<T> {
   weak var delegate: VisualProt?
   var allrecids :[CKRecordID] = []
   init() {
-    container = CKContainer(identifier: "iCloud.com.midnightrambler.babifud")
+    container = CKContainer(identifier: "iCloud.com.midnightrambler.ckexplorer")
     db = container.privateCloudDatabase
   }
   func getRecIds (comp:@escaping ([CKRecordID])->()) {
