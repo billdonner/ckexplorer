@@ -48,13 +48,18 @@ func uploadRecordSampleRecord(
   
   samplesConduit.uploadCKRecord(rec)
 }
+    @IBOutlet weak var sliderVal: UISlider!
 
+    @IBAction func sliderValChanged(_ sender: Any) {
+        uploadbutton.setTitle ( "upload \(Int(sliderVal.value))",for:UIControlState.normal)
+    }
     @IBOutlet weak var upnumber: UILabel!
     @IBOutlet weak var timeper: UILabel!
     @IBAction func uploadagain(_ sender: Any) {
         redo()
     }
 
+    @IBOutlet weak var uploadbutton: UIButton!
     @IBAction func reset(_ sender: Any) {
         
       samplesConduit.deleteAllRecords(){
@@ -92,7 +97,7 @@ func uploadRecordSampleRecord(
   }
   func didPublish(opcode:PulseOpCode, x up:Int, t per:TimeInterval) {
     if opcode == .uploadCountAndMs {
-      self.timeper.text = "\(Gfuncs.prettyFloat(per,digits:3))ms/item"
+      self.timeper.text = "\(Gfuncs.prettyFloat(per,digits:3)) sec/item"
       self.upnumber.text = "\(up) items"
       self.view.setNeedsDisplay()
     
@@ -106,7 +111,11 @@ func uploadRecordSampleRecord(
 /// a bit unusual, but lets pass a delegate into this global func
 func allUploadsTest(delegate: VisualProt?) {
   let startTime = Date()
-  uploadRecordSampleRecord(
+    grandTotalWrites = 0
+    
+    for _ in 0..<Int(sliderVal.value) {
+    switch Int(arc4random_uniform(3)) {
+    case 0: uploadRecordSampleRecord(
     Bundle.main.url(forResource: "pizza", withExtension: "jpeg")!,
     placeName: "Ceasar's Pizza Palace",
     latitude: 37.332,
@@ -116,7 +125,7 @@ func allUploadsTest(delegate: VisualProt?) {
     ratings: [0, 1, 2])
   
   
-  uploadRecordSampleRecord(
+  case 1: uploadRecordSampleRecord(
     Bundle.main.url(forResource: "chinese", withExtension: "jpeg")!,
     placeName: "King Wok",
     latitude: 37.1,
@@ -125,7 +134,7 @@ func allUploadsTest(delegate: VisualProt?) {
     kidsMenu: false,
     ratings: [])
   
-  uploadRecordSampleRecord(
+ case 2:  uploadRecordSampleRecord(
     Bundle.main.url(forResource: "steak", withExtension: "jpeg")!,
     placeName: "The Back Deck",
     latitude: 37.4,
@@ -133,14 +142,18 @@ func allUploadsTest(delegate: VisualProt?) {
     healthy: true,
     kidsMenu: true,
     ratings: [5, 5, 4])
-  
-  
-  let elapsedTime : TimeInterval = Date().timeIntervalSince(startTime)*1000.0
+        
+    default: fatalError()
+        
+    }
+    }
+  let timeper : TimeInterval = Date().timeIntervalSince(startTime) / //*1000.0 / 
+    Double(grandTotalWrites)
   
   
   DispatchQueue.main.async {
   delegate?.didPublish(opcode: PulseOpCode.uploadCountAndMs,
-                       x: self.grandTotalWrites,t: elapsedTime)
+                       x: self.grandTotalWrites,t: timeper)
   }
 }
 }

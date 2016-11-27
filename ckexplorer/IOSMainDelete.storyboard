@@ -30,7 +30,7 @@
                                         <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="24"/>
                                         <state key="normal" title="Delete all Records"/>
                                         <connections>
-                                            <action selector="uploadagain:" destination="BYZ-38-t0r" eventType="touchUpInside" id="rnE-L9-PC4"/>
+                                            <action selector="deleteEm:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ufu-LP-36W"/>
                                         </connections>
                                     </button>
                                 </subviews>

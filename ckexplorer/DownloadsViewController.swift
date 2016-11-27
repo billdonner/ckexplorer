@@ -31,12 +31,13 @@ class DownloadsViewController: UIViewController {
     redo()
   }
   
-  
-  var samplesConduit = Conduit<SampleRecord>()
+  //MARK: connection to Cloudkit for sample records
+    var samplesConduit = Conduit<SampleRecord>()
   
   var totalincoming = 0
   var  redoStartTime = Date()
   
+    //MARK: repaint interface and start Download (again)
   func redo() {
     DispatchQueue.main.async {
       self.redoStartTime = Date()
@@ -57,15 +58,18 @@ class DownloadsViewController: UIViewController {
   }
   override func viewDidLoad() {
     super.viewDidLoad()
+    // pain the screen, including the image assets
     roguesGalleryView.setup()
   }
+    // get all the records
   func downloadAllTest( ) {
     let startTime = Date()
     totalincoming = 0
     samplesConduit.delegate = self
     samplesConduit.getTheRecords(){ recs in
-      /// actually never getting here, needs ultimate completion mechanism
       print ("downloadalltest finished with \(recs.count) items")
+     self.didFinishDownload()
+        
     }
     let netelapsedTime : TimeInterval = Date().timeIntervalSince(startTime)
     print ("downloadAllTest records started \(netelapsedTime)ms, still fetching")
