@@ -15,8 +15,6 @@
 		888C89911DE8C36300A7FCC8 /* IOSDownloadsLaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 888C89181DE8AC0C00A7FCC8 /* IOSDownloadsLaunchScreen.storyboard */; };
 		888C89941DE8C37A00A7FCC8 /* IOSDeletingLaunchScreen in Resources */ = {isa = PBXBuildFile; fileRef = 888C89471DE8B98400A7FCC8 /* IOSDeletingLaunchScreen */; };
 		888C89951DE8C38600A7FCC8 /* RoguesGalleryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 888C89261DE8AEB400A7FCC8 /* RoguesGalleryView.swift */; };
-		888C89961DE8C38800A7FCC8 /* RoguesGalleryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 888C89261DE8AEB400A7FCC8 /* RoguesGalleryView.swift */; };
-		888C89971DE8C38900A7FCC8 /* RoguesGalleryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 888C89261DE8AEB400A7FCC8 /* RoguesGalleryView.swift */; };
 		888C89981DE8C38E00A7FCC8 /* CloudCommon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 888C89231DE8AEB400A7FCC8 /* CloudCommon.swift */; };
 		888C89991DE8C38F00A7FCC8 /* CloudCommon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 888C89231DE8AEB400A7FCC8 /* CloudCommon.swift */; };
 		888C899A1DE8C39100A7FCC8 /* CloudCommon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 888C89231DE8AEB400A7FCC8 /* CloudCommon.swift */; };
@@ -25,6 +23,26 @@
 		888C899D1DE8C55000A7FCC8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 888C890F1DE8AC0C00A7FCC8 /* AppDelegate.swift */; };
 		888C899E1DE8C55100A7FCC8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 888C890F1DE8AC0C00A7FCC8 /* AppDelegate.swift */; };
 		888C899F1DE8C5C000A7FCC8 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 888C89881DE8C2E300A7FCC8 /* Info.plist */; };
+		88CD4FF01DEB7E5A006BC24D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 88CD4FEE1DEB7E5A006BC24D /* Main.storyboard */; };
+		88CD4FF21DEB7E5A006BC24D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 88CD4FF11DEB7E5A006BC24D /* Assets.xcassets */; };
+		88CD4FF51DEB7E5A006BC24D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 88CD4FF31DEB7E5A006BC24D /* LaunchScreen.storyboard */; };
+		88CD4FFB1DEB7E63006BC24D /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88CECAF21DE8D2F2003CC6AB /* CloudKit.framework */; };
+		88CD4FFC1DEB7F41006BC24D /* UploadsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88CECAFC1DE8D768003CC6AB /* UploadsViewController.swift */; };
+		88CD4FFD1DEB7F48006BC24D /* DeleteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88CECAFE1DE8D7B5003CC6AB /* DeleteViewController.swift */; };
+		88CD4FFE1DEB7F51006BC24D /* DownloadsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 888C89251DE8AEB400A7FCC8 /* DownloadsViewController.swift */; };
+		88CD4FFF1DEB8023006BC24D /* CloudCommon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 888C89231DE8AEB400A7FCC8 /* CloudCommon.swift */; };
+		88CD50001DEB8030006BC24D /* RoguesGalleryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 888C89261DE8AEB400A7FCC8 /* RoguesGalleryView.swift */; };
+		88CD50011DEB84EA006BC24D /* chinese.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 888C89281DE8AEB400A7FCC8 /* chinese.jpeg */; };
+		88CD50021DEB84F0006BC24D /* pizza.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 888C89291DE8AEB400A7FCC8 /* pizza.jpeg */; };
+		88CD50031DEB84F7006BC24D /* steak.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 888C892A1DE8AEB400A7FCC8 /* steak.jpeg */; };
+		88CD500B1DEB8F0B006BC24D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88CD500A1DEB8F0B006BC24D /* AppDelegate.swift */; };
+		88CD50101DEB8F0B006BC24D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 88CD500E1DEB8F0B006BC24D /* Main.storyboard */; };
+		88CD50121DEB8F0B006BC24D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 88CD50111DEB8F0B006BC24D /* Assets.xcassets */; };
+		88CD50191DEB8F11006BC24D /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88CD50181DEB8F11006BC24D /* CloudKit.framework */; };
+		88CD501A1DEB90ED006BC24D /* CloudCommon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 888C89231DE8AEB400A7FCC8 /* CloudCommon.swift */; };
+		88CD501B1DEB90F3006BC24D /* RoguesGalleryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 888C89261DE8AEB400A7FCC8 /* RoguesGalleryView.swift */; };
+		88CD501C1DEB90FC006BC24D /* DownloadsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 888C89251DE8AEB400A7FCC8 /* DownloadsViewController.swift */; };
+		88CD501E1DEBA860006BC24D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 888C890F1DE8AC0C00A7FCC8 /* AppDelegate.swift */; };
 		88CECAE81DE8CF2F003CC6AB /* pizza.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 888C89291DE8AEB400A7FCC8 /* pizza.jpeg */; };
 		88CECAE91DE8CF36003CC6AB /* steak.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 888C892A1DE8AEB400A7FCC8 /* steak.jpeg */; };
 		88CECAEB1DE8D09B003CC6AB /* IOSMainDelete.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 88CECAEA1DE8D09B003CC6AB /* IOSMainDelete.storyboard */; };
@@ -57,6 +75,19 @@
 		888C897A1DE8C2E300A7FCC8 /* ckdeleter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ckdeleter.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		888C89831DE8C2E300A7FCC8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = ../ckdeleter/Assets.xcassets; sourceTree = "<group>"; };
 		888C89881DE8C2E300A7FCC8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = ../ckdeleter/Info.plist; sourceTree = "<group>"; };
+		88CD4FE61DEB7E5A006BC24D /* cktabexplorer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = cktabexplorer.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		88CD4FEF1DEB7E5A006BC24D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		88CD4FF11DEB7E5A006BC24D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		88CD4FF41DEB7E5A006BC24D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		88CD4FF61DEB7E5A006BC24D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		88CD4FFA1DEB7E60006BC24D /* cktabexplorer.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = cktabexplorer.entitlements; sourceTree = "<group>"; };
+		88CD50081DEB8F0B006BC24D /* ckpresentortvos.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ckpresentortvos.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		88CD500A1DEB8F0B006BC24D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		88CD500F1DEB8F0B006BC24D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		88CD50111DEB8F0B006BC24D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		88CD50131DEB8F0B006BC24D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		88CD50171DEB8F0E006BC24D /* ckpresentortvos.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ckpresentortvos.entitlements; sourceTree = "<group>"; };
+		88CD50181DEB8F11006BC24D /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS10.1.sdk/System/Library/Frameworks/CloudKit.framework; sourceTree = DEVELOPER_DIR; };
 		88CECAEA1DE8D09B003CC6AB /* IOSMainDelete.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = IOSMainDelete.storyboard; sourceTree = "<group>"; };
 		88CECAEC1DE8D0C3003CC6AB /* IOSMainDownloads.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = IOSMainDownloads.storyboard; sourceTree = "<group>"; };
 		88CECAF01DE8D2EE003CC6AB /* ckuploader.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = ckuploader.entitlements; path = ckuploader/ckuploader.entitlements; sourceTree = "<group>"; };
@@ -93,6 +124,22 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		88CD4FE31DEB7E5A006BC24D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				88CD4FFB1DEB7E63006BC24D /* CloudKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		88CD50051DEB8F0B006BC24D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				88CD50191DEB8F11006BC24D /* CloudKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -105,6 +152,8 @@
 				888C890F1DE8AC0C00A7FCC8 /* AppDelegate.swift */,
 				888C89271DE8AEB400A7FCC8 /* Sample Upload Images */,
 				888C890E1DE8AC0C00A7FCC8 /* ckexplorer */,
+				88CD4FE71DEB7E5A006BC24D /* cktabexplorer */,
+				88CD50091DEB8F0B006BC24D /* ckpresentortvos */,
 				888C890D1DE8AC0C00A7FCC8 /* Products */,
 				88CECAF11DE8D2F2003CC6AB /* Frameworks */,
 			);
@@ -116,6 +165,8 @@
 				888C894E1DE8C2A300A7FCC8 /* ckdownloader.app */,
 				888C89641DE8C2C500A7FCC8 /* ckuploader.app */,
 				888C897A1DE8C2E300A7FCC8 /* ckdeleter.app */,
+				88CD4FE61DEB7E5A006BC24D /* cktabexplorer.app */,
+				88CD50081DEB8F0B006BC24D /* ckpresentortvos.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -179,9 +230,34 @@
 			name = Deleting;
 			sourceTree = "<group>";
 		};
+		88CD4FE71DEB7E5A006BC24D /* cktabexplorer */ = {
+			isa = PBXGroup;
+			children = (
+				88CD4FFA1DEB7E60006BC24D /* cktabexplorer.entitlements */,
+				88CD4FEE1DEB7E5A006BC24D /* Main.storyboard */,
+				88CD4FF11DEB7E5A006BC24D /* Assets.xcassets */,
+				88CD4FF31DEB7E5A006BC24D /* LaunchScreen.storyboard */,
+				88CD4FF61DEB7E5A006BC24D /* Info.plist */,
+			);
+			path = cktabexplorer;
+			sourceTree = "<group>";
+		};
+		88CD50091DEB8F0B006BC24D /* ckpresentortvos */ = {
+			isa = PBXGroup;
+			children = (
+				88CD50171DEB8F0E006BC24D /* ckpresentortvos.entitlements */,
+				88CD500A1DEB8F0B006BC24D /* AppDelegate.swift */,
+				88CD500E1DEB8F0B006BC24D /* Main.storyboard */,
+				88CD50111DEB8F0B006BC24D /* Assets.xcassets */,
+				88CD50131DEB8F0B006BC24D /* Info.plist */,
+			);
+			path = ckpresentortvos;
+			sourceTree = "<group>";
+		};
 		88CECAF11DE8D2F2003CC6AB /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				88CD50181DEB8F11006BC24D /* CloudKit.framework */,
 				88CECAF21DE8D2F2003CC6AB /* CloudKit.framework */,
 			);
 			name = Frameworks;
@@ -241,6 +317,40 @@
 			productReference = 888C897A1DE8C2E300A7FCC8 /* ckdeleter.app */;
 			productType = "com.apple.product-type.application";
 		};
+		88CD4FE51DEB7E5A006BC24D /* cktabexplorer */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 88CD4FF91DEB7E5A006BC24D /* Build configuration list for PBXNativeTarget "cktabexplorer" */;
+			buildPhases = (
+				88CD4FE21DEB7E5A006BC24D /* Sources */,
+				88CD4FE31DEB7E5A006BC24D /* Frameworks */,
+				88CD4FE41DEB7E5A006BC24D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = cktabexplorer;
+			productName = cktabexplorer;
+			productReference = 88CD4FE61DEB7E5A006BC24D /* cktabexplorer.app */;
+			productType = "com.apple.product-type.application";
+		};
+		88CD50071DEB8F0B006BC24D /* ckpresentortvos */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 88CD50141DEB8F0B006BC24D /* Build configuration list for PBXNativeTarget "ckpresentortvos" */;
+			buildPhases = (
+				88CD50041DEB8F0B006BC24D /* Sources */,
+				88CD50051DEB8F0B006BC24D /* Frameworks */,
+				88CD50061DEB8F0B006BC24D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = ckpresentortvos;
+			productName = ckpresentortvos;
+			productReference = 88CD50081DEB8F0B006BC24D /* ckpresentortvos.app */;
+			productType = "com.apple.product-type.application";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -290,6 +400,32 @@
 							};
 						};
 					};
+					88CD4FE51DEB7E5A006BC24D = {
+						CreatedOnToolsVersion = 8.2;
+						DevelopmentTeam = X2PQYA6S48;
+						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.Push = {
+								enabled = 1;
+							};
+							com.apple.iCloud = {
+								enabled = 1;
+							};
+						};
+					};
+					88CD50071DEB8F0B006BC24D = {
+						CreatedOnToolsVersion = 8.2;
+						DevelopmentTeam = X2PQYA6S48;
+						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.Push = {
+								enabled = 0;
+							};
+							com.apple.iCloud = {
+								enabled = 1;
+							};
+						};
+					};
 				};
 			};
 			buildConfigurationList = 888C89071DE8AC0C00A7FCC8 /* Build configuration list for PBXProject "ckexplorer" */;
@@ -308,6 +444,8 @@
 				888C894D1DE8C2A300A7FCC8 /* ckdownloader */,
 				888C89631DE8C2C500A7FCC8 /* ckuploader */,
 				888C89791DE8C2E300A7FCC8 /* ckdeleter */,
+				88CD4FE51DEB7E5A006BC24D /* cktabexplorer */,
+				88CD50071DEB8F0B006BC24D /* ckpresentortvos */,
 			);
 		};
 /* End PBXProject section */
@@ -347,6 +485,28 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		88CD4FE41DEB7E5A006BC24D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				88CD4FF51DEB7E5A006BC24D /* LaunchScreen.storyboard in Resources */,
+				88CD4FF21DEB7E5A006BC24D /* Assets.xcassets in Resources */,
+				88CD4FF01DEB7E5A006BC24D /* Main.storyboard in Resources */,
+				88CD50021DEB84F0006BC24D /* pizza.jpeg in Resources */,
+				88CD50031DEB84F7006BC24D /* steak.jpeg in Resources */,
+				88CD50011DEB84EA006BC24D /* chinese.jpeg in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		88CD50061DEB8F0B006BC24D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				88CD50121DEB8F0B006BC24D /* Assets.xcassets in Resources */,
+				88CD50101DEB8F0B006BC24D /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -368,7 +528,6 @@
 				888C899D1DE8C55000A7FCC8 /* AppDelegate.swift in Sources */,
 				88CECAFD1DE8D768003CC6AB /* UploadsViewController.swift in Sources */,
 				888C89991DE8C38F00A7FCC8 /* CloudCommon.swift in Sources */,
-				888C89961DE8C38800A7FCC8 /* RoguesGalleryView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -378,8 +537,31 @@
 			files = (
 				888C899E1DE8C55100A7FCC8 /* AppDelegate.swift in Sources */,
 				888C899A1DE8C39100A7FCC8 /* CloudCommon.swift in Sources */,
-				888C89971DE8C38900A7FCC8 /* RoguesGalleryView.swift in Sources */,
 				88CECAFF1DE8D7B5003CC6AB /* DeleteViewController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		88CD4FE21DEB7E5A006BC24D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				88CD4FFC1DEB7F41006BC24D /* UploadsViewController.swift in Sources */,
+				88CD50001DEB8030006BC24D /* RoguesGalleryView.swift in Sources */,
+				88CD4FFE1DEB7F51006BC24D /* DownloadsViewController.swift in Sources */,
+				88CD501E1DEBA860006BC24D /* AppDelegate.swift in Sources */,
+				88CD4FFF1DEB8023006BC24D /* CloudCommon.swift in Sources */,
+				88CD4FFD1DEB7F48006BC24D /* DeleteViewController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		88CD50041DEB8F0B006BC24D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				88CD501C1DEB90FC006BC24D /* DownloadsViewController.swift in Sources */,
+				88CD501A1DEB90ED006BC24D /* CloudCommon.swift in Sources */,
+				88CD501B1DEB90F3006BC24D /* RoguesGalleryView.swift in Sources */,
+				88CD500B1DEB8F0B006BC24D /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -408,6 +590,30 @@
 				888C89481DE8B98400A7FCC8 /* Base */,
 			);
 			name = IOSDeletingLaunchScreen;
+			sourceTree = "<group>";
+		};
+		88CD4FEE1DEB7E5A006BC24D /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				88CD4FEF1DEB7E5A006BC24D /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		88CD4FF31DEB7E5A006BC24D /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				88CD4FF41DEB7E5A006BC24D /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		88CD500E1DEB8F0B006BC24D /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				88CD500F1DEB8F0B006BC24D /* Base */,
+			);
+			name = Main.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -590,6 +796,70 @@
 			};
 			name = Release;
 		};
+		88CD4FF71DEB7E5A006BC24D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = cktabexplorer/cktabexplorer.entitlements;
+				DEVELOPMENT_TEAM = X2PQYA6S48;
+				INFOPLIST_FILE = cktabexplorer/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.midnightrambler.cktabexplorer;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Debug;
+		};
+		88CD4FF81DEB7E5A006BC24D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = cktabexplorer/cktabexplorer.entitlements;
+				DEVELOPMENT_TEAM = X2PQYA6S48;
+				INFOPLIST_FILE = cktabexplorer/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.midnightrambler.cktabexplorer;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Release;
+		};
+		88CD50151DEB8F0B006BC24D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_ENTITLEMENTS = ckpresentortvos/ckpresentortvos.entitlements;
+				DEVELOPMENT_TEAM = X2PQYA6S48;
+				INFOPLIST_FILE = ckpresentortvos/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.midnightrambler.ckpresentortvos;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = appletvos;
+				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = 3;
+				TVOS_DEPLOYMENT_TARGET = 10.1;
+			};
+			name = Debug;
+		};
+		88CD50161DEB8F0B006BC24D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_ENTITLEMENTS = ckpresentortvos/ckpresentortvos.entitlements;
+				DEVELOPMENT_TEAM = X2PQYA6S48;
+				INFOPLIST_FILE = ckpresentortvos/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.midnightrambler.ckpresentortvos;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = appletvos;
+				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = 3;
+				TVOS_DEPLOYMENT_TARGET = 10.1;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -628,6 +898,22 @@
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
+		};
+		88CD4FF91DEB7E5A006BC24D /* Build configuration list for PBXNativeTarget "cktabexplorer" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				88CD4FF71DEB7E5A006BC24D /* Debug */,
+				88CD4FF81DEB7E5A006BC24D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		88CD50141DEB8F0B006BC24D /* Build configuration list for PBXNativeTarget "ckpresentortvos" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				88CD50151DEB8F0B006BC24D /* Debug */,
+				88CD50161DEB8F0B006BC24D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
 		};
 /* End XCConfigurationList section */
 	};

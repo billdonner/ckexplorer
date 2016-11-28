@@ -7,17 +7,27 @@
 		<key>ckdeleter.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>3</integer>
+			<integer>2</integer>
 		</dict>
 		<key>ckdownloader.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>1</integer>
+			<integer>0</integer>
+		</dict>
+		<key>ckpresentortvos.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>4</integer>
+		</dict>
+		<key>cktabexplorer.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>3</integer>
 		</dict>
 		<key>ckuploader.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>2</integer>
+			<integer>1</integer>
 		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
@@ -38,6 +48,16 @@
 			<true/>
 		</dict>
 		<key>888C89791DE8C2E300A7FCC8</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>88CD4FE51DEB7E5A006BC24D</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>88CD50071DEB8F0B006BC24D</key>
 		<dict>
 			<key>primary</key>
 			<true/>

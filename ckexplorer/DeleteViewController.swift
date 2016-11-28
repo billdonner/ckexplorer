@@ -20,15 +20,18 @@ final class DeletesViewController: UIViewController,VisualProt {
   var samplesConduit = Conduit<SampleRecord>()
   
     @IBAction func deleteEm(_ sender: Any) {
+        spinner.startAnimating()
         samplesConduit.delegate = self
         samplesConduit.deleteAllRecords(){
             print("Deleted all em records")
+            self.spinner.stopAnimating()
             
     }
 
     }
     // must be on main thread
     
+    @IBOutlet weak var spinner: UIActivityIndicatorView!
     func didAddRogue(r:Rogue){}
     func didFinishDownload (){
         

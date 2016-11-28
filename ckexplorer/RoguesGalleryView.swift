@@ -32,12 +32,12 @@ class RoguesGalleryViewCell:UICollectionViewCell {
     @IBOutlet weak var idstring: UILabel!
     
   func configure(r:Rogue) {
-    print("configure cell id \(r.id)")
+   // print("configure cell id \(r.id)")
     self.imageView.image = UIImage(data: r.fileData)
   }
 }
 class RoguesGalleryView:UICollectionView {
- fileprivate var rogues : [Rogue] = []
+ fileprivate var rogues = [Rogue]()
   func setup() {
     self.dataSource = self
     rogues = []

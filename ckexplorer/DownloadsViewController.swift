@@ -52,24 +52,23 @@ class DownloadsViewController: UIViewController {
     }
   }
   
-  override func viewWillAppear(_ animated: Bool) {
-    super.viewWillAppear(animated)
-    redo()
-  }
+
   override func viewDidLoad() {
     super.viewDidLoad()
     // pain the screen, including the image assets
     roguesGalleryView.setup()
   }
-    // get all the records
+    /// get all the records
   func downloadAllTest( ) {
     let startTime = Date()
     totalincoming = 0
     samplesConduit.delegate = self
     samplesConduit.getTheRecords(){ recs in
       print ("downloadalltest finished with \(recs.count) items")
-     self.didFinishDownload()
-        
+        self.spinner.stopAnimating() // starts on mainq
+        self.refreshButton.isEnabled = true
+        self.downTime.text = "...done..."
+        self.moreDataIndicator.text = "done"
     }
     let netelapsedTime : TimeInterval = Date().timeIntervalSince(startTime)
     print ("downloadAllTest records started \(netelapsedTime)ms, still fetching")
@@ -90,9 +89,10 @@ extension DownloadsViewController: VisualProt {
   }
   func didPublish(opcode: PulseOpCode, x count:Int, t mstime: TimeInterval) {
     switch opcode {
+        
     case  .eventCountAndMs :
       totalincoming += count
-      self.downTime.text = "\(Gfuncs.prettyFloat(mstime,digits:3))ms/item"
+      self.downTime.text = "\(Gfuncs.prettyFloat(mstime,digits:3))sec/item"
       self.downCount.text = "\(totalincoming) items"
       
     case  .initialCountAndTime :
