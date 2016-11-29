@@ -24,29 +24,56 @@ class DownloadsViewController: UIViewController {
   
   @IBOutlet weak var roguesGalleryView: RoguesGalleryView!
   @IBOutlet weak var refreshButton: UIButton!
-  @IBAction func tipped(_ sender: Any) {
-    redo()
-  }
-  @IBAction func tapped(_ sender: Any) {
+
+    @IBAction func tapped(_ sender: Any) { 
     redo()
   }
   
   //MARK: connection to Cloudkit for sample records
     var samplesConduit = Conduit<SampleRecord>()
   
-  var totalincoming = 0
-  var  redoStartTime = Date()
+ fileprivate var totalincoming = 0
+  
+    fileprivate var  redoStartTime = Date()
   
     //MARK: repaint interface and start Download (again)
+    private var countUp:Int = 0
+    private var startTime = Date()
+    
+    var myTimer: Timer? = nil
+    
+    func countUpTick() {
+        countUp += 1
+        
+        if (countUp == 0) {
+            myTimer!.invalidate()
+            myTimer=nil
+        }
+         let netelapsedTime : TimeInterval = Date().timeIntervalSince(startTime)
+        elapsedWallTime.text = "\(Gfuncs.prettyFloat(netelapsedTime,digits:1)) secs elapsed"
+    }
+   
+    
   func redo() {
+        self.myTimer?.invalidate()
+        self.myTimer=nil
+        
+        // set repeating timer for UI updates
+        self.countUp = 0
+        
+        self.myTimer = Timer.scheduledTimer (timeInterval: 0.1, target: self, selector:#selector(DownloadsViewController.countUpTick), userInfo: nil, repeats: true)
+        
+    
     DispatchQueue.main.async {
       self.redoStartTime = Date()
       self.spinner.startAnimating() // starts on mainq
       self.refreshButton.isEnabled = false
-      self.downTime.text = "...working..."
+        self.refreshButton.setTitle("...downloading...", for: .normal)
+      self.downTime.text = "...restarting..."
       self.downCount.text = "no items"
-      self.moreDataIndicator.text = "unknown if more"
+      self.moreDataIndicator.text = "...thinking..."
     }
+    
     DispatchQueue.global(qos: DispatchQoS.QoSClass.background).async {
       self.downloadAllTest()//still working in back, will finish with delegate call on mainq
     }
@@ -67,6 +94,7 @@ class DownloadsViewController: UIViewController {
       print ("downloadalltest finished with \(recs.count) items")
         self.spinner.stopAnimating() // starts on mainq
         self.refreshButton.isEnabled = true
+        self.refreshButton.setTitle("Download Again", for: .normal)
         self.downTime.text = "...done..."
         self.moreDataIndicator.text = "done"
     }
@@ -85,7 +113,9 @@ extension DownloadsViewController: VisualProt {
   func didFinishDownload () {
     self.moreDataIndicator.text = "done"
     self.refreshButton.isEnabled = true
+        self.refreshButton.setTitle("Done Downloading", for: .normal)
     self.spinner.stopAnimating()
+    self.myTimer?.invalidate()
   }
   func didPublish(opcode: PulseOpCode, x count:Int, t mstime: TimeInterval) {
     switch opcode {
@@ -100,15 +130,15 @@ extension DownloadsViewController: VisualProt {
       self.downCount.text = "initially \(count) items"
       
     case .moreData :
-      self.moreDataIndicator.text = count == 0 ? "no more" : "more data"
+      self.moreDataIndicator.text = count == 0 ? "no more" : "more data anticipated"
 //      if count == 0 {
 //        self.spinner.stopAnimating()
 //      }
     default: fatalError("upload enum in download controller")
     }
     
-    let elapsed = Date().timeIntervalSince(redoStartTime)
-    self.elapsedWallTime.text = "0:0:\(Gfuncs.prettyFloat(elapsed,digits:1)) elapsed"
+//    let elapsed = Date().timeIntervalSince(redoStartTime)
+//    self.elapsedWallTime.text = "0:0:\(Gfuncs.prettyFloat(elapsed,digits:1)) elapsed"
     
     self.view.setNeedsDisplay()
   }

@@ -168,7 +168,7 @@
                                 <rect key="frame" x="46" y="169" width="283" height="389"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FCM-Da-7WI">
-                                        <rect key="frame" x="60" y="0.0" width="163" height="129.5"/>
+                                        <rect key="frame" x="60" y="0.0" width="163" height="97.5"/>
                                         <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="50"/>
                                         <state key="normal" title="Upload"/>
                                         <connections>
@@ -176,14 +176,20 @@
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="upload #" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ozu-jn-YbF">
-                                        <rect key="frame" x="45.5" y="129.5" width="192.5" height="130"/>
+                                        <rect key="frame" x="45.5" y="97.5" width="192.5" height="97"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="50"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="time per upload" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="b7o-J3-kgZ">
-                                        <rect key="frame" x="24" y="259.5" width="235" height="129.5"/>
+                                        <rect key="frame" x="24" y="194.5" width="235" height="97.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="34"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="elapsed" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wiB-4p-9pj" userLabel="elapsed">
+                                        <rect key="frame" x="79" y="292" width="125.5" height="97"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="36"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
@@ -236,6 +242,7 @@
                     </view>
                     <navigationItem key="navigationItem" title="ckexplorer - uploads test" id="RKG-HH-pbt"/>
                     <connections>
+                        <outlet property="elapedTime" destination="wiB-4p-9pj" id="bEU-U6-Uao"/>
                         <outlet property="sliderVal" destination="IC8-1T-i7K" id="0rS-fy-9AH"/>
                         <outlet property="timeper" destination="b7o-J3-kgZ" id="xgi-Yc-bee"/>
                         <outlet property="uploadbutton" destination="FCM-Da-7WI" id="8eN-BS-gHr"/>
@@ -262,17 +269,35 @@
                                 <rect key="frame" x="46" y="124" width="283" height="434"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ngn-J1-uuY">
-                                        <rect key="frame" x="43.5" y="0.0" width="196" height="217"/>
+                                        <rect key="frame" x="43.5" y="0.0" width="196" height="108.5"/>
                                         <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="24"/>
                                         <state key="normal" title="Delete all Records"/>
                                         <connections>
                                             <action selector="deleteEm:" destination="VzR-v8-vOF" eventType="touchUpInside" id="fG0-HF-2oR"/>
                                         </connections>
                                     </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gmd-WK-kaO">
+                                        <rect key="frame" x="35.5" y="108.5" width="212.5" height="108.5"/>
+                                        <attributedString key="attributedText">
+                                            <fragment content="downcounter">
+                                                <attributes>
+                                                    <font key="NSFont" size="36" name=".SFNSText"/>
+                                                    <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                                </attributes>
+                                            </fragment>
+                                        </attributedString>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                     <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="4zq-qI-XKv">
-                                        <rect key="frame" x="123" y="217" width="37" height="217"/>
+                                        <rect key="frame" x="123" y="217" width="37" height="108.5"/>
                                         <color key="color" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     </activityIndicatorView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="elapsed" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="x52-U0-ZWQ">
+                                        <rect key="frame" x="111.5" y="325.5" width="60.5" height="108.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
                             </stackView>
                         </subviews>
@@ -286,6 +311,8 @@
                     </view>
                     <navigationItem key="navigationItem" title="ckexplorer - cleanup and reset" id="LFL-S0-JEo"/>
                     <connections>
+                        <outlet property="downcounter" destination="gmd-WK-kaO" id="1Xx-Gu-viG"/>
+                        <outlet property="elapsedWallTime" destination="x52-U0-ZWQ" id="Npg-6z-L8D"/>
                         <outlet property="spinner" destination="4zq-qI-XKv" id="Uov-CN-Ydy"/>
                     </connections>
                 </viewController>
@@ -335,7 +362,7 @@
         <scene sceneID="23F-lY-ImQ">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="54h-8k-auE" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="delete" image="theMidnightRambler-42" selectedImage="theMidnightRambler-42" id="tBv-b2-mM0" userLabel="delete"/>
+                    <tabBarItem key="tabBarItem" title="delete" image="theMidnightRambler-40" selectedImage="theMidnightRambler-40" id="tBv-b2-mM0" userLabel="delete"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="vZu-xo-hf6">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
@@ -354,6 +381,6 @@
     <resources>
         <image name="first" width="30" height="30"/>
         <image name="second" width="30" height="30"/>
-        <image name="theMidnightRambler-42" width="40" height="40"/>
+        <image name="theMidnightRambler-40" width="40" height="40"/>
     </resources>
 </document>

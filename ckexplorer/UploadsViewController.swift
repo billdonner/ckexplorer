@@ -50,9 +50,12 @@ func uploadRecordSampleRecord(
 }
     @IBOutlet weak var sliderVal: UISlider!
 
+    @IBOutlet weak var elapedTime: UILabel!
     @IBAction func sliderValChanged(_ sender: Any) {
         uploadbutton.setTitle ( "upload \(Int(sliderVal.value))",for:UIControlState.normal)
     }
+    
+    
     @IBOutlet weak var upnumber: UILabel!
     @IBOutlet weak var timeper: UILabel!
     @IBAction func uploadagain(_ sender: Any) {
@@ -60,16 +63,37 @@ func uploadRecordSampleRecord(
     }
 
     @IBOutlet weak var uploadbutton: UIButton!
-    @IBAction func reset(_ sender: Any) {
+
+    
+    private var countUp:Int = 0
+    
+    var myTimer: Timer? = nil
+    
+    func countUpTick() {
+        countUp += 1
         
-      samplesConduit.deleteAllRecords(){
-         print("Deleted ll records")
-      }
+        if (countUp == 0) {
+            myTimer!.invalidate()
+            myTimer=nil
+        }
+        
+        elapedTime.text = "\(countUp)"
     }
-  
+   
+ 
   
   func redo() {
       grandTotalWrites = 0
+    
+    myTimer?.invalidate()
+    myTimer=nil
+    
+    // set repeating timer for UI updates
+    countUp = 0
+    
+    myTimer = Timer(timeInterval: 1.0, target: self, selector:#selector(UploadsViewController.countUpTick), userInfo: nil, repeats: true)
+    elapedTime.text = "\(countUp)"
+    
         DispatchQueue.global(qos: DispatchQoS.QoSClass.background).async {
             self.allUploadsTest(delegate: self)
           
@@ -85,20 +109,25 @@ func uploadRecordSampleRecord(
     super.viewWillAppear(animated)
     redo()
    }
+
+    
     override func viewDidLoad() {
         super.viewDidLoad()
       print("UploadsViewController \(self)")
+    
+    
     }
   // must be on main thread
   
-  func didAddRogue(r:Rogue){}
+  func didAddRogue(r:Rogue){
+    }
   func didFinishDownload (){
   
   }
   func didPublish(opcode:PulseOpCode, x up:Int, t per:TimeInterval) {
     if opcode == .uploadCountAndMs {
       self.timeper.text = "\(Gfuncs.prettyFloat(per,digits:3)) sec/item"
-      self.upnumber.text = "\(up) items"
+      self.upnumber.text = "\(up) items uploaded"
       self.view.setNeedsDisplay()
     
     }

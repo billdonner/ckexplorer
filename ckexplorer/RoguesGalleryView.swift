@@ -19,7 +19,13 @@ import UIKit
 struct Rogue {
   var id:String
   let fileURL:URL
-  let fileData:Data
+  var fileData:Data?
+    
+    init(id:String,fileURL:URL,fileData:Data? = nil) {
+        self.id = id
+        self.fileURL = fileURL
+        self.fileData = fileData
+    }
 }
 protocol RoguePro {
   func resetRogue()
@@ -33,7 +39,14 @@ class RoguesGalleryViewCell:UICollectionViewCell {
     
   func configure(r:Rogue) {
    // print("configure cell id \(r.id)")
-    self.imageView.image = UIImage(data: r.fileData)
+     self.idstring.text = r.id
+    do {
+     let data = try Data(contentsOf:r.fileURL)
+    self.imageView.image = UIImage(data: data)
+    }
+    catch {
+        self.imageView = nil 
+    }
   }
 }
 class RoguesGalleryView:UICollectionView {

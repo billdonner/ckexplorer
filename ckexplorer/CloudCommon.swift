@@ -66,6 +66,7 @@ final class Conduit<T> {
     
     weak var delegate: VisualProt?
     var allrecids :[CKRecordID] = []
+    var querystarttime : Date?
     init() {
         container = CKContainer(identifier: "iCloud.com.midnightrambler.ckexplorer")
         db = container.privateCloudDatabase
@@ -81,6 +82,7 @@ final class Conduit<T> {
     private func queryRecords(forEachRecord: @escaping (CKRecord) -> (),finally:@escaping ([CKRecordID])->()) {
         let predicate = NSPredicate(value: true)
         let query = CKQuery(recordType: typeName, predicate: predicate)
+        querystarttime = Date()
         let queryOperation = CKQueryOperation(query: query)
         queryOperation.qualityOfService = .userInitiated
         queryOperation.recordFetchedBlock = forEachRecord
@@ -126,17 +128,18 @@ final class Conduit<T> {
         db.add(queryOperation)
     }
     
-    func deleteAllRecords(comp:@escaping ()->())
+    func deleteAllRecords(comp:@escaping (Int)->())
     {
         // fetch records from iCloud, get their recordID and then delete them
         self.getRecIds( ) { recordIDsArray in
             
+            print("will delete all \(recordIDsArray.count) records  ")
             let operation = CKModifyRecordsOperation(recordsToSave: nil, recordIDsToDelete: recordIDsArray)
             
             operation.modifyRecordsCompletionBlock = {
                 (savedRecords: [CKRecord]?, deletedRecordIDs: [CKRecordID]?, error: Error?) in
-                print("deleted all records \(deletedRecordIDs?.count)")
-                comp()
+                print("deleted all \(recordIDsArray.count) records \(deletedRecordIDs?.count)")
+                comp(recordIDsArray.count)
             }
             
             self.db.add(operation)
@@ -159,22 +162,17 @@ final class Conduit<T> {
         }
         
         allrecids.append(record.recordID)
-        let startTime = Date()
-        do {
-            let data = try Data(contentsOf:imageAsset.fileURL)
-            let rogue = Rogue(id:recordid , fileURL: imageAsset.fileURL, fileData:data)
+            let rogue = Rogue(id:recordid , fileURL: imageAsset.fileURL) //, fileData:data)
             DispatchQueue.main.async {
                 self.delegate?.didAddRogue(r: rogue)
             }
-        }
-        catch {
-            print ("Couldnt read imageasset from \(imageAsset.fileURL)")
+        var netelapsedTime = TimeInterval()
+        
+        if let qs = self.querystarttime {
+         netelapsedTime    = Date().timeIntervalSince(qs)
         }
         
-        let netelapsedTime    = Date().timeIntervalSince(startTime)*1000.0
-        
-        DispatchQueue.main.async {
-            // print ("Did read imageasset from \(imageAsset.fileURL)")
+        DispatchQueue.main.async { 
             self.delegate?.didPublish(opcode: PulseOpCode.eventCountAndMs,x: 1,t: netelapsedTime)
         }
     }

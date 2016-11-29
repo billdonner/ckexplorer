@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		885BFE2B1DEDC089002DAE16 /* Help.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 885BFE2A1DEDC089002DAE16 /* Help.storyboard */; };
+		885BFE301DEDC0BB002DAE16 /* ImportMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 885BFE2C1DEDC0BB002DAE16 /* ImportMenuViewController.swift */; };
+		885BFE311DEDC0BB002DAE16 /* StartupHelpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 885BFE2D1DEDC0BB002DAE16 /* StartupHelpViewController.swift */; };
+		885BFE321DEDC0BB002DAE16 /* InnerHelpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 885BFE2E1DEDC0BB002DAE16 /* InnerHelpViewController.swift */; };
+		885BFE331DEDC0BB002DAE16 /* WebHelpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 885BFE2F1DEDC0BB002DAE16 /* WebHelpViewController.swift */; };
 		888C89581DE8C2A300A7FCC8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 888C89571DE8C2A300A7FCC8 /* Assets.xcassets */; };
 		888C896E1DE8C2C500A7FCC8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 888C896D1DE8C2C500A7FCC8 /* Assets.xcassets */; };
 		888C89841DE8C2E300A7FCC8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 888C89831DE8C2E300A7FCC8 /* Assets.xcassets */; };
@@ -56,6 +61,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		885BFE2A1DEDC089002DAE16 /* Help.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Help.storyboard; sourceTree = "<group>"; };
+		885BFE2C1DEDC0BB002DAE16 /* ImportMenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImportMenuViewController.swift; sourceTree = "<group>"; };
+		885BFE2D1DEDC0BB002DAE16 /* StartupHelpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StartupHelpViewController.swift; sourceTree = "<group>"; };
+		885BFE2E1DEDC0BB002DAE16 /* InnerHelpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InnerHelpViewController.swift; sourceTree = "<group>"; };
+		885BFE2F1DEDC0BB002DAE16 /* WebHelpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebHelpViewController.swift; sourceTree = "<group>"; };
 		888C890F1DE8AC0C00A7FCC8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = ckexplorer/AppDelegate.swift; sourceTree = "<group>"; };
 		888C89191DE8AC0C00A7FCC8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/IOSDownloadsLaunchScreen.storyboard; sourceTree = "<group>"; };
 		888C89231DE8AEB400A7FCC8 /* CloudCommon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CloudCommon.swift; sourceTree = "<group>"; };
@@ -88,6 +98,7 @@
 		88CD50131DEB8F0B006BC24D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		88CD50171DEB8F0E006BC24D /* ckpresentortvos.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ckpresentortvos.entitlements; sourceTree = "<group>"; };
 		88CD50181DEB8F11006BC24D /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS10.1.sdk/System/Library/Frameworks/CloudKit.framework; sourceTree = DEVELOPER_DIR; };
+		88CD501F1DEC501F006BC24D /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		88CECAEA1DE8D09B003CC6AB /* IOSMainDelete.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = IOSMainDelete.storyboard; sourceTree = "<group>"; };
 		88CECAEC1DE8D0C3003CC6AB /* IOSMainDownloads.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = IOSMainDownloads.storyboard; sourceTree = "<group>"; };
 		88CECAF01DE8D2EE003CC6AB /* ckuploader.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = ckuploader.entitlements; path = ckuploader/ckuploader.entitlements; sourceTree = "<group>"; };
@@ -146,6 +157,7 @@
 		888C89031DE8AC0C00A7FCC8 = {
 			isa = PBXGroup;
 			children = (
+				88CD501F1DEC501F006BC24D /* README.md */,
 				88CECAF61DE8D36A003CC6AB /* ckdeleter.entitlements */,
 				88CECAF41DE8D34B003CC6AB /* ckdownloader.entitlements */,
 				88CECAF01DE8D2EE003CC6AB /* ckuploader.entitlements */,
@@ -234,10 +246,15 @@
 			isa = PBXGroup;
 			children = (
 				88CD4FFA1DEB7E60006BC24D /* cktabexplorer.entitlements */,
+				885BFE2A1DEDC089002DAE16 /* Help.storyboard */,
 				88CD4FEE1DEB7E5A006BC24D /* Main.storyboard */,
 				88CD4FF11DEB7E5A006BC24D /* Assets.xcassets */,
 				88CD4FF31DEB7E5A006BC24D /* LaunchScreen.storyboard */,
 				88CD4FF61DEB7E5A006BC24D /* Info.plist */,
+				885BFE2C1DEDC0BB002DAE16 /* ImportMenuViewController.swift */,
+				885BFE2D1DEDC0BB002DAE16 /* StartupHelpViewController.swift */,
+				885BFE2E1DEDC0BB002DAE16 /* InnerHelpViewController.swift */,
+				885BFE2F1DEDC0BB002DAE16 /* WebHelpViewController.swift */,
 			);
 			path = cktabexplorer;
 			sourceTree = "<group>";
@@ -493,6 +510,7 @@
 				88CD4FF21DEB7E5A006BC24D /* Assets.xcassets in Resources */,
 				88CD4FF01DEB7E5A006BC24D /* Main.storyboard in Resources */,
 				88CD50021DEB84F0006BC24D /* pizza.jpeg in Resources */,
+				885BFE2B1DEDC089002DAE16 /* Help.storyboard in Resources */,
 				88CD50031DEB84F7006BC24D /* steak.jpeg in Resources */,
 				88CD50011DEB84EA006BC24D /* chinese.jpeg in Resources */,
 			);
@@ -545,10 +563,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				885BFE321DEDC0BB002DAE16 /* InnerHelpViewController.swift in Sources */,
 				88CD4FFC1DEB7F41006BC24D /* UploadsViewController.swift in Sources */,
+				885BFE331DEDC0BB002DAE16 /* WebHelpViewController.swift in Sources */,
 				88CD50001DEB8030006BC24D /* RoguesGalleryView.swift in Sources */,
 				88CD4FFE1DEB7F51006BC24D /* DownloadsViewController.swift in Sources */,
 				88CD501E1DEBA860006BC24D /* AppDelegate.swift in Sources */,
+				885BFE301DEDC0BB002DAE16 /* ImportMenuViewController.swift in Sources */,
+				885BFE311DEDC0BB002DAE16 /* StartupHelpViewController.swift in Sources */,
 				88CD4FFF1DEB8023006BC24D /* CloudCommon.swift in Sources */,
 				88CD4FFD1DEB7F48006BC24D /* DeleteViewController.swift in Sources */,
 			);
@@ -827,7 +849,7 @@
 		88CD50151DEB8F0B006BC24D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
+				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image-1";
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_ENTITLEMENTS = ckpresentortvos/ckpresentortvos.entitlements;
 				DEVELOPMENT_TEAM = X2PQYA6S48;
@@ -845,7 +867,7 @@
 		88CD50161DEB8F0B006BC24D /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
+				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image-1";
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_ENTITLEMENTS = ckpresentortvos/ckpresentortvos.entitlements;
 				DEVELOPMENT_TEAM = X2PQYA6S48;
@@ -906,6 +928,7 @@
 				88CD4FF81DEB7E5A006BC24D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		88CD50141DEB8F0B006BC24D /* Build configuration list for PBXNativeTarget "ckpresentortvos" */ = {
 			isa = XCConfigurationList;
@@ -914,6 +937,7 @@
 				88CD50161DEB8F0B006BC24D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
