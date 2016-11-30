@@ -12,22 +12,9 @@
 		885BFE311DEDC0BB002DAE16 /* StartupHelpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 885BFE2D1DEDC0BB002DAE16 /* StartupHelpViewController.swift */; };
 		885BFE321DEDC0BB002DAE16 /* InnerHelpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 885BFE2E1DEDC0BB002DAE16 /* InnerHelpViewController.swift */; };
 		885BFE331DEDC0BB002DAE16 /* WebHelpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 885BFE2F1DEDC0BB002DAE16 /* WebHelpViewController.swift */; };
-		888C89581DE8C2A300A7FCC8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 888C89571DE8C2A300A7FCC8 /* Assets.xcassets */; };
-		888C896E1DE8C2C500A7FCC8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 888C896D1DE8C2C500A7FCC8 /* Assets.xcassets */; };
-		888C89841DE8C2E300A7FCC8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 888C89831DE8C2E300A7FCC8 /* Assets.xcassets */; };
-		888C898C1DE8C30300A7FCC8 /* IOSUploadLaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 888C89441DE8B95B00A7FCC8 /* IOSUploadLaunchScreen.storyboard */; };
-		888C898F1DE8C34C00A7FCC8 /* DownloadsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 888C89251DE8AEB400A7FCC8 /* DownloadsViewController.swift */; };
-		888C89911DE8C36300A7FCC8 /* IOSDownloadsLaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 888C89181DE8AC0C00A7FCC8 /* IOSDownloadsLaunchScreen.storyboard */; };
-		888C89941DE8C37A00A7FCC8 /* IOSDeletingLaunchScreen in Resources */ = {isa = PBXBuildFile; fileRef = 888C89471DE8B98400A7FCC8 /* IOSDeletingLaunchScreen */; };
-		888C89951DE8C38600A7FCC8 /* RoguesGalleryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 888C89261DE8AEB400A7FCC8 /* RoguesGalleryView.swift */; };
-		888C89981DE8C38E00A7FCC8 /* CloudCommon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 888C89231DE8AEB400A7FCC8 /* CloudCommon.swift */; };
-		888C89991DE8C38F00A7FCC8 /* CloudCommon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 888C89231DE8AEB400A7FCC8 /* CloudCommon.swift */; };
-		888C899A1DE8C39100A7FCC8 /* CloudCommon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 888C89231DE8AEB400A7FCC8 /* CloudCommon.swift */; };
-		888C899B1DE8C3A700A7FCC8 /* chinese.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 888C89281DE8AEB400A7FCC8 /* chinese.jpeg */; };
-		888C899C1DE8C54E00A7FCC8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 888C890F1DE8AC0C00A7FCC8 /* AppDelegate.swift */; };
-		888C899D1DE8C55000A7FCC8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 888C890F1DE8AC0C00A7FCC8 /* AppDelegate.swift */; };
-		888C899E1DE8C55100A7FCC8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 888C890F1DE8AC0C00A7FCC8 /* AppDelegate.swift */; };
-		888C899F1DE8C5C000A7FCC8 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 888C89881DE8C2E300A7FCC8 /* Info.plist */; };
+		885BFE351DEDD579002DAE16 /* Incorporator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 885BFE341DEDD579002DAE16 /* Incorporator.swift */; };
+		88CA9D8E1DEF0E770074B498 /* LICENSE.txt in Resources */ = {isa = PBXBuildFile; fileRef = 88CA9D8D1DEF0E770074B498 /* LICENSE.txt */; };
+		88CA9D8F1DEF0E770074B498 /* LICENSE.txt in Resources */ = {isa = PBXBuildFile; fileRef = 88CA9D8D1DEF0E770074B498 /* LICENSE.txt */; };
 		88CD4FF01DEB7E5A006BC24D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 88CD4FEE1DEB7E5A006BC24D /* Main.storyboard */; };
 		88CD4FF21DEB7E5A006BC24D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 88CD4FF11DEB7E5A006BC24D /* Assets.xcassets */; };
 		88CD4FF51DEB7E5A006BC24D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 88CD4FF31DEB7E5A006BC24D /* LaunchScreen.storyboard */; };
@@ -48,16 +35,6 @@
 		88CD501B1DEB90F3006BC24D /* RoguesGalleryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 888C89261DE8AEB400A7FCC8 /* RoguesGalleryView.swift */; };
 		88CD501C1DEB90FC006BC24D /* DownloadsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 888C89251DE8AEB400A7FCC8 /* DownloadsViewController.swift */; };
 		88CD501E1DEBA860006BC24D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 888C890F1DE8AC0C00A7FCC8 /* AppDelegate.swift */; };
-		88CECAE81DE8CF2F003CC6AB /* pizza.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 888C89291DE8AEB400A7FCC8 /* pizza.jpeg */; };
-		88CECAE91DE8CF36003CC6AB /* steak.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 888C892A1DE8AEB400A7FCC8 /* steak.jpeg */; };
-		88CECAEB1DE8D09B003CC6AB /* IOSMainDelete.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 88CECAEA1DE8D09B003CC6AB /* IOSMainDelete.storyboard */; };
-		88CECAED1DE8D0C3003CC6AB /* IOSMainDownloads.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 88CECAEC1DE8D0C3003CC6AB /* IOSMainDownloads.storyboard */; };
-		88CECAF31DE8D2F2003CC6AB /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88CECAF21DE8D2F2003CC6AB /* CloudKit.framework */; };
-		88CECAF51DE8D34E003CC6AB /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88CECAF21DE8D2F2003CC6AB /* CloudKit.framework */; };
-		88CECAF71DE8D376003CC6AB /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88CECAF21DE8D2F2003CC6AB /* CloudKit.framework */; };
-		88CECAF91DE8D500003CC6AB /* IOSMainUpload.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 88CECAF81DE8D500003CC6AB /* IOSMainUpload.storyboard */; };
-		88CECAFD1DE8D768003CC6AB /* UploadsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88CECAFC1DE8D768003CC6AB /* UploadsViewController.swift */; };
-		88CECAFF1DE8D7B5003CC6AB /* DeleteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88CECAFE1DE8D7B5003CC6AB /* DeleteViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -66,25 +43,15 @@
 		885BFE2D1DEDC0BB002DAE16 /* StartupHelpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StartupHelpViewController.swift; sourceTree = "<group>"; };
 		885BFE2E1DEDC0BB002DAE16 /* InnerHelpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InnerHelpViewController.swift; sourceTree = "<group>"; };
 		885BFE2F1DEDC0BB002DAE16 /* WebHelpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebHelpViewController.swift; sourceTree = "<group>"; };
-		888C890F1DE8AC0C00A7FCC8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = ckexplorer/AppDelegate.swift; sourceTree = "<group>"; };
-		888C89191DE8AC0C00A7FCC8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/IOSDownloadsLaunchScreen.storyboard; sourceTree = "<group>"; };
+		885BFE341DEDD579002DAE16 /* Incorporator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Incorporator.swift; sourceTree = "<group>"; };
+		888C890F1DE8AC0C00A7FCC8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = ../ckexplorer/AppDelegate.swift; sourceTree = "<group>"; };
 		888C89231DE8AEB400A7FCC8 /* CloudCommon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CloudCommon.swift; sourceTree = "<group>"; };
 		888C89251DE8AEB400A7FCC8 /* DownloadsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DownloadsViewController.swift; sourceTree = "<group>"; };
 		888C89261DE8AEB400A7FCC8 /* RoguesGalleryView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoguesGalleryView.swift; sourceTree = "<group>"; };
 		888C89281DE8AEB400A7FCC8 /* chinese.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = chinese.jpeg; sourceTree = "<group>"; };
 		888C89291DE8AEB400A7FCC8 /* pizza.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = pizza.jpeg; sourceTree = "<group>"; };
 		888C892A1DE8AEB400A7FCC8 /* steak.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = steak.jpeg; sourceTree = "<group>"; };
-		888C89451DE8B95B00A7FCC8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/IOSUploadLaunchScreen.storyboard; sourceTree = "<group>"; };
-		888C89481DE8B98400A7FCC8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = Base; path = Base.lproj/IOSDeletingLaunchScreen; sourceTree = "<group>"; };
-		888C894E1DE8C2A300A7FCC8 /* ckdownloader.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ckdownloader.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		888C89571DE8C2A300A7FCC8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = ../ckdownloader/Assets.xcassets; sourceTree = "<group>"; };
-		888C895C1DE8C2A300A7FCC8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = ../ckdownloader/Info.plist; sourceTree = "<group>"; };
-		888C89641DE8C2C500A7FCC8 /* ckuploader.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ckuploader.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		888C896D1DE8C2C500A7FCC8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = ../ckuploader/Assets.xcassets; sourceTree = "<group>"; };
-		888C89721DE8C2C500A7FCC8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = ../ckuploader/Info.plist; sourceTree = "<group>"; };
-		888C897A1DE8C2E300A7FCC8 /* ckdeleter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ckdeleter.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		888C89831DE8C2E300A7FCC8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = ../ckdeleter/Assets.xcassets; sourceTree = "<group>"; };
-		888C89881DE8C2E300A7FCC8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = ../ckdeleter/Info.plist; sourceTree = "<group>"; };
+		88CA9D8D1DEF0E770074B498 /* LICENSE.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; };
 		88CD4FE61DEB7E5A006BC24D /* cktabexplorer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = cktabexplorer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		88CD4FEF1DEB7E5A006BC24D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		88CD4FF11DEB7E5A006BC24D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -99,42 +66,12 @@
 		88CD50171DEB8F0E006BC24D /* ckpresentortvos.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ckpresentortvos.entitlements; sourceTree = "<group>"; };
 		88CD50181DEB8F11006BC24D /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS10.1.sdk/System/Library/Frameworks/CloudKit.framework; sourceTree = DEVELOPER_DIR; };
 		88CD501F1DEC501F006BC24D /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
-		88CECAEA1DE8D09B003CC6AB /* IOSMainDelete.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = IOSMainDelete.storyboard; sourceTree = "<group>"; };
-		88CECAEC1DE8D0C3003CC6AB /* IOSMainDownloads.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = IOSMainDownloads.storyboard; sourceTree = "<group>"; };
-		88CECAF01DE8D2EE003CC6AB /* ckuploader.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = ckuploader.entitlements; path = ckuploader/ckuploader.entitlements; sourceTree = "<group>"; };
 		88CECAF21DE8D2F2003CC6AB /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
-		88CECAF41DE8D34B003CC6AB /* ckdownloader.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = ckdownloader.entitlements; path = ckdownloader/ckdownloader.entitlements; sourceTree = "<group>"; };
-		88CECAF61DE8D36A003CC6AB /* ckdeleter.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = ckdeleter.entitlements; path = ckdeleter/ckdeleter.entitlements; sourceTree = "<group>"; };
-		88CECAF81DE8D500003CC6AB /* IOSMainUpload.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = IOSMainUpload.storyboard; sourceTree = "<group>"; };
 		88CECAFC1DE8D768003CC6AB /* UploadsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UploadsViewController.swift; sourceTree = "<group>"; };
 		88CECAFE1DE8D7B5003CC6AB /* DeleteViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeleteViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		888C894B1DE8C2A300A7FCC8 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				88CECAF51DE8D34E003CC6AB /* CloudKit.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		888C89611DE8C2C500A7FCC8 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				88CECAF31DE8D2F2003CC6AB /* CloudKit.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		888C89771DE8C2E300A7FCC8 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				88CECAF71DE8D376003CC6AB /* CloudKit.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		88CD4FE31DEB7E5A006BC24D /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -158,12 +95,8 @@
 			isa = PBXGroup;
 			children = (
 				88CD501F1DEC501F006BC24D /* README.md */,
-				88CECAF61DE8D36A003CC6AB /* ckdeleter.entitlements */,
-				88CECAF41DE8D34B003CC6AB /* ckdownloader.entitlements */,
-				88CECAF01DE8D2EE003CC6AB /* ckuploader.entitlements */,
-				888C890F1DE8AC0C00A7FCC8 /* AppDelegate.swift */,
-				888C89271DE8AEB400A7FCC8 /* Sample Upload Images */,
-				888C890E1DE8AC0C00A7FCC8 /* ckexplorer */,
+				88CA9D8D1DEF0E770074B498 /* LICENSE.txt */,
+				888C890E1DE8AC0C00A7FCC8 /* ckexplorerlib */,
 				88CD4FE71DEB7E5A006BC24D /* cktabexplorer */,
 				88CD50091DEB8F0B006BC24D /* ckpresentortvos */,
 				888C890D1DE8AC0C00A7FCC8 /* Products */,
@@ -174,24 +107,20 @@
 		888C890D1DE8AC0C00A7FCC8 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				888C894E1DE8C2A300A7FCC8 /* ckdownloader.app */,
-				888C89641DE8C2C500A7FCC8 /* ckuploader.app */,
-				888C897A1DE8C2E300A7FCC8 /* ckdeleter.app */,
 				88CD4FE61DEB7E5A006BC24D /* cktabexplorer.app */,
 				88CD50081DEB8F0B006BC24D /* ckpresentortvos.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		888C890E1DE8AC0C00A7FCC8 /* ckexplorer */ = {
+		888C890E1DE8AC0C00A7FCC8 /* ckexplorerlib */ = {
 			isa = PBXGroup;
 			children = (
+				888C89391DE8B2A300A7FCC8 /* Downloading */,
 				888C89231DE8AEB400A7FCC8 /* CloudCommon.swift */,
 				888C89261DE8AEB400A7FCC8 /* RoguesGalleryView.swift */,
-				888C893D1DE8B35E00A7FCC8 /* Deleting */,
-				888C89391DE8B2A300A7FCC8 /* Downloading */,
-				888C893A1DE8B2CE00A7FCC8 /* Uploading */,
 			);
+			name = ckexplorerlib;
 			path = ckexplorer;
 			sourceTree = "<group>";
 		};
@@ -203,17 +132,13 @@
 				888C892A1DE8AEB400A7FCC8 /* steak.jpeg */,
 			);
 			name = "Sample Upload Images";
-			path = "ckexplorer/Sample Images";
+			path = "Sample Images";
 			sourceTree = "<group>";
 		};
 		888C89391DE8B2A300A7FCC8 /* Downloading */ = {
 			isa = PBXGroup;
 			children = (
-				88CECAEC1DE8D0C3003CC6AB /* IOSMainDownloads.storyboard */,
-				888C89181DE8AC0C00A7FCC8 /* IOSDownloadsLaunchScreen.storyboard */,
 				888C89251DE8AEB400A7FCC8 /* DownloadsViewController.swift */,
-				888C89571DE8C2A300A7FCC8 /* Assets.xcassets */,
-				888C895C1DE8C2A300A7FCC8 /* Info.plist */,
 			);
 			name = Downloading;
 			sourceTree = "<group>";
@@ -221,31 +146,30 @@
 		888C893A1DE8B2CE00A7FCC8 /* Uploading */ = {
 			isa = PBXGroup;
 			children = (
+				888C89271DE8AEB400A7FCC8 /* Sample Upload Images */,
 				88CECAFC1DE8D768003CC6AB /* UploadsViewController.swift */,
-				88CECAF81DE8D500003CC6AB /* IOSMainUpload.storyboard */,
-				888C89441DE8B95B00A7FCC8 /* IOSUploadLaunchScreen.storyboard */,
-				888C896D1DE8C2C500A7FCC8 /* Assets.xcassets */,
-				888C89721DE8C2C500A7FCC8 /* Info.plist */,
+				885BFE341DEDD579002DAE16 /* Incorporator.swift */,
 			);
 			name = Uploading;
+			path = ../ckexplorer;
 			sourceTree = "<group>";
 		};
 		888C893D1DE8B35E00A7FCC8 /* Deleting */ = {
 			isa = PBXGroup;
 			children = (
 				88CECAFE1DE8D7B5003CC6AB /* DeleteViewController.swift */,
-				88CECAEA1DE8D09B003CC6AB /* IOSMainDelete.storyboard */,
-				888C89471DE8B98400A7FCC8 /* IOSDeletingLaunchScreen */,
-				888C89831DE8C2E300A7FCC8 /* Assets.xcassets */,
-				888C89881DE8C2E300A7FCC8 /* Info.plist */,
 			);
 			name = Deleting;
+			path = ../ckexplorer;
 			sourceTree = "<group>";
 		};
 		88CD4FE71DEB7E5A006BC24D /* cktabexplorer */ = {
 			isa = PBXGroup;
 			children = (
+				888C893D1DE8B35E00A7FCC8 /* Deleting */,
+				888C893A1DE8B2CE00A7FCC8 /* Uploading */,
 				88CD4FFA1DEB7E60006BC24D /* cktabexplorer.entitlements */,
+				888C890F1DE8AC0C00A7FCC8 /* AppDelegate.swift */,
 				885BFE2A1DEDC089002DAE16 /* Help.storyboard */,
 				88CD4FEE1DEB7E5A006BC24D /* Main.storyboard */,
 				88CD4FF11DEB7E5A006BC24D /* Assets.xcassets */,
@@ -283,57 +207,6 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		888C894D1DE8C2A300A7FCC8 /* ckdownloader */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 888C895D1DE8C2A300A7FCC8 /* Build configuration list for PBXNativeTarget "ckdownloader" */;
-			buildPhases = (
-				888C894A1DE8C2A300A7FCC8 /* Sources */,
-				888C894B1DE8C2A300A7FCC8 /* Frameworks */,
-				888C894C1DE8C2A300A7FCC8 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = ckdownloader;
-			productName = ckdownloader;
-			productReference = 888C894E1DE8C2A300A7FCC8 /* ckdownloader.app */;
-			productType = "com.apple.product-type.application";
-		};
-		888C89631DE8C2C500A7FCC8 /* ckuploader */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 888C89731DE8C2C500A7FCC8 /* Build configuration list for PBXNativeTarget "ckuploader" */;
-			buildPhases = (
-				888C89601DE8C2C500A7FCC8 /* Sources */,
-				888C89611DE8C2C500A7FCC8 /* Frameworks */,
-				888C89621DE8C2C500A7FCC8 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = ckuploader;
-			productName = ckuploader;
-			productReference = 888C89641DE8C2C500A7FCC8 /* ckuploader.app */;
-			productType = "com.apple.product-type.application";
-		};
-		888C89791DE8C2E300A7FCC8 /* ckdeleter */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 888C89891DE8C2E300A7FCC8 /* Build configuration list for PBXNativeTarget "ckdeleter" */;
-			buildPhases = (
-				888C89761DE8C2E300A7FCC8 /* Sources */,
-				888C89771DE8C2E300A7FCC8 /* Frameworks */,
-				888C89781DE8C2E300A7FCC8 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = ckdeleter;
-			productName = ckdeleter;
-			productReference = 888C897A1DE8C2E300A7FCC8 /* ckdeleter.app */;
-			productType = "com.apple.product-type.application";
-		};
 		88CD4FE51DEB7E5A006BC24D /* cktabexplorer */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 88CD4FF91DEB7E5A006BC24D /* Build configuration list for PBXNativeTarget "cktabexplorer" */;
@@ -378,45 +251,6 @@
 				LastUpgradeCheck = 0820;
 				ORGANIZATIONNAME = midnightrambler;
 				TargetAttributes = {
-					888C894D1DE8C2A300A7FCC8 = {
-						CreatedOnToolsVersion = 8.2;
-						DevelopmentTeam = X2PQYA6S48;
-						ProvisioningStyle = Automatic;
-						SystemCapabilities = {
-							com.apple.Push = {
-								enabled = 1;
-							};
-							com.apple.iCloud = {
-								enabled = 1;
-							};
-						};
-					};
-					888C89631DE8C2C500A7FCC8 = {
-						CreatedOnToolsVersion = 8.2;
-						DevelopmentTeam = X2PQYA6S48;
-						ProvisioningStyle = Automatic;
-						SystemCapabilities = {
-							com.apple.Push = {
-								enabled = 1;
-							};
-							com.apple.iCloud = {
-								enabled = 1;
-							};
-						};
-					};
-					888C89791DE8C2E300A7FCC8 = {
-						CreatedOnToolsVersion = 8.2;
-						DevelopmentTeam = X2PQYA6S48;
-						ProvisioningStyle = Automatic;
-						SystemCapabilities = {
-							com.apple.Push = {
-								enabled = 1;
-							};
-							com.apple.iCloud = {
-								enabled = 1;
-							};
-						};
-					};
 					88CD4FE51DEB7E5A006BC24D = {
 						CreatedOnToolsVersion = 8.2;
 						DevelopmentTeam = X2PQYA6S48;
@@ -458,9 +292,6 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				888C894D1DE8C2A300A7FCC8 /* ckdownloader */,
-				888C89631DE8C2C500A7FCC8 /* ckuploader */,
-				888C89791DE8C2E300A7FCC8 /* ckdeleter */,
 				88CD4FE51DEB7E5A006BC24D /* cktabexplorer */,
 				88CD50071DEB8F0B006BC24D /* ckpresentortvos */,
 			);
@@ -468,40 +299,6 @@
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		888C894C1DE8C2A300A7FCC8 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				888C89911DE8C36300A7FCC8 /* IOSDownloadsLaunchScreen.storyboard in Resources */,
-				888C89581DE8C2A300A7FCC8 /* Assets.xcassets in Resources */,
-				88CECAED1DE8D0C3003CC6AB /* IOSMainDownloads.storyboard in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		888C89621DE8C2C500A7FCC8 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				888C898C1DE8C30300A7FCC8 /* IOSUploadLaunchScreen.storyboard in Resources */,
-				888C896E1DE8C2C500A7FCC8 /* Assets.xcassets in Resources */,
-				88CECAF91DE8D500003CC6AB /* IOSMainUpload.storyboard in Resources */,
-				88CECAE81DE8CF2F003CC6AB /* pizza.jpeg in Resources */,
-				88CECAE91DE8CF36003CC6AB /* steak.jpeg in Resources */,
-				888C899B1DE8C3A700A7FCC8 /* chinese.jpeg in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		888C89781DE8C2E300A7FCC8 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				888C899F1DE8C5C000A7FCC8 /* Info.plist in Resources */,
-				888C89841DE8C2E300A7FCC8 /* Assets.xcassets in Resources */,
-				88CECAEB1DE8D09B003CC6AB /* IOSMainDelete.storyboard in Resources */,
-				888C89941DE8C37A00A7FCC8 /* IOSDeletingLaunchScreen in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		88CD4FE41DEB7E5A006BC24D /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -510,6 +307,7 @@
 				88CD4FF21DEB7E5A006BC24D /* Assets.xcassets in Resources */,
 				88CD4FF01DEB7E5A006BC24D /* Main.storyboard in Resources */,
 				88CD50021DEB84F0006BC24D /* pizza.jpeg in Resources */,
+				88CA9D8E1DEF0E770074B498 /* LICENSE.txt in Resources */,
 				885BFE2B1DEDC089002DAE16 /* Help.storyboard in Resources */,
 				88CD50031DEB84F7006BC24D /* steak.jpeg in Resources */,
 				88CD50011DEB84EA006BC24D /* chinese.jpeg in Resources */,
@@ -520,6 +318,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				88CA9D8F1DEF0E770074B498 /* LICENSE.txt in Resources */,
 				88CD50121DEB8F0B006BC24D /* Assets.xcassets in Resources */,
 				88CD50101DEB8F0B006BC24D /* Main.storyboard in Resources */,
 			);
@@ -528,37 +327,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		888C894A1DE8C2A300A7FCC8 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				888C899C1DE8C54E00A7FCC8 /* AppDelegate.swift in Sources */,
-				888C89981DE8C38E00A7FCC8 /* CloudCommon.swift in Sources */,
-				888C89951DE8C38600A7FCC8 /* RoguesGalleryView.swift in Sources */,
-				888C898F1DE8C34C00A7FCC8 /* DownloadsViewController.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		888C89601DE8C2C500A7FCC8 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				888C899D1DE8C55000A7FCC8 /* AppDelegate.swift in Sources */,
-				88CECAFD1DE8D768003CC6AB /* UploadsViewController.swift in Sources */,
-				888C89991DE8C38F00A7FCC8 /* CloudCommon.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		888C89761DE8C2E300A7FCC8 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				888C899E1DE8C55100A7FCC8 /* AppDelegate.swift in Sources */,
-				888C899A1DE8C39100A7FCC8 /* CloudCommon.swift in Sources */,
-				88CECAFF1DE8D7B5003CC6AB /* DeleteViewController.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		88CD4FE21DEB7E5A006BC24D /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -566,6 +334,7 @@
 				885BFE321DEDC0BB002DAE16 /* InnerHelpViewController.swift in Sources */,
 				88CD4FFC1DEB7F41006BC24D /* UploadsViewController.swift in Sources */,
 				885BFE331DEDC0BB002DAE16 /* WebHelpViewController.swift in Sources */,
+				885BFE351DEDD579002DAE16 /* Incorporator.swift in Sources */,
 				88CD50001DEB8030006BC24D /* RoguesGalleryView.swift in Sources */,
 				88CD4FFE1DEB7F51006BC24D /* DownloadsViewController.swift in Sources */,
 				88CD501E1DEBA860006BC24D /* AppDelegate.swift in Sources */,
@@ -590,30 +359,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		888C89181DE8AC0C00A7FCC8 /* IOSDownloadsLaunchScreen.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				888C89191DE8AC0C00A7FCC8 /* Base */,
-			);
-			name = IOSDownloadsLaunchScreen.storyboard;
-			sourceTree = "<group>";
-		};
-		888C89441DE8B95B00A7FCC8 /* IOSUploadLaunchScreen.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				888C89451DE8B95B00A7FCC8 /* Base */,
-			);
-			name = IOSUploadLaunchScreen.storyboard;
-			sourceTree = "<group>";
-		};
-		888C89471DE8B98400A7FCC8 /* IOSDeletingLaunchScreen */ = {
-			isa = PBXVariantGroup;
-			children = (
-				888C89481DE8B98400A7FCC8 /* Base */,
-			);
-			name = IOSDeletingLaunchScreen;
-			sourceTree = "<group>";
-		};
 		88CD4FEE1DEB7E5A006BC24D /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -734,90 +479,6 @@
 			};
 			name = Release;
 		};
-		888C895E1DE8C2A300A7FCC8 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = ckdownloader/ckdownloader.entitlements;
-				DEVELOPMENT_TEAM = X2PQYA6S48;
-				INFOPLIST_FILE = ckdownloader/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.midnightrambler.ckdownloader;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
-			};
-			name = Debug;
-		};
-		888C895F1DE8C2A300A7FCC8 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = ckdownloader/ckdownloader.entitlements;
-				DEVELOPMENT_TEAM = X2PQYA6S48;
-				INFOPLIST_FILE = ckdownloader/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.midnightrambler.ckdownloader;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
-			};
-			name = Release;
-		};
-		888C89741DE8C2C500A7FCC8 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = ckuploader/ckuploader.entitlements;
-				DEVELOPMENT_TEAM = X2PQYA6S48;
-				INFOPLIST_FILE = ckuploader/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.midnightrambler.ckuploader;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
-			};
-			name = Debug;
-		};
-		888C89751DE8C2C500A7FCC8 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = ckuploader/ckuploader.entitlements;
-				DEVELOPMENT_TEAM = X2PQYA6S48;
-				INFOPLIST_FILE = ckuploader/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.midnightrambler.ckuploader;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
-			};
-			name = Release;
-		};
-		888C898A1DE8C2E300A7FCC8 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = ckdeleter/ckdeleter.entitlements;
-				DEVELOPMENT_TEAM = X2PQYA6S48;
-				INFOPLIST_FILE = ckdeleter/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.midnightrambler.ckdeleter;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
-			};
-			name = Debug;
-		};
-		888C898B1DE8C2E300A7FCC8 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = ckdeleter/ckdeleter.entitlements;
-				DEVELOPMENT_TEAM = X2PQYA6S48;
-				INFOPLIST_FILE = ckdeleter/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.midnightrambler.ckdeleter;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
-			};
-			name = Release;
-		};
 		88CD4FF71DEB7E5A006BC24D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -890,33 +551,6 @@
 			buildConfigurations = (
 				888C891C1DE8AC0C00A7FCC8 /* Debug */,
 				888C891D1DE8AC0C00A7FCC8 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		888C895D1DE8C2A300A7FCC8 /* Build configuration list for PBXNativeTarget "ckdownloader" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				888C895E1DE8C2A300A7FCC8 /* Debug */,
-				888C895F1DE8C2A300A7FCC8 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		888C89731DE8C2C500A7FCC8 /* Build configuration list for PBXNativeTarget "ckuploader" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				888C89741DE8C2C500A7FCC8 /* Debug */,
-				888C89751DE8C2C500A7FCC8 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		888C89891DE8C2E300A7FCC8 /* Build configuration list for PBXNativeTarget "ckdeleter" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				888C898A1DE8C2E300A7FCC8 /* Debug */,
-				888C898B1DE8C2E300A7FCC8 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

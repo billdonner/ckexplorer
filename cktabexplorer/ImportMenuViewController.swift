@@ -7,8 +7,9 @@
 //
 
 import UIKit
-
-import stikz
+protocol ModalOverCurrentContext {
+    
+}
 protocol HelpDropdownDelegate : class {
     func refreshLayout()
 }
@@ -34,16 +35,22 @@ final class ImportMenuViewController: UIViewController, ModalOverCurrentContext 
         print("secret")
         
     }
-    
+        
     @IBAction func hitITunesAction(_ sender: AnyObject) {
-       Manifest.loadFromITunesSharing(){status, title, allofme in
+        loadfromitunes(each:{
+            url,title in
+        }) {
+            //finally
+        }
+        /*
+        {status, title, allofme in
         print("loaded \(allofme.count) files")
             if allofme.count == 0 {
                  IOSSpecialOps.blurt(self ,title:"no files loaded",mess:"go to ITunes > your device > apps")
             } else {
             IOSSpecialOps.blurt(self ,title:"loaded \(allofme.count) files",mess:"available in catalog")
             }
-        }
+        }*/
     }
     
     
@@ -84,35 +91,18 @@ final class ImportMenuViewController: UIViewController, ModalOverCurrentContext 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        let count = SharedCaptionSpace.itemCount()
-        let remcount = StickerAssetSpace.itemCount()
-        let s = count == 1 ? "" : "s"
-        subLabel.text =  "Currently you have \(count) sticker" + s + " in the Messages App"
-        bodyLabel.text = remcount != 1 ? "You have \(remcount) catalog entries as sources to make stickers" :"You have one catalog entry as a sticker source"
+         subLabel.text = // "Currently you have \(count) sticker" + s + 
+        " in the Messages App"
+        bodyLabel.text = //remcount != 1 ? "You have \(remcount) catalog entries as sources to make stickers" :
+        
+        "You have one catalog entry as a sticker source"
         
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         imagePicker.delegate = self
-        
-        // the icloud and itunes options are only present in kaptionator variants
-        let showmore =  showCatalogID == "ShowITunesID"
-        hitICloudButton.isEnabled = showmore
-        hitICloudButton.isHidden =  !showmore
-        hitITunes.isEnabled =  showmore
-        hitITunes.isHidden =  !showmore
-        hitPhotoImportButton.isEnabled = showmore
-        hitPhotoImportButton.isHidden = !showmore
-        
-        hitWebHelpButton.isEnabled = !showmore
-        hitWebHelpButton.isHidden = showmore
-        hitArtistsSiteButton.isEnabled = !showmore
-        hitArtistsSiteButton.isHidden = showmore
-        
-        
-        topLabel.text =  extensionScheme
-        imageview.image = UIImage(named:backgroundImagePath)
+       
         
         
         addDismissButtonToViewController(self , named:appTheme.dismissButtonAltImageName,#selector(dismisstapped))
@@ -127,7 +117,7 @@ extension ImportMenuViewController : UIDocumentPickerDelegate {
     
     func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentAt url: URL) {
         print("picked new document at \(url)")
-         StickerAsset.quietlyAddNewURL(url,options:StickerOptions.generatemedium)
+         //StickerAsset.quietlyAddNewURL(url,options:StickerOptions.generatemedium)
         self.dismisstapped(self)
     }
 }
@@ -164,11 +154,11 @@ private extension ImportMenuViewController {
 extension ImportMenuViewController :UIImagePickerControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
-            let newimage =  resizeImage(image: image,targetSize:(CGSize(width:618.0,height:618.0)))
+            let _ =  resizeImage(image: image,targetSize:(CGSize(width:618.0,height:618.0)))
             
        // turn this into a file wit a url
-           let url = StickerAssetSpace.writeImageToURL(newimage)
-            StickerAsset.quietlyAddNewURL(url,options:StickerOptions.generatelarge)
+          // let url = StickerAssetSpace.writeImageToURL(newimage)
+           // StickerAsset.quietlyAddNewURL(url,options:StickerOptions.generatelarge)
         }
         self.dismisstapped(self)
     }

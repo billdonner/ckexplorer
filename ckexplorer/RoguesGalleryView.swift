@@ -15,6 +15,8 @@
 
 import UIKit
 
+/// used in both the TVOS and IOS versions
+
 // a self maintaining collection view
 struct Rogue {
   var id:String
@@ -30,8 +32,21 @@ struct Rogue {
 protocol RoguePro {
   func resetRogue()
   func addRogue(r:Rogue)
+  func removeRogue(id:String)
 }
-
+extension UIViewController {  // where self is Modal...
+//dismissButtonAltImageName
+public func addDismissButtonToViewController(_ v:UIViewController,named:String, _ sel:Selector){
+    let img = UIImage(named:named)
+    let iv = UIImageView(image:img)
+    iv.frame = CGRect(x:0,y:0,width:60,height:60)//// test
+    iv.isUserInteractionEnabled = true
+    iv.contentMode = .scaleAspectFit
+    let tgr = UITapGestureRecognizer(target: v, action: sel)
+    iv.addGestureRecognizer(tgr)
+    v.view.addSubview(iv)
+}
+}
 class RoguesGalleryViewCell:UICollectionViewCell {
     
     @IBOutlet weak var imageView: UIImageView!

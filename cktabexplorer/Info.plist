@@ -51,5 +51,71 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Accessing Library to use your own images inside Kaptionator</string>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<true/>
+	</dict>
+	<key>UIFileSharingEnabled</key>
+	<true/>
+	<key>CFBundleDocumentTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeIconFiles</key>
+			<array>
+				<string>MusicStand_72x72.png</string>
+				<string>MusicStand_512x512.png</string>
+				<string>theMidnightRambler-120</string>
+			</array>
+			<key>CFBundleTypeName</key>
+			<string>Image GIF Input</string>
+			<key>CFBundleTypeRole</key>
+			<string>Viewer</string>
+			<key>LSHandlerRank</key>
+			<string>Owner</string>
+			<key>LSItemContentTypes</key>
+			<array>
+				<string>com.compuserve.gif</string>
+			</array>
+		</dict>
+		<dict>
+			<key>CFBundleTypeIconFiles</key>
+			<array>
+				<string>MusicStand_72x72.png</string>
+				<string>MusicStand_512x512.png</string>
+				<string>theMidnightRambler-120</string>
+			</array>
+			<key>CFBundleTypeName</key>
+			<string>Image PNG Input</string>
+			<key>CFBundleTypeRole</key>
+			<string>Viewer</string>
+			<key>LSHandlerRank</key>
+			<string>Owner</string>
+			<key>LSItemContentTypes</key>
+			<array>
+				<string>public.png</string>
+			</array>
+		</dict>
+		<dict>
+			<key>CFBundleTypeIconFiles</key>
+			<array>
+				<string>MusicStand_72x72.png</string>
+				<string>MusicStand_512x512.png</string>
+				<string>theMidnightRambler-120</string>
+			</array>
+			<key>CFBundleTypeName</key>
+			<string>Image JPEG Input</string>
+			<key>CFBundleTypeRole</key>
+			<string>Viewer</string>
+			<key>LSHandlerRank</key>
+			<string>Owner</string>
+			<key>LSItemContentTypes</key>
+			<array>
+				<string>public.jpeg</string>
+			</array>
+		</dict>
+	</array>
 </dict>
 </plist>

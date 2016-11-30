@@ -14,6 +14,11 @@ Created by bill donner on 11/23/16
  */
 import UIKit
 
+
+
+/// used in both the TVOS and IOS versions
+
+
 class DownloadsViewController: UIViewController {
   @IBOutlet weak var downTime: UILabel!
   @IBOutlet weak var downCount: UILabel!
@@ -28,6 +33,13 @@ class DownloadsViewController: UIViewController {
     @IBAction func tapped(_ sender: Any) { 
     redo()
   }
+    @IBAction func cancelTheTest(_ sender: Any) {
+        
+        countUp = -1 // set the flag
+        //let t:CKRecordZoneID = nil
+       // samplesConduit.db.delete(withRecordZoneID: 0) {cKRecordZoneID, error in
+       // }
+    }
   
   //MARK: connection to Cloudkit for sample records
     var samplesConduit = Conduit<SampleRecord>()
@@ -89,8 +101,8 @@ class DownloadsViewController: UIViewController {
   func downloadAllTest( ) {
     let startTime = Date()
     totalincoming = 0
-    samplesConduit.delegate = self
-    samplesConduit.getTheRecords(){ recs in
+    samplesConduit.download_delegate = self
+    samplesConduit.getTheRecordsForDownload(){ recs in
       print ("downloadalltest finished with \(recs.count) items")
         self.spinner.stopAnimating() // starts on mainq
         self.refreshButton.isEnabled = true
@@ -101,11 +113,11 @@ class DownloadsViewController: UIViewController {
     let netelapsedTime : TimeInterval = Date().timeIntervalSince(startTime)
     print ("downloadAllTest records started \(netelapsedTime)ms, still fetching")
     DispatchQueue.main.async {
-      self.didPublish(opcode: PulseOpCode.initialCountAndTime,x: 0,t: netelapsedTime)
+      self.publishEventDownload(opcode: PulseOpCode.initialCountAndTime,x: 0,t: netelapsedTime)
     }
   }
 }
-extension DownloadsViewController: VisualProt {
+extension DownloadsViewController: DownloadProt {
   // must be on main thread
   func didAddRogue(r:Rogue) {
     roguesGalleryView.addRogue(r: r)
@@ -117,12 +129,12 @@ extension DownloadsViewController: VisualProt {
     self.spinner.stopAnimating()
     self.myTimer?.invalidate()
   }
-  func didPublish(opcode: PulseOpCode, x count:Int, t mstime: TimeInterval) {
+  func publishEventDownload(opcode: PulseOpCode, x count:Int, t mstime: TimeInterval) {
     switch opcode {
         
     case  .eventCountAndMs :
       totalincoming += count
-      self.downTime.text = "\(Gfuncs.prettyFloat(mstime,digits:3))sec/item"
+      self.downTime.text = "\(Gfuncs.prettyFloat(mstime,digits:3))msec/item"
       self.downCount.text = "\(totalincoming) items"
       
     case  .initialCountAndTime :
@@ -136,10 +148,7 @@ extension DownloadsViewController: VisualProt {
 //      }
     default: fatalError("upload enum in download controller")
     }
-    
-//    let elapsed = Date().timeIntervalSince(redoStartTime)
-//    self.elapsedWallTime.text = "0:0:\(Gfuncs.prettyFloat(elapsed,digits:1)) elapsed"
-    
+     
     self.view.setNeedsDisplay()
   }
 }

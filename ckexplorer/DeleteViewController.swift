@@ -16,7 +16,9 @@
 import UIKit
 import CloudKit
 
-final class DeletesViewController: UIViewController,VisualProt {
+
+final class DeletesViewController: UIViewController  {
+    
     var samplesConduit = Conduit<SampleRecord>()
     
     //MARK: repaint interface and start Download (again)
@@ -41,7 +43,7 @@ final class DeletesViewController: UIViewController,VisualProt {
         self.myTimer?.invalidate()
         self.myTimer = nil
         
-        // set repeating timer for UI updates
+        // set repeating timer for UI updates of elapsed time
         self.countUp = 0
         self.startTime = Date() // reset for this redo
         self.myTimer = Timer.scheduledTimer (timeInterval: 0.1, target: self, selector:#selector(DeletesViewController.countUpTick), userInfo: nil, repeats: true)
@@ -50,7 +52,7 @@ final class DeletesViewController: UIViewController,VisualProt {
         redo() // gets timer going
         downcounter.text = "...gathering..."
         spinner.startAnimating()
-        samplesConduit.delegate = self
+        samplesConduit.delete_delegate = self
         samplesConduit.deleteAllRecords(){ deletecount  in
             print("Deleted\(deletecount) records")
             DispatchQueue.main.async {
@@ -63,25 +65,32 @@ final class DeletesViewController: UIViewController,VisualProt {
     @IBOutlet weak var downcounter: UILabel!
     @IBOutlet weak var elapsedWallTime: UILabel!
     @IBOutlet weak var spinner: UIActivityIndicatorView!
-    func didAddRogue(r:Rogue){}
-    func didFinishDownload (){
+    
+    
+    @IBAction func cancelTheTest(_ sender: Any) {
+        countUp = -1 // set the flag
+    }
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.downcounter.text = "...press to start deleting ..."
+        print("DeletesViewController \(self)")
+    }
+}
+extension DeletesViewController : DeleteProt {
+    func didFinishDelete (){
         DispatchQueue.main.async {
             print("Deleted all records")
             self.spinner.stopAnimating()
             self.myTimer?.invalidate()
         }
     }
-    func didPublish(opcode:PulseOpCode, x count:Int, t per:TimeInterval) {
+    func publishEventDelete(opcode:PulseOpCode, x count:Int, t per:TimeInterval) {
         switch opcode {
         case .moreData :
-            self.downcounter.text = count == 0 ? "no more" : "more data anticipated"
+            self.downcounter.text = count == 0 ? "no more to delete" : "more data to delete anticipated"
         default:
             self.downcounter.text = "unknown opcode \(opcode)"
         }
-    }
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        self.downcounter.text = "...press button to start..."
-        print("DeletesViewController \(self)")
     }
 }

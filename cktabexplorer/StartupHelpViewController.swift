@@ -6,11 +6,7 @@
 //  Copyright © 2016 Bill Donner/ midnightrambler. All rights reserved.
 //
 
-import UIKit
-
-import stikz
-
-
+import UIKit 
 final class StartupHelpViewController:  UIViewController, ModalOverCurrentContext  {
     
     @IBOutlet weak var pic: UIImageView!
@@ -24,11 +20,7 @@ final class StartupHelpViewController:  UIViewController, ModalOverCurrentContex
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-        let count = SharedCaptionSpace.itemCount()
-        pic.image = UIImage(named:backgroundImagePath)
-        topLabel.text = count == 0 ? "Welcome to " + extensionScheme : " \(count) stickers in  Messages app"
-        topBlurb.text = bigBlurb
-        
+  
         addDismissButtonToViewController(self , named:appTheme.dismissButtonAltImageName,#selector(dismisstapped))
         
     }

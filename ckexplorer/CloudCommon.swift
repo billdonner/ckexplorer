@@ -12,20 +12,37 @@
  Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  
  */
+
+
+/// used in both the TVOS and IOS versions
+
 import Foundation
 import CloudKit
 import CoreLocation
 
+/// the PulseOpCode is used to send back signals
 public enum PulseOpCode:Int  {
     case uploadCountAndMs
     case eventCountAndMs
     case initialCountAndTime
     case moreData
 }
-protocol VisualProt:class {
-    func didPublish(opcode:PulseOpCode, x:Int,t:TimeInterval)
+
+/// the viewcontrollers have associated callback class protocols which can be weak
+
+protocol DownloadProt:class {
+    func publishEventDownload(opcode:PulseOpCode, x:Int,t:TimeInterval)
     func didAddRogue(r:Rogue)
     func didFinishDownload ()
+}
+
+protocol DeleteProt : class {
+    func didFinishDelete ()
+    func publishEventDelete(opcode:PulseOpCode, x count:Int, t per:TimeInterval)
+}
+protocol UploadProt : class {
+    func didFinishUpload()
+    func publishEventUpload(opcode:PulseOpCode, x count:Int, t per:TimeInterval)
 }
 // global funcs
 
@@ -51,12 +68,17 @@ final class SampleRecord: NSObject  {
     init(record: CKRecord, database: CKDatabase) {
         self.record = record
         self.database = database
-        self.name = record["Name"] as? String
+        self.name = record["Name"] as! String
     }
     var title: String? {
         return name
     }
 }
+
+
+//MARK: - Conduit gathers all operations against one particular set of Record Types T
+
+/// generic parameter is only used for the type of record passed to CKRecord
 
 final class Conduit<T> {
     
@@ -64,22 +86,36 @@ final class Conduit<T> {
     let db:CKDatabase
     let typeName = "\(T.self)s" // hacked s in for now
     
-    weak var delegate: VisualProt?
-    var allrecids :[CKRecordID] = []
-    var querystarttime : Date?
+    
+    weak var delete_delegate: DeleteProt?
+    
+    weak var upload_delegate: UploadProt?
+    
+    weak var download_delegate: DownloadProt?
+    
+    fileprivate var  allrecids :[CKRecordID] = []
+    
+    fileprivate var querystarttime : Date?
+    
     init() {
         container = CKContainer(identifier: "iCloud.com.midnightrambler.ckexplorer")
         db = container.privateCloudDatabase
     }
-    func getRecIds (comp:@escaping ([CKRecordID])->()) {
-        queryRecords(forEachRecord:absorbRecordID) {[unowned self] _ in
+    /// load whole records
+    func getTheRecordsForDownload  (comp:@escaping ([CKRecordID])->()) {
+        queryRecordsForDownload(forEachRecord:absorbWholeRecord) {[unowned self]  _ in
             comp(self.allrecids) }
     }
-    func getTheRecords  (comp:@escaping ([CKRecordID])->()) {
-        queryRecords(forEachRecord:absorbWholeRecord) {[unowned self]  _ in
+    
+    /// gather the records IDs only
+    func getRecIdsForDelete (comp:@escaping ([CKRecordID])->()) {
+        queryRecordsForDelete(forEachRecord:absorbRecordID) {[unowned self] _ in
             comp(self.allrecids) }
     }
-    private func queryRecords(forEachRecord: @escaping (CKRecord) -> (),finally:@escaping ([CKRecordID])->()) {
+    
+    
+    /// aquire cloudkit records , in full form
+    private func queryRecordsForDownload(forEachRecord: @escaping (CKRecord) -> (),finally:@escaping ([CKRecordID])->()) {
         let predicate = NSPredicate(value: true)
         let query = CKQuery(recordType: typeName, predicate: predicate)
         querystarttime = Date()
@@ -89,10 +125,10 @@ final class Conduit<T> {
         queryOperation.queryCompletionBlock = { cursor, error in
             if cursor != nil {
                 DispatchQueue.main.async {
-                    self.delegate?.didPublish(opcode: PulseOpCode.moreData,  x: 1,t: 0)
+                    self.delete_delegate?.publishEventDelete (opcode: PulseOpCode.moreData,  x: 1,t: 0)
                     print("There is more data to fetch -- ")
                 }
-                self.fetchRecords(cursor: cursor!,forEachRecord: forEachRecord)
+                self.fetchRecordsForDownload(cursor: cursor!,forEachRecord: forEachRecord)
             } else {
                 // nothing more, signal the finally
                 DispatchQueue.main.async {
@@ -103,8 +139,60 @@ final class Conduit<T> {
         db.add(queryOperation)
     }
     
-    fileprivate  func fetchRecords(cursor: CKQueryCursor?,
-                                   forEachRecord: @escaping (CKRecord) -> ()) {
+    /// recursive record fetcher
+    fileprivate  func fetchRecordsForDownload(cursor: CKQueryCursor?,
+                                            forEachRecord: @escaping (CKRecord) -> ()) {
+        
+        let queryOperation = CKQueryOperation(cursor: cursor!)
+        queryOperation.qualityOfService = .userInitiated
+        queryOperation.recordFetchedBlock = forEachRecord
+        queryOperation.queryCompletionBlock = { cursor, error in
+            if cursor != nil {
+                DispatchQueue.main.async {
+                    self.download_delegate?.publishEventDownload(opcode: PulseOpCode.moreData,x: self.allrecids.count,t: 0)
+                    print("more data again for download \(self.allrecids.count) --")
+                }
+                self.fetchRecordsForDownload(cursor: cursor!,forEachRecord: forEachRecord)
+            } else {
+                DispatchQueue.main.async { 
+                    print("no more data \(self.allrecids.count)")
+                    self.download_delegate?.didFinishDownload()
+                }
+            }
+        }
+        db.add(queryOperation)
+    }
+  
+    
+    /// aquire cloudkit record ids , in format for deleting
+    private func queryRecordsForDelete(forEachRecord: @escaping (CKRecord) -> (),finally:@escaping ([CKRecordID])->()) {
+        let predicate = NSPredicate(value: true)
+        let query = CKQuery(recordType: typeName, predicate: predicate)
+        querystarttime = Date()
+        let queryOperation = CKQueryOperation(query: query)
+        queryOperation.qualityOfService = .userInitiated
+        queryOperation.recordFetchedBlock = forEachRecord
+        queryOperation.queryCompletionBlock = { cursor, error in
+            if cursor != nil {
+                DispatchQueue.main.async {
+                    self.delete_delegate?.publishEventDelete (opcode: PulseOpCode.moreData,  x: 1,t: 0)
+                    print("There is more data to fetch -- ")
+                }
+                self.fetchRecordsForDelete(cursor: cursor!,forEachRecord: forEachRecord,finally:finally)
+            } else {
+                // nothing more, signal the finally
+                DispatchQueue.main.async {
+                    finally(self.allrecids)
+                }
+            }
+        }
+        db.add(queryOperation)
+    }
+    
+    /// internal, recursive records fetcher
+    fileprivate  func fetchRecordsForDelete(cursor: CKQueryCursor?,
+                                   forEachRecord: @escaping (CKRecord) -> (),
+                                   finally:@escaping ([CKRecordID])->()) {
         
         let queryOperation = CKQueryOperation(cursor: cursor!)
         queryOperation.qualityOfService = .userInitiated
@@ -113,25 +201,27 @@ final class Conduit<T> {
             if cursor != nil {
                 
                 DispatchQueue.main.async {
-                    self.delegate?.didPublish(opcode: PulseOpCode.moreData,x: 1,t: 0)
-                    print("more data again --")
+                    self.delete_delegate?.publishEventDelete(opcode: PulseOpCode.moreData,x:self.allrecids.count,t: 0)
+                    print("more data again for deleting \(self.allrecids.count)--")
                 }
-                self.fetchRecords(cursor: cursor!,forEachRecord: forEachRecord)
+                self.fetchRecordsForDelete(cursor: cursor!,forEachRecord: forEachRecord,finally:finally)
             } else {
                 DispatchQueue.main.async {
-                    self.delegate?.didPublish(opcode: PulseOpCode.moreData,x: 0,t: 0)
-                    print("no more data")
-                    self.delegate?.didFinishDownload()
+                        finally(self.allrecids)
+                
+                    print("no more data \(self.allrecids.count)")
+                    self.delete_delegate?.didFinishDelete()
                 }
             }
         }
         db.add(queryOperation)
     }
     
+    
+    /// fetch records from iCloud, get their recordID and then delete them
     func deleteAllRecords(comp:@escaping (Int)->())
     {
-        // fetch records from iCloud, get their recordID and then delete them
-        self.getRecIds( ) { recordIDsArray in
+        self.getRecIdsForDelete( ) { recordIDsArray in
             
             print("will delete all \(recordIDsArray.count) records  ")
             let operation = CKModifyRecordsOperation(recordsToSave: nil, recordIDsToDelete: recordIDsArray)
@@ -146,25 +236,27 @@ final class Conduit<T> {
         }
     }
     
-    // here when we hve a spce
+    /// callback - just accumulate recordids for delete
     func absorbRecordID (record: CKRecord) {
         allrecids.append(record.recordID)
     }
+    /// callback - get the whole record integrated into Rogue structure
     func absorbWholeRecord (record: CKRecord) {
+        
+        allrecids.append(record.recordID)
         //  let name = record ["Name"]
         guard let imageAsset = record["CoverPhoto"] as? CKAsset
             else { return }
         var recordid : String
         if let rid = record["id"] as? String {
             recordid = rid
-        }else {
+        } else {
             recordid = "\(Date())"
         }
         
-        allrecids.append(record.recordID)
             let rogue = Rogue(id:recordid , fileURL: imageAsset.fileURL) //, fileData:data)
             DispatchQueue.main.async {
-                self.delegate?.didAddRogue(r: rogue)
+                self.download_delegate?.didAddRogue(r: rogue)
             }
         var netelapsedTime = TimeInterval()
         
@@ -173,10 +265,11 @@ final class Conduit<T> {
         }
         
         DispatchQueue.main.async { 
-            self.delegate?.didPublish(opcode: PulseOpCode.eventCountAndMs,x: 1,t: netelapsedTime)
+            self.download_delegate?.publishEventDownload (opcode: PulseOpCode.eventCountAndMs,x: 1,t: netelapsedTime)
         }
     }
     
+    /// save record to cloudkit
     func uploadCKRecord (_ rec:CKRecord) {
         db.save(rec, completionHandler: { record, error in
             guard error == nil else {
