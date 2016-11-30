@@ -5,7 +5,7 @@ A platform for experimenting with Cloudkit, especially with AppleTV.
 
 ![http://s350968899.onlinehome.us/ckexplorerpic/ckexplorerpic.001.png](http://s350968899.onlinehome.us/ckexplorerpic/ckexplorerpic.001.png)
 
-Pull images thru iTunes on the desktop, or from iCloud files, or from Photos Albumns
+Pull images thru iTunes on the desktop, or from iCloud files, or from Photos Albumns 
 
 ## cloudkit library 
 Code common to IOS and TVOS 
@@ -13,6 +13,16 @@ TBD: turn into framework
 ## utility functions
 Measure common operations 
 Currently on screen only
+
+
+![http://s350968899.onlinehome.us/ckexplorerpic/ck01.png](http://s350968899.onlinehome.us/ckexplorerpic/ck01.png)
+
+
+![http://s350968899.onlinehome.us/ckexplorerpic/ck02.png](http://s350968899.onlinehome.us/ckexplorerpic/ck02.png)
+
+
+![http://s350968899.onlinehome.us/ckexplorerpic/ck03.png](http://s350968899.onlinehome.us/ckexplorerpic/ck03.png)
+
 ### upload
 Sends N Images to Cloudkit in Background. IOS only
 Happens quickly because everything is done out of process.
