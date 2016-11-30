@@ -1,7 +1,9 @@
 # ckexplorer laboratory
-CloudKit Explorer Lab - Move Images From Desktop to Cloud and Then Into TVOS
+CloudKit Explorer Lab - Move Content From Desktop to Cloud and Then Into TVOS
 
 A platform for experimenting with Cloudkit, especially with AppleTV.
+
+![http://s350968899.onlinehome.us/ckexplorerpic/ckexplorerpic.001.png](http://s350968899.onlinehome.us/ckexplorerpic/ckexplorerpic.001.png)
 
 Pull images thru iTunes on the desktop, or from iCloud files, or from Photos Albumns
 
@@ -29,5 +31,9 @@ Xcode 8.0, iOS 10.0 SDK, tvOS 10.0 SDK
 ### Runtime
 
 iOS 9.0, tvOS 9.0 
+
+### License
+
+Apache 2.0
 
 Copyright (C) 2016 Bill Donner. All rights reserved.
