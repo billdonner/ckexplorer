@@ -11,7 +11,7 @@
 		885BFE301DEDC0BB002DAE16 /* ImportMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 885BFE2C1DEDC0BB002DAE16 /* ImportMenuViewController.swift */; };
 		885BFE311DEDC0BB002DAE16 /* StartupHelpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 885BFE2D1DEDC0BB002DAE16 /* StartupHelpViewController.swift */; };
 		885BFE321DEDC0BB002DAE16 /* InnerHelpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 885BFE2E1DEDC0BB002DAE16 /* InnerHelpViewController.swift */; };
-		885BFE331DEDC0BB002DAE16 /* WebHelpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 885BFE2F1DEDC0BB002DAE16 /* WebHelpViewController.swift */; };
+		885BFE331DEDC0BB002DAE16 /* LoadDocHelpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 885BFE2F1DEDC0BB002DAE16 /* LoadDocHelpViewController.swift */; };
 		885BFE351DEDD579002DAE16 /* Incorporator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 885BFE341DEDD579002DAE16 /* Incorporator.swift */; };
 		88CA9D8E1DEF0E770074B498 /* LICENSE.txt in Resources */ = {isa = PBXBuildFile; fileRef = 88CA9D8D1DEF0E770074B498 /* LICENSE.txt */; };
 		88CA9D8F1DEF0E770074B498 /* LICENSE.txt in Resources */ = {isa = PBXBuildFile; fileRef = 88CA9D8D1DEF0E770074B498 /* LICENSE.txt */; };
@@ -42,7 +42,7 @@
 		885BFE2C1DEDC0BB002DAE16 /* ImportMenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImportMenuViewController.swift; sourceTree = "<group>"; };
 		885BFE2D1DEDC0BB002DAE16 /* StartupHelpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StartupHelpViewController.swift; sourceTree = "<group>"; };
 		885BFE2E1DEDC0BB002DAE16 /* InnerHelpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InnerHelpViewController.swift; sourceTree = "<group>"; };
-		885BFE2F1DEDC0BB002DAE16 /* WebHelpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebHelpViewController.swift; sourceTree = "<group>"; };
+		885BFE2F1DEDC0BB002DAE16 /* LoadDocHelpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadDocHelpViewController.swift; sourceTree = "<group>"; };
 		885BFE341DEDD579002DAE16 /* Incorporator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Incorporator.swift; sourceTree = "<group>"; };
 		888C890F1DE8AC0C00A7FCC8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = ../ckexplorer/AppDelegate.swift; sourceTree = "<group>"; };
 		888C89231DE8AEB400A7FCC8 /* CloudCommon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CloudCommon.swift; sourceTree = "<group>"; };
@@ -178,7 +178,7 @@
 				885BFE2C1DEDC0BB002DAE16 /* ImportMenuViewController.swift */,
 				885BFE2D1DEDC0BB002DAE16 /* StartupHelpViewController.swift */,
 				885BFE2E1DEDC0BB002DAE16 /* InnerHelpViewController.swift */,
-				885BFE2F1DEDC0BB002DAE16 /* WebHelpViewController.swift */,
+				885BFE2F1DEDC0BB002DAE16 /* LoadDocHelpViewController.swift */,
 			);
 			path = cktabexplorer;
 			sourceTree = "<group>";
@@ -333,7 +333,7 @@
 			files = (
 				885BFE321DEDC0BB002DAE16 /* InnerHelpViewController.swift in Sources */,
 				88CD4FFC1DEB7F41006BC24D /* UploadsViewController.swift in Sources */,
-				885BFE331DEDC0BB002DAE16 /* WebHelpViewController.swift in Sources */,
+				885BFE331DEDC0BB002DAE16 /* LoadDocHelpViewController.swift in Sources */,
 				885BFE351DEDD579002DAE16 /* Incorporator.swift in Sources */,
 				88CD50001DEB8030006BC24D /* RoguesGalleryView.swift in Sources */,
 				88CD4FFE1DEB7F51006BC24D /* DownloadsViewController.swift in Sources */,
@@ -521,7 +521,7 @@
 				SDKROOT = appletvos;
 				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = 3;
-				TVOS_DEPLOYMENT_TARGET = 10.1;
+				TVOS_DEPLOYMENT_TARGET = 10.0;
 			};
 			name = Debug;
 		};
@@ -539,7 +539,7 @@
 				SDKROOT = appletvos;
 				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = 3;
-				TVOS_DEPLOYMENT_TARGET = 10.1;
+				TVOS_DEPLOYMENT_TARGET = 10.0;
 			};
 			name = Release;
 		};

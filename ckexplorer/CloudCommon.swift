@@ -33,6 +33,7 @@ public enum PulseOpCode:Int  {
 protocol DownloadProt:class {
     func publishEventDownload(opcode:PulseOpCode, x:Int,t:TimeInterval)
     func didAddRogue(r:Rogue)
+    func reloadRouges()
     func didFinishDownload ()
 }
 
@@ -80,9 +81,9 @@ final class SampleRecord: NSObject  {
 
 /// generic parameter is only used for the type of record passed to CKRecord
 
-final class Conduit<T> {
-    
-    let container:CKContainer
+var upcount = 0
+
+final class Conduit<T> {    let container:CKContainer
     let db:CKDatabase
     let typeName = "\(T.self)s" // hacked s in for now
     
@@ -241,8 +242,9 @@ final class Conduit<T> {
         allrecids.append(record.recordID)
     }
     /// callback - get the whole record integrated into Rogue structure
+    
     func absorbWholeRecord (record: CKRecord) {
-        
+       
         allrecids.append(record.recordID)
         //  let name = record ["Name"]
         guard let imageAsset = record["CoverPhoto"] as? CKAsset
@@ -251,9 +253,10 @@ final class Conduit<T> {
         if let rid = record["id"] as? String {
             recordid = rid
         } else {
-            recordid = "\(Date())"
+            let crk = Gfuncs.intWithLeadingZeros(Int64(upcount), digits: 4)
+            recordid = "\(crk)"
         }
-        
+        upcount += 1
             let rogue = Rogue(id:recordid , fileURL: imageAsset.fileURL) //, fileData:data)
             DispatchQueue.main.async {
                 self.download_delegate?.didAddRogue(r: rogue)
@@ -264,7 +267,8 @@ final class Conduit<T> {
          netelapsedTime    = Date().timeIntervalSince(qs)
         }
         
-        DispatchQueue.main.async { 
+        DispatchQueue.main.async {
+            self.download_delegate?.reloadRouges()
             self.download_delegate?.publishEventDownload (opcode: PulseOpCode.eventCountAndMs,x: 1,t: netelapsedTime)
         }
     }

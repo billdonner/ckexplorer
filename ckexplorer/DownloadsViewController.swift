@@ -122,10 +122,14 @@ extension DownloadsViewController: DownloadProt {
   func didAddRogue(r:Rogue) {
     roguesGalleryView.addRogue(r: r)
   }
+    func reloadRouges() {
+        
+        self.roguesGalleryView.reloadData()
+    }
   func didFinishDownload () {
-    self.moreDataIndicator.text = "done"
+    self.moreDataIndicator.text = "DONE"
     self.refreshButton.isEnabled = true
-        self.refreshButton.setTitle("Done Downloading", for: .normal)
+        self.refreshButton.setTitle("Download Again", for: .normal)
     self.spinner.stopAnimating()
     self.myTimer?.invalidate()
   }

@@ -47,6 +47,22 @@ public func addDismissButtonToViewController(_ v:UIViewController,named:String, 
     v.view.addSubview(iv)
 }
 }
+extension UIImageView {
+    public func loadimageFromURL(_ url: URL) {
+        
+        URLSession.shared.dataTask(with: url, completionHandler: { (data, response, error) -> Void in
+            
+            if error != nil {
+                print("\(error)")
+                return
+            }
+            DispatchQueue.main.async(execute: { () -> Void in
+                let image = UIImage(data: data!)
+                self.image = image
+            })
+            
+        }).resume()
+    }}
 class RoguesGalleryViewCell:UICollectionViewCell {
     
     @IBOutlet weak var imageView: UIImageView!
@@ -55,16 +71,20 @@ class RoguesGalleryViewCell:UICollectionViewCell {
   func configure(r:Rogue) {
    // print("configure cell id \(r.id)")
      self.idstring.text = r.id
-    do {
-     let data = try Data(contentsOf:r.fileURL)
-    self.imageView.image = UIImage(data: data)
-    }
-    catch {
-        self.imageView = nil 
-    }
+ 
+    self.imageView.loadimageFromURL( r.fileURL)
+   // self.imageView.image = UIImage(data: data)
   }
+    
+    override func prepareForReuse() {
+        self.imageView.image = nil
+        self.idstring.text = ""
+    }
 }
 class RoguesGalleryView:UICollectionView {
+    func roguesCount() -> Int {
+        return rogues.count
+    }
  fileprivate var rogues = [Rogue]()
   func setup() {
     self.dataSource = self
@@ -98,10 +118,12 @@ extension RoguesGalleryView : RoguePro {
   }
 
   func addRogue(r rogue:Rogue) {
+    
+    rogues.append(rogue)
     // put at front
     
-    rogues.insert(rogue, at: 0)
-    self.reloadData()
+    //rogues.insert(rogue, at: 0)
+   
   }
   func removeRogue(id:String) {
     var idx = 0
