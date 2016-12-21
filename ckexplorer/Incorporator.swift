@@ -246,9 +246,7 @@ func loadfromitunes(each:@escaping(URL,String)->(),finally:@escaping ()->()) {
             each: { url,label  in
                     each(url,label)
     }, completion: { label,read,dupes,csv in
-                                            let fresh = read - dupes
-                                            let blh = "added \(fresh) shared iTunes documents and \(csv) Configurations"
-                                            print (blh)
+        
                                             finally()
     })
 }

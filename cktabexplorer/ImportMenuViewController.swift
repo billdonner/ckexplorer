@@ -45,18 +45,12 @@ final class ImportMenuViewController: UIViewController, ModalOverCurrentContext 
     @IBAction func hitITunesAction(_ sender: AnyObject) {
         loadfromitunes(each:{
             url,title in
+            print("Loaded \(title) via iTunes from \(url)")
         }) {
             //finally
+            print("Done loading")
         }
-        /*
-        {status, title, allofme in
-        print("loaded \(allofme.count) files")
-            if allofme.count == 0 {
-                 IOSSpecialOps.blurt(self ,title:"no files loaded",mess:"go to ITunes > your device > apps")
-            } else {
-            IOSSpecialOps.blurt(self ,title:"loaded \(allofme.count) files",mess:"available in catalog")
-            }
-        }*/
+
     }
     
     

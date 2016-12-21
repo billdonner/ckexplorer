@@ -19,13 +19,48 @@ import CloudKit
 
 //MARK: - Test Uploads in Self-Sufficient View Controller
 
+final class UploadConduit<T> {
+    
+    let container:CKContainer
+    let db:CKDatabase
+    
+    
+    weak var upload_delegate: UploadProt?
+    
+    fileprivate var  allrecids :[CKRecordID] = []
+    
+    fileprivate var querystarttime : Date?
+    
+    init() {
+        container = CKContainer(identifier: containerID)
+        db = container.privateCloudDatabase
+    }
+    
+    
+    
+    /// callback - get the whole record integrated into Rogue structure
+    
+    /// save record to cloudkit
+    func uploadCKRecord (_ rec:CKRecord) {
+        db.save(rec, completionHandler: { record, error in
+            guard error == nil else {
+                print("!!!error saving to cloudkit \(error)")
+                
+                if let basevc = self.upload_delegate as? UIViewController {
+                    IOSSpecialOps.blurt(basevc, title: "!!!error saving to cloudkit", mess: "cloudkit \(error)")
+                }
+                return
+            }
+        })
+    }//end upload
+}
 final class UploadsViewController: UIViewController,UploadProt {
     
     
     fileprivate var grandTotalWrites = 0
     
     /// samplesConduit connects to Cloudkit Sample Record Type, providing instance
-    fileprivate var samplesConduit = Conduit<PhotoAsset>()
+    fileprivate var samplesConduit = UploadConduit<PhotoAsset>()
     
     
     //MARK: - uploadRecordSampleRecord adds one to Cloudkit
@@ -38,7 +73,7 @@ final class UploadsViewController: UIViewController,UploadProt {
         ratings: [UInt]) {
         
         grandTotalWrites += 1
-        let rec = CKRecord(recordType: samplesConduit.typeName)
+        let rec = CKRecord(recordType: containerTableName)
         let coverPhoto = CKAsset(fileURL: imURL)
         let location = CLLocation(latitude: latitude, longitude: longitude)
         rec.setObject(coverPhoto, forKey: "CoverPhoto")
@@ -47,7 +82,7 @@ final class UploadsViewController: UIViewController,UploadProt {
         rec.setObject(grandTotalWrites as CKRecordValue?, forKey: "id")
         
         
-        print("uploading #\(rec["id"]) \(rec["Name"])) to \(samplesConduit.typeName) from \(imURL)")
+        print("uploading #\(rec["id"]) \(rec["Name"])) to \(containerTableName) from \(imURL)")
         samplesConduit.uploadCKRecord(rec)
     }
     
@@ -130,6 +165,7 @@ internal extension UploadsViewController {
     }
     /// at the end of  cycle update the UI
     func redofinally() {
+        print("end of upload cycle")
         DispatchQueue.main.async {
             self.upnumber.text = "done"
             self.myTimer?.invalidate()

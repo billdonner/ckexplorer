@@ -13,9 +13,136 @@
  
  */
 import UIKit
+import CloudKit
 
-
-
+final class DownloadConduit<T> {
+    let container:CKContainer
+    let db:CKDatabase
+    weak var download_delegate: DownloadProt?
+    
+    
+    fileprivate var  allrecids :[CKRecordID] = []
+    fileprivate var querystarttime : Date?
+    
+    init() {
+        container = CKContainer(identifier: containerID)
+        db = container.privateCloudDatabase
+    }
+    /// load whole records
+    func getTheRecordsForDownload  (limit:Int,comp:@escaping ([CKRecordID])->()) {
+        queryRecordsForDownload(limit:limit,forEachRecord:absorbWholeRecord) {[unowned self]  _ in
+            comp(self.allrecids) }
+    }
+    
+    
+    func absorbWholeRecord (record: CKRecord) {
+        
+        allrecids.append(record.recordID)
+        //  let name = record ["Name"]
+        guard let imageAsset = record["CoverPhoto"] as? CKAsset
+            else { return }
+        var recordid : String
+        if let rid = record["id"] as? String {
+            recordid = rid
+        } else {
+            let crk = Gfuncs.intWithLeadingZeros(Int64(upcount+1), digits: 4)
+            recordid = "\(crk)"
+        }
+        let rogue = Rogue(idx:upcount,
+                          id:recordid , fileURL: imageAsset.fileURL)
+        DispatchQueue.main.async {
+            self.download_delegate?.didAddRogue(r: rogue)
+        }
+        allind.append(upcount) // keep track
+        
+        upcount += 1
+        var netelapsedTime = TimeInterval()
+        
+        if let qs = self.querystarttime {
+            netelapsedTime    = Date().timeIntervalSince(qs)
+        }
+        
+        DispatchQueue.main.async {
+            // might keep trak of what is updating and only reload those
+            self.download_delegate?.insertIntoCollection(allind)
+            self.download_delegate?.publishEventDownload (opcode: PulseOpCode.eventCountAndMs,x: 1,t: Double(upcount)/netelapsedTime)
+        }
+    }
+    
+    /// aquire cloudkit records , in full form
+    private func queryRecordsForDownload(limit:Int, forEachRecord: @escaping (CKRecord) -> (),finally:@escaping ([CKRecordID])->()) {
+        
+        let predicate = NSPredicate(value: true)
+        let query = CKQuery(recordType: containerTableName, predicate: predicate)
+        
+        querystarttime = Date()
+        let reclim = limit > 0 ? limit : CKQueryOperationMaximumResults
+        let queryOperation = CKQueryOperation(query: query)
+        queryOperation.qualityOfService = .userInitiated
+        queryOperation.resultsLimit = reclim // aha
+        queryOperation.recordFetchedBlock = forEachRecord
+        queryOperation.queryCompletionBlock = { cursor, error in
+            guard error == nil else {
+                print("!!!error CKQueryOperation queryRecordsForDownload \(error)")
+                
+                if let basevc = self.download_delegate as? UIViewController {
+                    DispatchQueue.main.async {
+                        
+                        IOSSpecialOps.blurt(basevc, title: "!!!CKQueryOperation cloudkit error", mess: "cloudkit \(error)")
+                    }
+                }
+                return
+            }
+            if cursor != nil {
+                DispatchQueue.main.async {
+                    self.download_delegate?.publishEventDownload (opcode: PulseOpCode.moreData,  x: 1,t: 0)
+                    print("There is more data to fetch -- ")
+                }
+                self.fetchRecordsForDownload(cursor: cursor!,forEachRecord: forEachRecord)
+            } else {
+                // nothing more, signal the finally
+                DispatchQueue.main.async {
+                    finally(self.allrecids)
+                }
+            }
+        }
+        db.add(queryOperation)
+    }
+    
+    /// recursive record fetcher
+    fileprivate  func fetchRecordsForDownload(cursor: CKQueryCursor?, forEachRecord: @escaping (CKRecord) -> ()) {
+        
+        let queryOperation = CKQueryOperation(cursor: cursor!)
+        queryOperation.qualityOfService = .userInitiated
+        queryOperation.recordFetchedBlock = forEachRecord
+        queryOperation.queryCompletionBlock = { cursor, error in
+            guard error == nil else {
+                print("!!!error CKQueryOperation fetchRecordsForDownload \(error)")
+                
+                if let basevc = self.download_delegate as? UIViewController {
+                    DispatchQueue.main.async {
+                        
+                        IOSSpecialOps.blurt(basevc, title: "!!!CKQueryOperation fetchRecordsForDownload error", mess: "cloudkit \(error)")
+                    }
+                }
+                return
+            }
+            if cursor != nil {
+                DispatchQueue.main.async {
+                    self.download_delegate?.publishEventDownload(opcode: PulseOpCode.moreData,x: self.allrecids.count,t: 0)
+                    print("more data again for download \(self.allrecids.count) --")
+                }
+                self.fetchRecordsForDownload(cursor: cursor!,forEachRecord: forEachRecord)
+            } else {
+                DispatchQueue.main.async {
+                    print("no more data \(self.allrecids.count)")
+                    self.download_delegate?.didFinishDownload()
+                }
+            }
+        }
+        db.add(queryOperation)
+    }
+}
 
 class DownloadsViewController: UIViewController {
     @IBOutlet weak var downTime: UILabel!
@@ -25,6 +152,7 @@ class DownloadsViewController: UIViewController {
     @IBOutlet weak var startupDelay: UILabel!
     @IBOutlet weak var spinner: UIActivityIndicatorView!
     
+    @IBOutlet weak var slider: UISlider!
     @IBOutlet weak var roguesGalleryView: RoguesGalleryView!
     @IBOutlet weak var refreshButton: UIButton!
     
@@ -40,7 +168,7 @@ class DownloadsViewController: UIViewController {
     }
     
     //MARK: connection to Cloudkit for sample records
-    var samplesConduit = Conduit<PhotoAsset>()
+    var samplesConduit = DownloadConduit<PhotoAsset>()
     
     private var _currentValue: IndexPath? = nil
     var selectedCell:IndexPath? { // used from rogues gallery
@@ -48,6 +176,8 @@ class DownloadsViewController: UIViewController {
         set { _currentValue = newValue }
         
     }
+  
+    
     fileprivate var firstload = true
     fileprivate var totalincoming = 0
     
@@ -103,14 +233,15 @@ class DownloadsViewController: UIViewController {
         
         self.navigationItem.title = "download from " + containerID
         // pain the screen, including the image assets
-        roguesGalleryView.setup(pvc: self)
+       
+        roguesGalleryView.setup(vc:self,pvc: self)
     }
     /// get all the records
     func downloadAllTest( ) {
         let startTime = Date()
         totalincoming = 0
         samplesConduit.download_delegate = self
-        samplesConduit.getTheRecordsForDownload(){ recs in
+        samplesConduit.getTheRecordsForDownload(limit: Int(slider.value)){ recs in
             print ("downloadalltest finished with \(recs.count) items")
             self.spinner.stopAnimating() // starts on mainq
             self.refreshButton.isEnabled = true
@@ -125,10 +256,10 @@ class DownloadsViewController: UIViewController {
         }
     }
 }
+
+
 extension DownloadsViewController: DownloadProt {
-    
-    
-    
+
     // must be on main thread
     func didAddRogue(r:Rogue) {
         roguesGalleryView.addRogue(r: r)

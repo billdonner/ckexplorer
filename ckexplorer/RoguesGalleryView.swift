@@ -142,15 +142,21 @@ class RoguesGalleryViewCell:UICollectionViewCell {
     }
 }
 class RoguesGalleryView:UICollectionView {
-  
     
-    var pvc: DownloadProt!
+    private var _currentpvc: UIViewController? = nil
+    var parentvc:UIViewController? { // used from rogues gallery
+        get { return _currentpvc }
+        set { _currentpvc = newValue }
+    }
+    
+    var downloadDelegate: DownloadProt!
     func roguesCount() -> Int {
         return rogues.count
     }
     fileprivate var rogues = [Rogue]()
-    func setup(pvc:DownloadProt) {
-        self.pvc = pvc
+    func setup(vc:UIViewController, pvc:DownloadProt) {
+        self.parentvc = vc
+        self.downloadDelegate = pvc
         self.dataSource = self
         self.delegate = self
         rogues = []
@@ -182,7 +188,7 @@ extension RoguesGalleryView : UICollectionViewDelegate {
         
     }
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
-        pvc?.selectedCell = nil
+        downloadDelegate?.selectedCell = nil
         let cell = collectionView.cellForItem(at: indexPath)
         cell?.layer.borderWidth = 0.0
         cell?.layer.borderColor = UIColor.clear.cgColor
@@ -192,7 +198,7 @@ extension RoguesGalleryView : UICollectionViewDelegate {
         let rogue = rogues[indexPath.item]
         print("didSelect \(rogue)")
         // clear out the old cell
-        let oldPath = pvc?.selectedCell
+        let oldPath = downloadDelegate?.selectedCell
         if let oldPath = oldPath {
             let oldCell = collectionView.cellForItem(at: oldPath)
             if let oldCell = oldCell {
@@ -201,7 +207,7 @@ extension RoguesGalleryView : UICollectionViewDelegate {
             }
         }
         // setup the new selected cell
-        pvc?.selectedCell = indexPath
+        downloadDelegate?.selectedCell = indexPath
         let cell = collectionView.cellForItem(at: indexPath)
         cell?.layer.borderWidth = 5.0
         cell?.layer.borderColor = UIColor.red.cgColor
@@ -212,6 +218,7 @@ extension RoguesGalleryView : UICollectionViewDelegate {
         vc.text = rogue.id
         vc.urlForImage = rogue.fileURL
         
+        parentvc?.present(vc, animated: true, completion: nil)
         
     }
 }
@@ -239,7 +246,7 @@ extension RoguesGalleryView:UICollectionViewDataSource{
         let rogue = rogues[indexPath.item]
         cell.configure(r:rogue)
         
-        if indexPath == pvc?.selectedCell {
+        if indexPath == downloadDelegate?.selectedCell {
             cell.layer.borderWidth = 5.0
             cell.layer.borderColor = UIColor.red.cgColor
         }

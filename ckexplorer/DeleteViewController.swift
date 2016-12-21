@@ -17,9 +17,145 @@ import UIKit
 import CloudKit
 
 
+final class DeleteConduit<T> {
+    let container:CKContainer
+    let db:CKDatabase
+    
+    
+    weak var delete_delegate: DeleteProt?
+    
+    
+    fileprivate var  allrecids :[CKRecordID] = []
+    
+    fileprivate var querystarttime : Date?
+    
+    init() {
+        container = CKContainer(identifier: containerID)
+        db = container.privateCloudDatabase
+    }
+    /// gather the records IDs only
+    func getRecIdsForDelete (comp:@escaping ([CKRecordID])->()) {
+        queryRecordsForDelete(forEachRecord:absorbRecordID) {[unowned self] _ in
+            comp(self.allrecids) }
+    }
+    
+    /// aquire cloudkit record ids , in format for deleting
+    private func queryRecordsForDelete(forEachRecord: @escaping (CKRecord) -> (),finally:@escaping ([CKRecordID])->()) {
+        let predicate = NSPredicate(value: true)
+        let query = CKQuery(recordType: containerTableName, predicate: predicate)
+        querystarttime = Date()
+        let queryOperation = CKQueryOperation(query: query)
+        queryOperation.qualityOfService = .userInitiated
+        queryOperation.recordFetchedBlock = forEachRecord
+        queryOperation.queryCompletionBlock = { cursor, error in
+            guard error == nil else {
+                print("!!!error CKQueryOperation queryRecordsForDelete \(error)")
+                
+                if let basevc = self.delete_delegate as? UIViewController {
+                    DispatchQueue.main.async {
+                        
+                        IOSSpecialOps.blurt(basevc, title: "!!!CKQueryOperation queryRecordsForDelete error", mess: "cloudkit \(error)")
+                    }
+                }
+                return
+            }
+            if cursor != nil {
+                DispatchQueue.main.async {
+                    self.delete_delegate?.publishEventDelete (opcode: PulseOpCode.moreData,  x: 1,t: 0)
+                    print("There is more data to fetch -- ")
+                }
+                self.fetchRecordsForDelete(cursor: cursor!,forEachRecord: forEachRecord,finally:finally)
+            } else {
+                // nothing more, signal the finally
+                DispatchQueue.main.async {
+                    finally(self.allrecids)
+                }
+            }
+        }
+        db.add(queryOperation)
+    }
+    
+    /// internal, recursive records fetcher
+    fileprivate  func fetchRecordsForDelete(cursor: CKQueryCursor?,
+                                            forEachRecord: @escaping (CKRecord) -> (),
+                                            finally:@escaping ([CKRecordID])->()) {
+        
+        let queryOperation = CKQueryOperation(cursor: cursor!)
+        queryOperation.qualityOfService = .userInitiated
+        queryOperation.recordFetchedBlock = forEachRecord
+        queryOperation.queryCompletionBlock = { cursor, error in
+            guard error == nil else {
+                print("!!!error CKQueryOperation fetchRecordsForDelete \(error)")
+                
+                if let basevc = self.delete_delegate as? UIViewController {
+                    DispatchQueue.main.async {
+                        
+                        IOSSpecialOps.blurt(basevc, title: "!!!CKQueryOperation fetchRecordsForDelete error", mess: "cloudkit \(error)")
+                    }
+                }
+                return
+            }
+            if cursor != nil {
+                
+                DispatchQueue.main.async {
+                    self.delete_delegate?.publishEventDelete(opcode: PulseOpCode.moreData,x:self.allrecids.count,t: 0)
+                    print("more data again for deleting \(self.allrecids.count)--")
+                }
+                self.fetchRecordsForDelete(cursor: cursor!,forEachRecord: forEachRecord,finally:finally)
+            } else {
+                DispatchQueue.main.async {
+                    finally(self.allrecids)
+                    
+                    print("no more data \(self.allrecids.count)")
+                    self.delete_delegate?.didFinishDelete()
+                }
+            }
+        }
+        db.add(queryOperation)
+    }
+    
+    
+    /// fetch records from iCloud, get their recordID and then delete them
+    func deleteAllRecords(comp:@escaping (Int)->())
+    {
+        self.getRecIdsForDelete( ) { recordIDsArray in
+            
+            print("will delete all \(recordIDsArray.count) records  ")
+            let operation = CKModifyRecordsOperation(recordsToSave: nil, recordIDsToDelete: recordIDsArray)
+            
+            operation.modifyRecordsCompletionBlock = {
+                (savedRecords: [CKRecord]?, deletedRecordIDs: [CKRecordID]?, error: Error?) in
+                guard error == nil else {
+                    print("!!!error CKModifyRecordsOperation deleteAllRecords \(error)")
+                    
+                    if let basevc = self.delete_delegate as? UIViewController {
+                        DispatchQueue.main.async {
+                            
+                            IOSSpecialOps.blurt(basevc, title: "!!!CKModifyRecordsOperation deleteAllRecords error", mess: "cloudkit \(error)")
+                        }
+                    }
+                    return
+                }
+                
+                print("deleted all \(recordIDsArray.count) records \(deletedRecordIDs?.count)")
+                comp(recordIDsArray.count)
+            }
+            
+            self.db.add(operation)
+        }
+    }
+    
+    /// callback - just accumulate recordids for delete
+    func absorbRecordID (record: CKRecord) {
+        allrecids.append(record.recordID)
+    }
+}
+
+
+
 final class DeletesViewController: UIViewController  {
     
-    var samplesConduit = Conduit<PhotoAsset>()
+    var samplesConduit = DeleteConduit<PhotoAsset>()
     
     //MARK: repaint interface and start Download (again)
     private var countUp:Int = 0
