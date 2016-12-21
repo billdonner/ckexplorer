@@ -19,7 +19,7 @@ import CloudKit
 
 final class DeletesViewController: UIViewController  {
     
-    var samplesConduit = Conduit<SampleRecord>()
+    var samplesConduit = Conduit<PhotoAsset>()
     
     //MARK: repaint interface and start Download (again)
     private var countUp:Int = 0
@@ -73,6 +73,8 @@ final class DeletesViewController: UIViewController  {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.navigationItem.title = "delete from " + containerID
         self.downcounter.text = "...press to start deleting ..."
         print("DeletesViewController \(self)")
     }

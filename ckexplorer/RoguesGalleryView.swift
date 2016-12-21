@@ -1,7 +1,7 @@
 /*
-
-   RoguesGalleryView.swift
-   Created by bill donner on 11/23/16
+ 
+ RoguesGalleryView.swift
+ Created by bill donner on 11/23/16
  
  Copyright 2016 Bill Donner/aka MidnightRambler
  
@@ -18,42 +18,98 @@ import UIKit
 /// used in both the TVOS and IOS versions
 
 // a self maintaining collection view
-struct Rogue {
-  var id:String
-  let fileURL:URL
-  var fileData:Data?
+
+let originalCellSize = CGSize(width:225, height:354)
+let focusCellSize = CGSize(width:240, height:380)
+
+/// used in both the TVOS and IOS versions
+/// push into here
+fileprivate class ShowDetailsViewController : UIViewController{
+    var text: String!
+    var urlForImage: URL!
     
-    init(id:String,fileURL:URL,fileData:Data? = nil) {
+    func userdidcancel() {
+        let _ = self.navigationController?.popViewController(animated: true)
+        
+    }
+    fileprivate override func viewDidLoad() {
+        super.viewDidLoad()
+        //        guard let nav = self.navigationItem else {
+        //            fatalError("must be in nav controller")
+        //        }
+        self.navigationItem.leftBarButtonItem =
+            UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(ShowDetailsViewController.userdidcancel))
+        let iv = UIImageView(frame:(self.view?.frame)!)
+        do {
+            let data = try Data(contentsOf: urlForImage)
+            iv.image = UIImage(data:data)
+            self.view.addSubview(iv)
+            
+            let label = UILabel(frame:(self.view?.frame)!)
+            label.text = self.text
+            label.textColor = .blue
+            self.view.addSubview(label)
+        }
+        catch {
+        }
+    }
+}
+struct Rogue {
+    
+    let idx: Int
+    var id:String
+    let fileURL:URL
+    var fileData:Data?
+    
+    init(idx:Int,id:String,fileURL:URL,fileData:Data? = nil) {
+        self.idx = idx
         self.id = id
         self.fileURL = fileURL
         self.fileData = fileData
     }
 }
 protocol RoguePro {
-  func resetRogue()
-  func addRogue(r:Rogue)
-  func removeRogue(id:String)
+    func resetRogue()
+    func addRogue(r:Rogue)
+    func removeRogue(id:String)
 }
 extension UIViewController {  // where self is Modal...
-//dismissButtonAltImageName
-public func addDismissButtonToViewController(_ v:UIViewController,named:String, _ sel:Selector){
-    let img = UIImage(named:named)
-    let iv = UIImageView(image:img)
-    iv.frame = CGRect(x:0,y:0,width:60,height:60)//// test
-    iv.isUserInteractionEnabled = true
-    iv.contentMode = .scaleAspectFit
-    let tgr = UITapGestureRecognizer(target: v, action: sel)
-    iv.addGestureRecognizer(tgr)
-    v.view.addSubview(iv)
-}
+    //dismissButtonAltImageName
+    public func addDismissButtonToViewController(_ v:UIViewController,named:String, _ sel:Selector){
+        let img = UIImage(named:named)
+        let iv = UIImageView(image:img)
+        iv.frame = CGRect(x:0,y:0,width:60,height:60)//// test
+        iv.isUserInteractionEnabled = true
+        iv.contentMode = .scaleAspectFit
+        let tgr = UITapGestureRecognizer(target: v, action: sel)
+        iv.addGestureRecognizer(tgr)
+        v.view.addSubview(iv)
+    }
 }
 extension UIImageView {
-    public func loadimageFromURL(_ url: URL) {
+    func loadimageFromRogue(_ rogue: Rogue, onerror:   ((Error?)->())? ) {
+        
+        self.image = UIImage (named:"placeholderrogue")
+        URLSession.shared.dataTask(with: rogue.fileURL, completionHandler: { (data, response, error) -> Void in
+            
+            if let error = error {
+                onerror?(error)
+                return
+            }
+            DispatchQueue.main.async(execute: { () -> Void in
+                //rogue.fileData = data
+                let image = UIImage(data: data!)
+                self.image = image
+            })
+            
+        }).resume()
+    }
+    public func loadimageFromURL(_ url: URL, onerror:   ((Error?)->())? ) {
         
         URLSession.shared.dataTask(with: url, completionHandler: { (data, response, error) -> Void in
             
-            if error != nil {
-                print("\(error)")
+            if let error = error {
+                onerror?(error)
                 return
             }
             DispatchQueue.main.async(execute: { () -> Void in
@@ -62,77 +118,156 @@ extension UIImageView {
             })
             
         }).resume()
-    }}
+    }
+}
 class RoguesGalleryViewCell:UICollectionViewCell {
     
+
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var idstring: UILabel!
     
-  func configure(r:Rogue) {
-   // print("configure cell id \(r.id)")
-     self.idstring.text = r.id
- 
-    self.imageView.loadimageFromURL( r.fileURL)
-   // self.imageView.image = UIImage(data: data)
-  }
-    
+    func configure(r:Rogue) {
+        self.idstring.text = r.id
+        self.imageView.loadimageFromRogue( r )
+        { err in
+            print("\(err)")
+        }
+        
+    }
     override func prepareForReuse() {
         self.imageView.image = nil
         self.idstring.text = ""
+        self.layer.borderWidth = 0.0
+        self.layer.borderColor = UIColor.yellow.cgColor
     }
 }
 class RoguesGalleryView:UICollectionView {
+  
+    
+    var pvc: DownloadProt!
     func roguesCount() -> Int {
         return rogues.count
     }
- fileprivate var rogues = [Rogue]()
-  func setup() {
-    self.dataSource = self
-    rogues = []
-  }
+    fileprivate var rogues = [Rogue]()
+    func setup(pvc:DownloadProt) {
+        self.pvc = pvc
+        self.dataSource = self
+        self.delegate = self
+        rogues = []
+    }
+}
+extension RoguesGalleryView : UICollectionViewDelegate {
+    override var preferredFocusEnvironments : [UIFocusEnvironment] {
+        
+        //condition
+        return [self]
+    }
+    override func shouldUpdateFocus(in context: UIFocusUpdateContext) -> Bool {
+        return true
+    }
+    func collectionView(_ collectionView: UICollectionView, canFocusItemAt indexPath: IndexPath) -> Bool {
+        return true //
+    }
+     func didUpdateFocusInContext(context: UIFocusUpdateContext, withAnimationCoordinator coordinator: UIFocusAnimationCoordinator) {
+        if let previousItem = context.previouslyFocusedView as? RoguesGalleryViewCell {
+            UIView.animate(withDuration: 0.2, animations: { () -> Void in
+                previousItem.imageView.frame.size =  originalCellSize
+            })
+        }
+        if let nextItem = context.nextFocusedView as? RoguesGalleryViewCell {
+            UIView.animate(withDuration: 0.2, animations: { () -> Void in
+                nextItem.imageView.frame.size = focusCellSize
+            })
+        }
+        
+    }
+    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
+        pvc?.selectedCell = nil
+        let cell = collectionView.cellForItem(at: indexPath)
+        cell?.layer.borderWidth = 0.0
+        cell?.layer.borderColor = UIColor.clear.cgColor
+        }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let rogue = rogues[indexPath.item]
+        print("didSelect \(rogue)")
+        // clear out the old cell
+        let oldPath = pvc?.selectedCell
+        if let oldPath = oldPath {
+            let oldCell = collectionView.cellForItem(at: oldPath)
+            if let oldCell = oldCell {
+                oldCell.layer.borderWidth = 0.0
+                oldCell.layer.borderColor = UIColor.clear.cgColor
+            }
+        }
+        // setup the new selected cell
+        pvc?.selectedCell = indexPath
+        let cell = collectionView.cellForItem(at: indexPath)
+        cell?.layer.borderWidth = 5.0
+        cell?.layer.borderColor = UIColor.red.cgColor
+        
+        // 
+        
+        let vc = ShowDetailsViewController()
+        vc.text = rogue.id
+        vc.urlForImage = rogue.fileURL
+        
+        
+    }
 }
 extension RoguesGalleryView:UICollectionViewDataSource{
-  //MARK: UICollectionViewDataSource
-  
-  @objc(numberOfSectionsInCollectionView:)
-  func numberOfSections(in collectionView: UICollectionView) -> Int { return 1 }
-  
-  func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-    return rogues.count
-  }
-  
-  @objc(collectionView:cellForItemAtIndexPath:)
-  func collectionView(_ collectionView: UICollectionView,
-                      cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    //MARK: UICollectionViewDataSource
     
-    let cell  = self.dequeueReusableCell(withReuseIdentifier: "RoguesGalleryViewCell", for: indexPath  )
-      as! RoguesGalleryViewCell // Create the cell from the storyboard cell
-    let rogue = rogues[indexPath.item]
-    cell.configure(r:rogue)
-    return cell
-   }
+    override var numberOfSections: Int {
+        return 1
+    }
+    
+//    @objc(numberOfSectionsInCollectionView:)
+//    func numberOfSections(in collectionView: UICollectionView) -> Int { return 1 }
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return rogues.count
+    }
+    
+    
+    @objc(collectionView:cellForItemAtIndexPath:)
+    func collectionView(_ collectionView: UICollectionView,
+                        cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        
+        let cell  = self.dequeueReusableCell(withReuseIdentifier: "RoguesGalleryViewCell", for: indexPath  )
+            as! RoguesGalleryViewCell // Create the cell from the storyboard cell
+        let rogue = rogues[indexPath.item]
+        cell.configure(r:rogue)
+        
+        if indexPath == pvc?.selectedCell {
+            cell.layer.borderWidth = 5.0
+            cell.layer.borderColor = UIColor.red.cgColor
+        }
+        
+        return cell
+    }
 }
 extension RoguesGalleryView : RoguePro {
-  internal func resetRogue() {
-    
-  }
-
-  func addRogue(r rogue:Rogue) {
-    
-    rogues.append(rogue)
-    // put at front
-    
-    //rogues.insert(rogue, at: 0)
-   
-  }
-  func removeRogue(id:String) {
-    var idx = 0
-    for rogue in rogues {
-      if rogue.id == id {
-        rogues.remove(at:idx)
-        return
-      }
-      idx += 1
+    internal func resetRogue() {
+        
     }
-  }
+    
+    func addRogue(r rogue:Rogue) {
+        
+        rogues.append(rogue)
+        // put at front
+        
+        //rogues.insert(rogue, at: 0)
+        
+    }
+    func removeRogue(id:String) {
+        var idx = 0
+        for rogue in rogues {
+            if rogue.id == id {
+                rogues.remove(at:idx)
+                return
+            }
+            idx += 1
+        }
+    }
 }

@@ -257,7 +257,7 @@
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.Push = {
-								enabled = 1;
+								enabled = 0;
 							};
 							com.apple.iCloud = {
 								enabled = 1;
@@ -486,6 +486,7 @@
 				CODE_SIGN_ENTITLEMENTS = cktabexplorer/cktabexplorer.entitlements;
 				DEVELOPMENT_TEAM = X2PQYA6S48;
 				INFOPLIST_FILE = cktabexplorer/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.midnightrambler.cktabexplorer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -500,6 +501,7 @@
 				CODE_SIGN_ENTITLEMENTS = cktabexplorer/cktabexplorer.entitlements;
 				DEVELOPMENT_TEAM = X2PQYA6S48;
 				INFOPLIST_FILE = cktabexplorer/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.midnightrambler.cktabexplorer;
 				PRODUCT_NAME = "$(TARGET_NAME)";

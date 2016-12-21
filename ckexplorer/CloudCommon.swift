@@ -33,8 +33,11 @@ public enum PulseOpCode:Int  {
 protocol DownloadProt:class {
     func publishEventDownload(opcode:PulseOpCode, x:Int,t:TimeInterval)
     func didAddRogue(r:Rogue)
-    func reloadRouges()
+    func insertIntoCollection(_ indices:[Int])
     func didFinishDownload ()
+    var selectedCell:IndexPath? {
+        get set 
+    }
 }
 
 protocol DeleteProt : class {
@@ -56,9 +59,9 @@ struct Gfuncs {
         return String(format:"%0.\(digits)f", (t) )
     }
 }
-//MARK: - SampleRecord docs
+//MARK: - PhotoAsset docs
 
-final class SampleRecord: NSObject  {
+final class PhotoAsset: NSObject  {
     // MARK: - Properties
     var record: CKRecord!
     var name: String!
@@ -76,16 +79,38 @@ final class SampleRecord: NSObject  {
     }
 }
 
-
 //MARK: - Conduit gathers all operations against one particular set of Record Types T
 
 /// generic parameter is only used for the type of record passed to CKRecord
 
 var upcount = 0
+var allind :[Int] = []
 
-final class Conduit<T> {    let container:CKContainer
+/// "CONTAINER-ID" depending on the actual app instance theres a differen shared data area
+//    it looks something like group.xxx.yyy.zzz
+public var containerID: String  { get {
+    if let iDict = Bundle.main.infoDictionary,
+        let w =  iDict["CONTAINER-ID"] as? String {
+        return w
+    }
+    return "PLEASE_SET_CONTAINER-ID"
+}
+}
+/// "CONTAINER-ID" depending on the actual app instance theres a differen shared data area
+//    it looks something like group.xxx.yyy.zzz
+public var containerTableName: String  { get {
+    if let iDict = Bundle.main.infoDictionary,
+        let w =  iDict["CLOUD-TABLE-NAME"] as? String {
+        return w
+    }
+    return "PLEASE_SET_CLOUD-TABLE-NAME"
+}
+}
+
+final class Conduit<T> {
+    let container:CKContainer
     let db:CKDatabase
-    let typeName = "\(T.self)s" // hacked s in for now
+    let typeName = containerTableName //"\(T.self)s" // hacked s in for now
     
     
     weak var delete_delegate: DeleteProt?
@@ -99,7 +124,7 @@ final class Conduit<T> {    let container:CKContainer
     fileprivate var querystarttime : Date?
     
     init() {
-        container = CKContainer(identifier: "iCloud.com.midnightrambler.ckexplorer")
+        container = CKContainer(identifier: containerID)
         db = container.privateCloudDatabase
     }
     /// load whole records
@@ -117,9 +142,12 @@ final class Conduit<T> {    let container:CKContainer
     
     /// aquire cloudkit records , in full form
     private func queryRecordsForDownload(forEachRecord: @escaping (CKRecord) -> (),finally:@escaping ([CKRecordID])->()) {
+        
         let predicate = NSPredicate(value: true)
         let query = CKQuery(recordType: typeName, predicate: predicate)
         querystarttime = Date()
+        
+        
         let queryOperation = CKQueryOperation(query: query)
         queryOperation.qualityOfService = .userInitiated
         queryOperation.recordFetchedBlock = forEachRecord
@@ -141,8 +169,7 @@ final class Conduit<T> {    let container:CKContainer
     }
     
     /// recursive record fetcher
-    fileprivate  func fetchRecordsForDownload(cursor: CKQueryCursor?,
-                                            forEachRecord: @escaping (CKRecord) -> ()) {
+    fileprivate  func fetchRecordsForDownload(cursor: CKQueryCursor?, forEachRecord: @escaping (CKRecord) -> ()) {
         
         let queryOperation = CKQueryOperation(cursor: cursor!)
         queryOperation.qualityOfService = .userInitiated
@@ -253,14 +280,20 @@ final class Conduit<T> {    let container:CKContainer
         if let rid = record["id"] as? String {
             recordid = rid
         } else {
-            let crk = Gfuncs.intWithLeadingZeros(Int64(upcount), digits: 4)
+            let crk = Gfuncs.intWithLeadingZeros(Int64(upcount+1), digits: 4)
             recordid = "\(crk)"
         }
-        upcount += 1
-            let rogue = Rogue(id:recordid , fileURL: imageAsset.fileURL) //, fileData:data)
+        let rogue = Rogue(idx:upcount,
+                          id:recordid , fileURL: imageAsset.fileURL)
+        
             DispatchQueue.main.async {
                 self.download_delegate?.didAddRogue(r: rogue)
             }
+        
+        
+         allind.append(upcount) // keep track
+        
+        upcount += 1
         var netelapsedTime = TimeInterval()
         
         if let qs = self.querystarttime {
@@ -268,8 +301,9 @@ final class Conduit<T> {    let container:CKContainer
         }
         
         DispatchQueue.main.async {
-            self.download_delegate?.reloadRouges()
-            self.download_delegate?.publishEventDownload (opcode: PulseOpCode.eventCountAndMs,x: 1,t: netelapsedTime)
+            // might keep trak of what is updating and only reload those
+            self.download_delegate?.insertIntoCollection(allind)
+            self.download_delegate?.publishEventDownload (opcode: PulseOpCode.eventCountAndMs,x: 1,t: Double(upcount)/netelapsedTime)
         }
     }
     
@@ -277,7 +311,7 @@ final class Conduit<T> {    let container:CKContainer
     func uploadCKRecord (_ rec:CKRecord) {
         db.save(rec, completionHandler: { record, error in
             guard error == nil else {
-                print("error setting up record \(error)")
+                print("!!!error saving to cloudkit \(error)")
                 return
             }
         })

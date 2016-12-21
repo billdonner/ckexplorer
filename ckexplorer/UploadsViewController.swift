@@ -25,12 +25,12 @@ final class UploadsViewController: UIViewController,UploadProt {
     fileprivate var grandTotalWrites = 0
     
     /// samplesConduit connects to Cloudkit Sample Record Type, providing instance
-    fileprivate var samplesConduit = Conduit<SampleRecord>()
+    fileprivate var samplesConduit = Conduit<PhotoAsset>()
     
     
     //MARK: - uploadRecordSampleRecord adds one to Cloudkit
     
-    fileprivate func uploadRecordSampleRecord(
+    fileprivate func uploadRecordPhotoAsset(
         _ imURL: URL,
         placeName: String,
         latitude:  CLLocationDegrees,
@@ -38,7 +38,6 @@ final class UploadsViewController: UIViewController,UploadProt {
         ratings: [UInt]) {
         
         grandTotalWrites += 1
-        
         let rec = CKRecord(recordType: samplesConduit.typeName)
         let coverPhoto = CKAsset(fileURL: imURL)
         let location = CLLocation(latitude: latitude, longitude: longitude)
@@ -46,6 +45,9 @@ final class UploadsViewController: UIViewController,UploadProt {
         rec.setObject(placeName as CKRecordValue?, forKey: "Name")
         rec.setObject(location, forKey: "Location")
         rec.setObject(grandTotalWrites as CKRecordValue?, forKey: "id")
+        
+        
+        print("uploading #\(rec["id"]) \(rec["Name"])) to \(samplesConduit.typeName) from \(imURL)")
         samplesConduit.uploadCKRecord(rec)
     }
     
@@ -55,7 +57,7 @@ final class UploadsViewController: UIViewController,UploadProt {
     @IBOutlet weak var elapedTime: UILabel!
     
     @IBAction func sliderValChanged(_ sender: Any) {
-        upnumber.text = "upload \(Int(sliderVal.value))"
+        upnumber.text = "will upload \(Int(sliderVal.value)) assets"
     }
     @IBAction func cancelTheTest(_ sender: Any) {
         countUp = -1 // set the flag
@@ -103,7 +105,9 @@ final class UploadsViewController: UIViewController,UploadProt {
     //MARK: - viewcontroller lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("UploadsViewController \(self)")
+        self.navigationItem.title = "upload to " + containerID
+        sliderValChanged(self) //fills in ui first time up
+        samplesConduit.upload_delegate = self
     }
 }
 
@@ -112,7 +116,6 @@ internal extension UploadsViewController {
     
     /// at the beginning of a cycle, reset everthing
     func redocommon () {
-        grandTotalWrites = 0
         myTimer?.invalidate()
         myTimer=nil
         // set repeating timer for UI updates
@@ -121,6 +124,9 @@ internal extension UploadsViewController {
         spinner.startAnimating()
         myTimer = Timer.scheduledTimer (timeInterval: 1.0, target: self, selector:#selector(UploadsViewController.countUpTick), userInfo: nil, repeats: true)
         elapedTime.text = "\(countUp)"
+        
+        self.upnumber.text = "0 items uploaded"
+        
     }
     /// at the end of  cycle update the UI
     func redofinally() {
@@ -150,16 +156,16 @@ internal extension UploadsViewController {
         redocommon()
         loadfromitunes(each : { url, name in
             for _ in 0..<percycle {
-                do {
-                self.uploadRecordSampleRecord(url,
+              //  do {
+                self.uploadRecordPhotoAsset(url,
                                               placeName: name,
                                               latitude: 37.4,
                                               longitude: -122.03,
                                               ratings: [])
-                }
-                catch {
-                    print("couldnt make temp file\(url)  error \(error)")
-                }
+                //}
+//                catch {
+//                    print("couldnt make temp file\(url)  error \(error)")
+//                }
                 
                 
                 
@@ -183,6 +189,7 @@ internal extension UploadsViewController {
     
     internal func didFinishUpload() {
         myTimer?.invalidate()
+        
     }
     
     internal func publishEventUpload(opcode:PulseOpCode, x up:Int, t per:TimeInterval) {
@@ -200,13 +207,11 @@ internal extension UploadsViewController {
     
     /// a bit unusual, but lets pass a delegate into this global func
     func allUploadsTest(delegate: UploadProt?) {
-        let startTime = Date()
-        grandTotalWrites = 0
-        
+        let startTime = Date() 
         for _ in 0..<Int(sliderVal.value) {
             if countUp == -1 { break }
             switch Int(arc4random_uniform(3)) {
-            case 0: uploadRecordSampleRecord(
+            case 0: uploadRecordPhotoAsset(
                 Bundle.main.url(forResource: "pizza", withExtension: "jpeg")!,
                 placeName: "Ceasar's Pizza Palace",
                 latitude: 37.332,
@@ -214,14 +219,14 @@ internal extension UploadsViewController {
                 ratings: [0, 1, 2])
                 
                 
-            case 1: uploadRecordSampleRecord(
+            case 1: uploadRecordPhotoAsset(
                 Bundle.main.url(forResource: "chinese", withExtension: "jpeg")!,
                 placeName: "King Wok",
                 latitude: 37.1,
                 longitude: -122.1,
                 ratings: [])
                 
-            case 2:  uploadRecordSampleRecord(
+            case 2:  uploadRecordPhotoAsset(
                 Bundle.main.url(forResource: "steak", withExtension: "jpeg")!,
                 placeName: "The Back Deck",
                 latitude: 37.4,
@@ -253,7 +258,7 @@ extension UploadsViewController : UIDocumentPickerDelegate {
         let percycle = Int(sliderVal.value)
         for _ in 0..<percycle {
             if countUp == -1 { break }
-            uploadRecordSampleRecord(url,
+            uploadRecordPhotoAsset(url,
                                      placeName: "PickedFromCloud",
                                      latitude: 37.4,
                                      longitude: -122.03,

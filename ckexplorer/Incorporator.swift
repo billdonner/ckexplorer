@@ -103,7 +103,6 @@ extension StorageModel {
 
 final class Incorporator:StorageModel {
     
-    
     var dupes = 0
     var filesread = 0
     
@@ -147,7 +146,7 @@ final class Incorporator:StorageModel {
         let last = url.pathExtension
         let newf =  "\(NSTemporaryDirectory())\(uuid).\(last)"
         let nurl = URL(fileURLWithPath: newf, isDirectory: false)
-        print ("copy from \(url) to \(nurl)")
+       // print ("copy from \(url) to \(nurl)")
         do {
             try  FileManager.default.copyItem(at: url, to: nurl)
         }
@@ -177,7 +176,7 @@ final class Incorporator:StorageModel {
             let nspath = path as NSString
             let r  = true
             autoreleasepool {
-                var error:NSError?
+                var _:NSError?
                 let part = (nspath.lastPathComponent as NSString).deletingPathExtension.components(separatedBy: "-")[0].trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
             let normalTitle  = self.normalizeTitle(part)
                     // call per file completion
@@ -199,8 +198,11 @@ final class Incorporator:StorageModel {
         csv = 0
         zip = 0
         deft = 0
+        
         let toProcess = Incorporator.pathsForPrefix(inboxPath)
+        
         print("--------------------assimilating \(toProcess.count) documents from (\(inboxPath)) ---------")
+        
         for fp in toProcess {
             let filepath = fp as NSString
             let filetitle:String = filepath.lastPathComponent

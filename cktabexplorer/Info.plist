@@ -117,5 +117,9 @@
 			</array>
 		</dict>
 	</array>
+	<key>CLOUD-TABLE-NAME</key>
+	<string>SampleRecords</string>
+	<key>CONTAINER-ID</key>
+	<string>iCloud.com.midnightrambler.ckexplorer</string>
 </dict>
 </plist>
