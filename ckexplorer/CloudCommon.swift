@@ -22,37 +22,10 @@ import CloudKit
 import CoreLocation
 
 /// the PulseOpCode is used to send back signals
-public enum PulseOpCode:Int  {
-    case uploadCountAndMs
-    case eventCountAndMs
-    case initialCountAndTime
-    case moreData
-}
+
 
 /// the viewcontrollers have associated callback class protocols which can be weak
 
-protocol DownloadProt:class {
-    
-    func didAddRogue(r:Rogue)
-    func insertIntoCollection(_ indices:[Int])
-    func publishEventDownload(opcode:PulseOpCode,
-                              x:Int,t:TimeInterval)
-    func didFinishDownload ()
-    var selectedCell:IndexPath? {
-        get set 
-    }
- 
-}
-
-protocol DeleteProt : class {
-    func didFinishDelete ()
-    func publishEventDelete(opcode:PulseOpCode, x count:Int, t per:TimeInterval)
-}
-protocol UploadProt : class {
-    
-    func didFinishUpload()
-    func publishEventUpload(opcode:PulseOpCode, x count:Int, t per:TimeInterval)
-}
 // global funcs
 
 struct Gfuncs {
@@ -66,30 +39,27 @@ struct Gfuncs {
 }
 //MARK: - PhotoAsset docs
 
-final class PhotoAsset: NSObject  {
-    // MARK: - Properties
-    var record: CKRecord!
-    var name: String!
-    weak var database: CKDatabase!
-    var assetCount = 0
-    
-    // MARK: - Initializers
-    init(record: CKRecord, database: CKDatabase) {
-        self.record = record
-        self.database = database
-        self.name = record["Name"] as! String
-    }
-    var title: String? {
-        return name
-    }
-}
+//final class PhotoAsset: NSObject  {
+//    // MARK: - Properties
+//    var record: CKRecord!
+//    var name: String!
+//    weak var database: CKDatabase!
+//    var assetCount = 0
+//    
+//    // MARK: - Initializers
+//    init(record: CKRecord, database: CKDatabase) {
+//        self.record = record
+//        self.database = database
+//        self.name = record["Name"] as! String
+//    }
+//    var title: String? {
+//        return name
+//    }
+//}
 
 //MARK: - Conduit gathers all operations against one particular set of Record Types T
 
 /// generic parameter is only used for the type of record passed to CKRecord
-
-var upcount = 0
-var allind :[Int] = []
 
 /// "CONTAINER-ID" depending on the actual app instance theres a differen shared data area
 //    it looks something like group.xxx.yyy.zzz
@@ -98,18 +68,60 @@ public var containerID: String  { get {
         let w =  iDict["CONTAINER-ID"] as? String {
         return w
     }
-    return "PLEASE_SET_CONTAINER-ID"
+    return "PLEASE_SET_CONTAINER-ID" }
 }
-}
-/// "CONTAINER-ID" depending on the actual app instance theres a differen shared data area
+/// "CLOUD-TABLE-NAME" depending on the actual app instance theres a differen shared data area
 //    it looks something like group.xxx.yyy.zzz
 public var containerTableName: String  { get {
     if let iDict = Bundle.main.infoDictionary,
         let w =  iDict["CLOUD-TABLE-NAME"] as? String {
         return w
     }
-    return "PLEASE_SET_CLOUD-TABLE-NAME"
+    return "PLEASE_SET_CLOUD-TABLE-NAME" }
 }
+/// combo name can be used for icloud.com
+public var titleName: String  { get {
+    let tail  = containerID.components(separatedBy: ".").last!
+    return tail + ":" + containerTableName }
+}
+
+public struct IOSSpecialOps { // only compiles in main app - ios bug?
+    
+    public static func blurt (_ vc:UIViewController, title:String, mess:String, f:@escaping ()->()) {
+        
+        let action : UIAlertController = UIAlertController(title:title, message: mess, preferredStyle: .alert)
+        
+        action.addAction(UIAlertAction(title: "OK", style: .cancel, handler: {alertAction in
+            f()
+        }))
+        
+//        action.modalPresentationStyle = .popover
+//        let popPresenter = action.popoverPresentationController
+//        popPresenter?.sourceView = vc.view
+        vc.present(action, animated: true , completion:nil)
+    }
+    public static func blurt (_ vc:UIViewController, title:String, mess:String) {
+        blurt(vc,title:title,mess:mess,f:{})
+    }
+    public static func ask (_ vc:UIViewController, title:String, mess:String, f:@escaping ()->()) {
+        
+        let action : UIAlertController = UIAlertController(title:title, message: mess, preferredStyle: .alert)
+        
+        action.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: {alertAction in
+            
+        }))
+        action.addAction(UIAlertAction(title: "Delete", style: .default, handler: {alertAction in
+            f()
+        }))
+        
+        //action.modalPresentationStyle = .popover
+//        let popPresenter = action.popoverPresentationController
+//        popPresenter?.sourceView = vc.view
+        vc.present(action, animated: true , completion:nil)
+    }
+    public  static func ask (_ vc:UIViewController, title:String, mess:String) {
+        ask(vc,title:title,mess:mess,f:{})
+    }
 }
 
 

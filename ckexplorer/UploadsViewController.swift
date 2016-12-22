@@ -19,7 +19,15 @@ import CloudKit
 
 //MARK: - Test Uploads in Self-Sufficient View Controller
 
-final class UploadConduit<T> {
+public enum UploadOpCode:Int  {
+    case uploadCountAndMs
+}
+
+protocol UploadProt : class {
+    func didFinishUpload()
+    func publishEventUpload(opcode:UploadOpCode, x count:Int, t per:TimeInterval)
+}
+final class UploadConduit {
     
     let container:CKContainer
     let db:CKDatabase
@@ -31,11 +39,10 @@ final class UploadConduit<T> {
     
     fileprivate var querystarttime : Date?
     
-    init() {
-        container = CKContainer(identifier: containerID)
-        db = container.privateCloudDatabase
+    init(_ containerid:String, ispublic:Bool = false) {
+        container = CKContainer(identifier: containerid)
+        db = ispublic ? container.publicCloudDatabase : container.privateCloudDatabase
     }
-    
     
     
     /// callback - get the whole record integrated into Rogue structure
@@ -60,7 +67,7 @@ final class UploadsViewController: UIViewController,UploadProt {
     fileprivate var grandTotalWrites = 0
     
     /// samplesConduit connects to Cloudkit Sample Record Type, providing instance
-    fileprivate var samplesConduit = UploadConduit<PhotoAsset>()
+    fileprivate var uploadConduit = UploadConduit(containerID)
     
     
     //MARK: - uploadRecordSampleRecord adds one to Cloudkit
@@ -83,7 +90,7 @@ final class UploadsViewController: UIViewController,UploadProt {
         
         
         print("uploading #\(rec["id"]) \(rec["Name"])) to \(containerTableName) from \(imURL)")
-        samplesConduit.uploadCKRecord(rec)
+        uploadConduit.uploadCKRecord(rec)
     }
     
     /// quick and dirty ui in IB
@@ -140,9 +147,9 @@ final class UploadsViewController: UIViewController,UploadProt {
     //MARK: - viewcontroller lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationItem.title = "upload to " + containerID
+        self.navigationItem.title = "upload to " + titleName
         sliderValChanged(self) //fills in ui first time up
-        samplesConduit.upload_delegate = self
+        uploadConduit.upload_delegate = self
     }
 }
 
@@ -228,7 +235,7 @@ internal extension UploadsViewController {
         
     }
     
-    internal func publishEventUpload(opcode:PulseOpCode, x up:Int, t per:TimeInterval) {
+    internal func publishEventUpload(opcode:UploadOpCode, x up:Int, t per:TimeInterval) {
         if opcode == .uploadCountAndMs {
             self.timeper.text = "\(Gfuncs.prettyFloat(per,digits:3)) sec/item"
             self.upnumber.text = "\(up) items uploaded"
@@ -278,7 +285,7 @@ internal extension UploadsViewController {
             Double(grandTotalWrites)
         
         DispatchQueue.main.async {
-            delegate?.publishEventUpload(opcode: PulseOpCode.uploadCountAndMs,
+            delegate?.publishEventUpload(opcode: UploadOpCode.uploadCountAndMs,
                                        x: self.grandTotalWrites,t: timeper)
         }
     }

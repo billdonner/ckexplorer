@@ -17,10 +17,16 @@ import UIKit
 import CloudKit
 
 
-final class DeleteConduit<T> {
+protocol DeleteProt : class {
+    func didFinishDelete ()
+    func publishEventDelete(opcode:DeleteOpCode, x count:Int, t per:TimeInterval)
+}
+public enum DeleteOpCode:Int  {
+    case moreData
+}
+final class DeleteConduit {
     let container:CKContainer
     let db:CKDatabase
-    
     
     weak var delete_delegate: DeleteProt?
     
@@ -29,9 +35,9 @@ final class DeleteConduit<T> {
     
     fileprivate var querystarttime : Date?
     
-    init() {
-        container = CKContainer(identifier: containerID)
-        db = container.privateCloudDatabase
+    init(_ containerid:String, ispublic:Bool = false) {
+        container = CKContainer(identifier: containerid)
+        db = ispublic ? container.publicCloudDatabase : container.privateCloudDatabase
     }
     /// gather the records IDs only
     func getRecIdsForDelete (comp:@escaping ([CKRecordID])->()) {
@@ -61,7 +67,7 @@ final class DeleteConduit<T> {
             }
             if cursor != nil {
                 DispatchQueue.main.async {
-                    self.delete_delegate?.publishEventDelete (opcode: PulseOpCode.moreData,  x: 1,t: 0)
+                    self.delete_delegate?.publishEventDelete (opcode: DeleteOpCode.moreData,  x: 1,t: 0)
                     print("There is more data to fetch -- ")
                 }
                 self.fetchRecordsForDelete(cursor: cursor!,forEachRecord: forEachRecord,finally:finally)
@@ -98,7 +104,7 @@ final class DeleteConduit<T> {
             if cursor != nil {
                 
                 DispatchQueue.main.async {
-                    self.delete_delegate?.publishEventDelete(opcode: PulseOpCode.moreData,x:self.allrecids.count,t: 0)
+                    self.delete_delegate?.publishEventDelete(opcode: DeleteOpCode.moreData,x:self.allrecids.count,t: 0)
                     print("more data again for deleting \(self.allrecids.count)--")
                 }
                 self.fetchRecordsForDelete(cursor: cursor!,forEachRecord: forEachRecord,finally:finally)
@@ -151,11 +157,9 @@ final class DeleteConduit<T> {
     }
 }
 
-
-
 final class DeletesViewController: UIViewController  {
     
-    var samplesConduit = DeleteConduit<PhotoAsset>()
+    var deleteConduit = DeleteConduit(containerID)
     
     //MARK: repaint interface and start Download (again)
     private var countUp:Int = 0
@@ -188,10 +192,11 @@ final class DeletesViewController: UIViewController  {
         redo() // gets timer going
         downcounter.text = "...gathering..."
         spinner.startAnimating()
-        samplesConduit.delete_delegate = self
-        samplesConduit.deleteAllRecords(){ deletecount  in
-            print("Deleted\(deletecount) records")
+        deleteConduit.delete_delegate = self
+        deleteConduit.deleteAllRecords(){ deletecount  in
+            print("Deleted \(deletecount) records")
             DispatchQueue.main.async {
+                self.downcounter.text = "Deleted \(deletecount) records"
                 self.spinner.stopAnimating()
                 self.myTimer?.invalidate()
             }
@@ -210,7 +215,7 @@ final class DeletesViewController: UIViewController  {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.navigationItem.title = "delete from " + containerID
+        self.navigationItem.title = "delete from " + titleName
         self.downcounter.text = "...press to start deleting ..."
         print("DeletesViewController \(self)")
     }
@@ -223,7 +228,7 @@ extension DeletesViewController : DeleteProt {
             self.myTimer?.invalidate()
         }
     }
-    func publishEventDelete(opcode:PulseOpCode, x count:Int, t per:TimeInterval) {
+    func publishEventDelete(opcode:DeleteOpCode, x count:Int, t per:TimeInterval) {
         switch opcode {
         case .moreData :
             self.downcounter.text = count == 0 ? "no more to delete" : "more data to delete anticipated"

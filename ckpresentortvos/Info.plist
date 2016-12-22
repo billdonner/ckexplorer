@@ -29,8 +29,8 @@
 	<key>UIUserInterfaceStyle</key>
 	<string>Automatic</string>
 	<key>CLOUD-TABLE-NAME</key>
-	<string>SampleRecords</string>
+	<string>PhotoAssets</string>
 	<key>CONTAINER-ID</key>
-	<string>iCloud.com.midnightrambler.ckexplorer</string>
+	<string>iCloud.com.midnightrambler.tvexplorer01</string>
 </dict>
 </plist>

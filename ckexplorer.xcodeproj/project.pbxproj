@@ -7,11 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		885BFE2B1DEDC089002DAE16 /* Help.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 885BFE2A1DEDC089002DAE16 /* Help.storyboard */; };
 		885BFE301DEDC0BB002DAE16 /* ImportMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 885BFE2C1DEDC0BB002DAE16 /* ImportMenuViewController.swift */; };
-		885BFE311DEDC0BB002DAE16 /* StartupHelpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 885BFE2D1DEDC0BB002DAE16 /* StartupHelpViewController.swift */; };
-		885BFE321DEDC0BB002DAE16 /* InnerHelpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 885BFE2E1DEDC0BB002DAE16 /* InnerHelpViewController.swift */; };
-		885BFE331DEDC0BB002DAE16 /* LoadDocHelpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 885BFE2F1DEDC0BB002DAE16 /* LoadDocHelpViewController.swift */; };
 		885BFE351DEDD579002DAE16 /* Incorporator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 885BFE341DEDD579002DAE16 /* Incorporator.swift */; };
 		88CA9D8E1DEF0E770074B498 /* LICENSE.txt in Resources */ = {isa = PBXBuildFile; fileRef = 88CA9D8D1DEF0E770074B498 /* LICENSE.txt */; };
 		88CA9D8F1DEF0E770074B498 /* LICENSE.txt in Resources */ = {isa = PBXBuildFile; fileRef = 88CA9D8D1DEF0E770074B498 /* LICENSE.txt */; };
@@ -308,7 +304,6 @@
 				88CD4FF01DEB7E5A006BC24D /* Main.storyboard in Resources */,
 				88CD50021DEB84F0006BC24D /* pizza.jpeg in Resources */,
 				88CA9D8E1DEF0E770074B498 /* LICENSE.txt in Resources */,
-				885BFE2B1DEDC089002DAE16 /* Help.storyboard in Resources */,
 				88CD50031DEB84F7006BC24D /* steak.jpeg in Resources */,
 				88CD50011DEB84EA006BC24D /* chinese.jpeg in Resources */,
 			);
@@ -331,15 +326,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				885BFE321DEDC0BB002DAE16 /* InnerHelpViewController.swift in Sources */,
 				88CD4FFC1DEB7F41006BC24D /* UploadsViewController.swift in Sources */,
-				885BFE331DEDC0BB002DAE16 /* LoadDocHelpViewController.swift in Sources */,
 				885BFE351DEDD579002DAE16 /* Incorporator.swift in Sources */,
 				88CD50001DEB8030006BC24D /* RoguesGalleryView.swift in Sources */,
 				88CD4FFE1DEB7F51006BC24D /* DownloadsViewController.swift in Sources */,
 				88CD501E1DEBA860006BC24D /* AppDelegate.swift in Sources */,
 				885BFE301DEDC0BB002DAE16 /* ImportMenuViewController.swift in Sources */,
-				885BFE311DEDC0BB002DAE16 /* StartupHelpViewController.swift in Sources */,
 				88CD4FFF1DEB8023006BC24D /* CloudCommon.swift in Sources */,
 				88CD4FFD1DEB7F48006BC24D /* DeleteViewController.swift in Sources */,
 			);

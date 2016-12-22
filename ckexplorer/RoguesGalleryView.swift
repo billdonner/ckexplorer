@@ -29,8 +29,14 @@ fileprivate class ShowDetailsViewController : UIViewController{
     var urlForImage: URL!
     
     func userdidcancel() {
-        let _ = self.navigationController?.popViewController(animated: true)
-        
+       // let _ = self.navigationController?.popViewController(animated: true)
+        self.presentingViewController?.dismiss(animated: true,
+                                               completion: {
+        })
+    }
+    
+    fileprivate override func willTransition(to newCollection: UITraitCollection, with coordinator: UIViewControllerTransitionCoordinator) {
+        self.view.setNeedsLayout()
     }
     fileprivate override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,6 +49,9 @@ fileprivate class ShowDetailsViewController : UIViewController{
         do {
             let data = try Data(contentsOf: urlForImage)
             iv.image = UIImage(data:data)
+            let tgr = UITapGestureRecognizer(target: self, action:#selector(ShowDetailsViewController.userdidcancel))
+            iv.addGestureRecognizer(tgr)
+            iv.isUserInteractionEnabled   = true
             self.view.addSubview(iv)
             
             let label = UILabel(frame:(self.view?.frame)!)
@@ -188,7 +197,7 @@ extension RoguesGalleryView : UICollectionViewDelegate {
         
     }
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
-        downloadDelegate?.selectedCell = nil
+        downloadDelegate?.selectedCellIndexPath = nil
         let cell = collectionView.cellForItem(at: indexPath)
         cell?.layer.borderWidth = 0.0
         cell?.layer.borderColor = UIColor.clear.cgColor
@@ -196,9 +205,9 @@ extension RoguesGalleryView : UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let rogue = rogues[indexPath.item]
-        print("didSelect \(rogue)")
+        
         // clear out the old cell
-        let oldPath = downloadDelegate?.selectedCell
+        let oldPath = downloadDelegate?.selectedCellIndexPath
         if let oldPath = oldPath {
             let oldCell = collectionView.cellForItem(at: oldPath)
             if let oldCell = oldCell {
@@ -207,7 +216,7 @@ extension RoguesGalleryView : UICollectionViewDelegate {
             }
         }
         // setup the new selected cell
-        downloadDelegate?.selectedCell = indexPath
+        downloadDelegate?.selectedCellIndexPath = indexPath
         let cell = collectionView.cellForItem(at: indexPath)
         cell?.layer.borderWidth = 5.0
         cell?.layer.borderColor = UIColor.red.cgColor
@@ -246,7 +255,7 @@ extension RoguesGalleryView:UICollectionViewDataSource{
         let rogue = rogues[indexPath.item]
         cell.configure(r:rogue)
         
-        if indexPath == downloadDelegate?.selectedCell {
+        if indexPath == downloadDelegate?.selectedCellIndexPath {
             cell.layer.borderWidth = 5.0
             cell.layer.borderColor = UIColor.red.cgColor
         }

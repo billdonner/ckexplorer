@@ -14,45 +14,6 @@
  */
 import UIKit
 
-public struct IOSSpecialOps { // only compiles in main app - ios bug?
-    
-    public static func blurt (_ vc:UIViewController, title:String, mess:String, f:@escaping ()->()) {
-        
-        let action : UIAlertController = UIAlertController(title:title, message: mess, preferredStyle: .alert)
-        
-        action.addAction(UIAlertAction(title: "OK", style: .cancel, handler: {alertAction in
-            f()
-        }))
-        
-        action.modalPresentationStyle = .popover
-        let popPresenter = action.popoverPresentationController
-        popPresenter?.sourceView = vc.view
-        vc.present(action, animated: true , completion:nil)
-    }
-    public static func blurt (_ vc:UIViewController, title:String, mess:String) {
-        blurt(vc,title:title,mess:mess,f:{})
-    }
-    public static func ask (_ vc:UIViewController, title:String, mess:String, f:@escaping ()->()) {
-        
-        let action : UIAlertController = UIAlertController(title:title, message: mess, preferredStyle: .alert)
-        
-        action.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: {alertAction in
-            
-        }))
-        action.addAction(UIAlertAction(title: "Delete", style: .default, handler: {alertAction in
-            f()
-        }))
-        
-        action.modalPresentationStyle = .popover
-        let popPresenter = action.popoverPresentationController
-        popPresenter?.sourceView = vc.view
-        vc.present(action, animated: true , completion:nil)
-    }
-    public  static func ask (_ vc:UIViewController, title:String, mess:String) {
-        ask(vc,title:title,mess:mess,f:{})
-    }
-}
-
 extension UIViewController {
     
     public func animatedViewOf(frame:CGRect, size:CGSize, imageurl:String) -> UIWebView {
