@@ -1,11 +1,18 @@
 # cloudkit laboratory
 CloudKit Explorer Lab - Move Content From Desktop to Cloud and Then Into TVOS
 
-A platform for experimenting with Cloudkit, especially with AppleTV.
+A small platform for experimenting with Cloudkit, especially with AppleTV.
 
 ![http://s350968899.onlinehome.us/ckexplorerpic/ckexplorerpic.001.png](http://s350968899.onlinehome.us/ckexplorerpic/ckexplorerpic.001.png)
 
-Pull images thru iTunes on the desktop, or from iCloud files, or from Photos Albumns 
+Pull images thru iTunes on the desktop, or from iCloud files, or from Photos Albums 
+
+## motivation
+For real time music and other performance purposes it is convenient to put media asset on a TV screen without depending on a host computer or even a mobile device acting as a relay.
+
+This laboratory is a start towards measuring the latencies surrounding the use of CloudKit as a means for uploading content to the iCloud and downloading content to the apple TV.
+
+
 
 ## cloudkit library 
 Code common to IOS and TVOS 
