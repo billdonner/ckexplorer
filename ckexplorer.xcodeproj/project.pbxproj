@@ -895,7 +895,7 @@
 		882DB8D31E1C271E006F67E1 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-1";
 				CODE_SIGN_ENTITLEMENTS = cklabios/cklabios.entitlements;
 				DEVELOPMENT_TEAM = X2PQYA6S48;
 				INFOPLIST_FILE = cklabios/Info.plist;
@@ -909,7 +909,7 @@
 		882DB8D41E1C271E006F67E1 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-1";
 				CODE_SIGN_ENTITLEMENTS = cklabios/cklabios.entitlements;
 				DEVELOPMENT_TEAM = X2PQYA6S48;
 				INFOPLIST_FILE = cklabios/Info.plist;

@@ -253,10 +253,11 @@ internal extension UploadsViewController {
         let startTime = Date()
         for _ in 0..<Int(sliderVal.value) {
             if countUp == -1 { break }
+            
             switch Int(arc4random_uniform(3)) {
+                
             case 0: uploadRecordPhotoAsset(self.uploadConduit,url:
                 Bundle.main.url(forResource: "pizza", withExtension: "jpeg")!,
-                                           
                                            idval:grandTotalWrites,
                                            placeName: "Ceasar's Pizza Palace",
                                            latitude: 37.332,
@@ -265,9 +266,7 @@ internal extension UploadsViewController {
                 
                 
             case 1: uploadRecordPhotoAsset(self.uploadConduit,url:
-                
                 Bundle.main.url(forResource: "chinese", withExtension: "jpeg")!,
-                                           
                                            idval:grandTotalWrites,
                                            placeName: "King Wok",
                                            latitude: 37.1,
@@ -275,11 +274,9 @@ internal extension UploadsViewController {
                                            ratings: [])
                 
             case 2:  uploadRecordPhotoAsset(self.uploadConduit,url:
-                
                 Bundle.main.url(forResource: "steak", withExtension: "jpeg")!,
                                             idval:grandTotalWrites,
                                             placeName: "The Back Deck",
-                                            
                                             latitude: 37.4,
                                             longitude: -122.03,
                                             ratings: [5, 5, 4])
@@ -313,8 +310,7 @@ extension UploadsViewController : UIDocumentPickerDelegate {
         let percycle = Int(sliderVal.value)
         for _ in 0..<percycle {
             if countUp == -1 { break }
-            uploadRecordPhotoAsset(self.uploadConduit,url:
-                url,
+            uploadRecordPhotoAsset(self.uploadConduit,url:url,
                                    idval:grandTotalWrites,
                                    placeName: "PickedFromCloud",
                                    latitude: 37.4,
