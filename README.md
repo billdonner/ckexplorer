@@ -16,14 +16,21 @@ TBD: turn into framework
 - viewer for TVOS
 - tbd: viewer for OSX, Web
 
+from tvos:
+
+-- choose cloudkit assets by color
 
 ![http://s350968899.onlinehome.us/ckexplorerpic/tv01.jpg](http://s350968899.onlinehome.us/ckexplorerpic/tv01.jpg)
 
+-- hit the "more" button for statistics overlay
+
+![http://s350968899.onlinehome.us/ckexplorerpic/tv03.jpg](http://s350968899.onlinehome.us/ckexplorerpic/tv03.jpg)
+
+-- go full screen by selecting item
 
 ![http://s350968899.onlinehome.us/ckexplorerpic/tv02.jpg](http://s350968899.onlinehome.us/ckexplorerpic/tv02.jpg)
 
-
-![http://s350968899.onlinehome.us/ckexplorerpic/tv03.jpg](http://s350968899.onlinehome.us/ckexplorerpic/tv03.jpg)
+-- return via Menu button
 
 ![http://s350968899.onlinehome.us/ckexplorerpic/tv04.jpg](http://s350968899.onlinehome.us/ckexplorerpic/tv04.jpg)
 
