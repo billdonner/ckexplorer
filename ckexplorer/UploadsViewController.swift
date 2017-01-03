@@ -22,28 +22,51 @@ import CloudKit
 public enum UploadOpCode:Int  {
     case uploadCountAndMs
 }
+protocol UpProt {
+    
+    func uploadRecordPhotoAsset(_ conduit:UploadConduit,
+                                
+                                url imURL: URL,
+                                idval: Int ,
+                                placeName: String,
+                                latitude:  CLLocationDegrees,
+                                longitude: CLLocationDegrees,
+                                ratings: [UInt])
 
-protocol UploadProt : class {
+}
+protocol UploadProt : UpProt {
     func didFinishUpload()
     func publishEventUpload(opcode:UploadOpCode, x count:Int, t per:TimeInterval)
+  
 }
-final class UploadConduit {
+extension UpProt {
+    //MARK: - uploadRecordSampleRecord adds one to Cloudkit
     
-    let container:CKContainer
-    let db:CKDatabase
-    
-    
-    weak var upload_delegate: UploadProt?
-    
-    fileprivate var  allrecids :[CKRecordID] = []
-    
-    fileprivate var querystarttime : Date?
-    
-    init(_ containerid:String, ispublic:Bool = false) {
-        container = CKContainer(identifier: containerid)
-        db = ispublic ? container.publicCloudDatabase : container.privateCloudDatabase
+    func uploadRecordPhotoAsset(_ conduit:UploadConduit,
+                                
+                                url imURL: URL,
+                                idval: Int ,
+                                placeName: String,
+                                latitude:  CLLocationDegrees,
+                                longitude: CLLocationDegrees,
+                                ratings: [UInt]) {
+        let rec = CKRecord(recordType: containerTableName)
+        let coverPhoto = CKAsset(fileURL: imURL)
+        let location = CLLocation(latitude: latitude, longitude: longitude)
+        rec.setObject(coverPhoto, forKey: "CoverPhoto")
+        rec.setObject(placeName as CKRecordValue?, forKey: "Name")
+        rec.setObject(location, forKey: "Location")
+        rec.setObject(idval as CKRecordValue?, forKey: "id")
+        
+        print("uploading #\(rec["id"]) \(rec["Name"])) to \(containerTableName) from \(imURL)")
+        conduit.uploadCKRecord(rec)
     }
+}
+final class UploadConduit : Conduit, UpProt {
     
+     var upload_delegate: UploadProt?
+    fileprivate var  allrecids :[CKRecordID] = []
+    fileprivate var querystarttime : Date?
     
     /// callback - get the whole record integrated into Rogue structure
     
@@ -52,7 +75,6 @@ final class UploadConduit {
         db.save(rec, completionHandler: { record, error in
             guard error == nil else {
                 print("!!!error saving to cloudkit \(error)")
-                
                 if let basevc = self.upload_delegate as? UIViewController {
                     IOSSpecialOps.blurt(basevc, title: "!!!error saving to cloudkit", mess: "cloudkit \(error)")
                 }
@@ -61,37 +83,15 @@ final class UploadConduit {
         })
     }//end upload
 }
+
 final class UploadsViewController: UIViewController,UploadProt {
-    
     
     fileprivate var grandTotalWrites = 0
     
     /// samplesConduit connects to Cloudkit Sample Record Type, providing instance
-    fileprivate var uploadConduit = UploadConduit(containerID)
+    fileprivate var uploadConduit = UploadConduit(containerID,tableName:containerTableName)
     
     
-    //MARK: - uploadRecordSampleRecord adds one to Cloudkit
-    
-    fileprivate func uploadRecordPhotoAsset(
-        _ imURL: URL,
-        placeName: String,
-        latitude:  CLLocationDegrees,
-        longitude: CLLocationDegrees,
-        ratings: [UInt]) {
-        
-        grandTotalWrites += 1
-        let rec = CKRecord(recordType: containerTableName)
-        let coverPhoto = CKAsset(fileURL: imURL)
-        let location = CLLocation(latitude: latitude, longitude: longitude)
-        rec.setObject(coverPhoto, forKey: "CoverPhoto")
-        rec.setObject(placeName as CKRecordValue?, forKey: "Name")
-        rec.setObject(location, forKey: "Location")
-        rec.setObject(grandTotalWrites as CKRecordValue?, forKey: "id")
-        
-        
-        print("uploading #\(rec["id"]) \(rec["Name"])) to \(containerTableName) from \(imURL)")
-        uploadConduit.uploadCKRecord(rec)
-    }
     
     /// quick and dirty ui in IB
     @IBOutlet weak var sliderVal: UISlider!
@@ -166,7 +166,6 @@ internal extension UploadsViewController {
         spinner.startAnimating()
         myTimer = Timer.scheduledTimer (timeInterval: 1.0, target: self, selector:#selector(UploadsViewController.countUpTick), userInfo: nil, repeats: true)
         elapedTime.text = "\(countUp)"
-        
         self.upnumber.text = "0 items uploaded"
         
     }
@@ -194,25 +193,26 @@ internal extension UploadsViewController {
         present (importMenu, animated: true, completion: nil)
     }
     //MARK: - pull images from iTunes
-        func redoUploadFromITunes () {
+    func redoUploadFromITunes () {
         let percycle = Int(sliderVal.value)
         redocommon()
         loadfromitunes(each : { url, name in
             for _ in 0..<percycle {
-              //  do {
-                self.uploadRecordPhotoAsset(url,
-                                              placeName: name,
-                                              latitude: 37.4,
-                                              longitude: -122.03,
-                                              ratings: [])
+                //  do {
+                self.uploadRecordPhotoAsset(self.uploadConduit,url:url,
+                                            idval:self.grandTotalWrites,
+                                            placeName: name,
+                                            latitude: 37.4,
+                                            longitude: -122.03,
+                                            ratings: [])
                 //}
-//                catch {
-//                    print("couldnt make temp file\(url)  error \(error)")
-//                }
+                //                catch {
+                //                    print("couldnt make temp file\(url)  error \(error)")
+                //                }
                 
                 
                 
-                }})
+            }})
         {
             self.redofinally()
         }
@@ -243,41 +243,53 @@ internal extension UploadsViewController {
         }
     }
     
-    //MARK: -
+    //MARK: - LOCAL TEST CASES
     
     
     // Apple Campus location = 37.33182, -122.03118
     
     /// a bit unusual, but lets pass a delegate into this global func
     func allUploadsTest(delegate: UploadProt?) {
-        let startTime = Date() 
+        let startTime = Date()
         for _ in 0..<Int(sliderVal.value) {
             if countUp == -1 { break }
             switch Int(arc4random_uniform(3)) {
-            case 0: uploadRecordPhotoAsset(
+            case 0: uploadRecordPhotoAsset(self.uploadConduit,url:
                 Bundle.main.url(forResource: "pizza", withExtension: "jpeg")!,
-                placeName: "Ceasar's Pizza Palace",
-                latitude: 37.332,
-                longitude: -122.03,
-                ratings: [0, 1, 2])
+                                           
+                                           idval:grandTotalWrites,
+                                           placeName: "Ceasar's Pizza Palace",
+                                           latitude: 37.332,
+                                           longitude: -122.03,
+                                           ratings: [0, 1, 2])
                 
                 
-            case 1: uploadRecordPhotoAsset(
+            case 1: uploadRecordPhotoAsset(self.uploadConduit,url:
+                
                 Bundle.main.url(forResource: "chinese", withExtension: "jpeg")!,
-                placeName: "King Wok",
-                latitude: 37.1,
-                longitude: -122.1,
-                ratings: [])
+                                           
+                                           idval:grandTotalWrites,
+                                           placeName: "King Wok",
+                                           latitude: 37.1,
+                                           longitude: -122.1,
+                                           ratings: [])
                 
-            case 2:  uploadRecordPhotoAsset(
+            case 2:  uploadRecordPhotoAsset(self.uploadConduit,url:
+                
                 Bundle.main.url(forResource: "steak", withExtension: "jpeg")!,
-                placeName: "The Back Deck",
-                latitude: 37.4,
-                longitude: -122.03,                 ratings: [5, 5, 4])
+                                            idval:grandTotalWrites,
+                                            placeName: "The Back Deck",
+                                            
+                                            latitude: 37.4,
+                                            longitude: -122.03,
+                                            ratings: [5, 5, 4])
                 
             default: fatalError()
                 
             }
+            
+            grandTotalWrites += 1
+            
         }
         
         self.redofinally()
@@ -286,7 +298,7 @@ internal extension UploadsViewController {
         
         DispatchQueue.main.async {
             delegate?.publishEventUpload(opcode: UploadOpCode.uploadCountAndMs,
-                                       x: self.grandTotalWrites,t: timeper)
+                                         x: self.grandTotalWrites,t: timeper)
         }
     }
 }
@@ -301,11 +313,14 @@ extension UploadsViewController : UIDocumentPickerDelegate {
         let percycle = Int(sliderVal.value)
         for _ in 0..<percycle {
             if countUp == -1 { break }
-            uploadRecordPhotoAsset(url,
-                                     placeName: "PickedFromCloud",
-                                     latitude: 37.4,
-                                     longitude: -122.03,
-                                     ratings: [])
+            uploadRecordPhotoAsset(self.uploadConduit,url:
+                url,
+                                   idval:grandTotalWrites,
+                                   placeName: "PickedFromCloud",
+                                   latitude: 37.4,
+                                   longitude: -122.03,
+                                   ratings: [])
+            grandTotalWrites += 1
         }
         self.redofinally()
     }

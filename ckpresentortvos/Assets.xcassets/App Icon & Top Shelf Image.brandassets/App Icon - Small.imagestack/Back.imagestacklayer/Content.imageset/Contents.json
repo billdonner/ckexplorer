@@ -2,6 +2,7 @@
   "images" : [
     {
       "idiom" : "tv",
+      "filename" : "smallicontvos.png",
       "scale" : "1x"
     }
   ],

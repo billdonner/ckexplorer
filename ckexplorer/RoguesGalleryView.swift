@@ -36,16 +36,17 @@ fileprivate class ShowDetailsViewController : UIViewController{
     }
     
     fileprivate override func willTransition(to newCollection: UITraitCollection, with coordinator: UIViewControllerTransitionCoordinator) {
-        self.view.setNeedsLayout()
+        self.view.setNeedsDisplay()
     }
     fileprivate override func viewDidLoad() {
         super.viewDidLoad()
         //        guard let nav = self.navigationItem else {
         //            fatalError("must be in nav controller")
         //        }
-        self.navigationItem.leftBarButtonItem =
-            UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(ShowDetailsViewController.userdidcancel))
+//        self.navigationItem.leftBarButtonItem =
+//            UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(ShowDetailsViewController.userdidcancel))
         let iv = UIImageView(frame:(self.view?.frame)!)
+        iv.contentMode = .scaleAspectFit
         do {
             let data = try Data(contentsOf: urlForImage)
             iv.image = UIImage(data:data)
@@ -54,9 +55,11 @@ fileprivate class ShowDetailsViewController : UIViewController{
             iv.isUserInteractionEnabled   = true
             self.view.addSubview(iv)
             
-            let label = UILabel(frame:(self.view?.frame)!)
+            let labelframe = CGRect(x:40.0,y:30.0,width:300.0,height:25.0)
+            let label = UILabel(frame:labelframe)
             label.text = self.text
             label.textColor = .blue
+        
             self.view.addSubview(label)
         }
         catch {
@@ -98,7 +101,7 @@ extension UIViewController {  // where self is Modal...
 extension UIImageView {
     func loadimageFromRogue(_ rogue: Rogue, onerror:   ((Error?)->())? ) {
         
-        self.image = UIImage (named:"placeholderrogue")
+        //self.image = UIImage (named:"placeholderrogue")
         URLSession.shared.dataTask(with: rogue.fileURL, completionHandler: { (data, response, error) -> Void in
             
             if let error = error {
@@ -217,9 +220,9 @@ extension RoguesGalleryView : UICollectionViewDelegate {
         }
         // setup the new selected cell
         downloadDelegate?.selectedCellIndexPath = indexPath
-        let cell = collectionView.cellForItem(at: indexPath)
-        cell?.layer.borderWidth = 5.0
-        cell?.layer.borderColor = UIColor.red.cgColor
+//        let cell = collectionView.cellForItem(at: indexPath)
+//        cell?.layer.borderWidth = 5.0
+//        cell?.layer.borderColor = UIColor.gray.cgColor
         
         // 
         
@@ -256,8 +259,8 @@ extension RoguesGalleryView:UICollectionViewDataSource{
         cell.configure(r:rogue)
         
         if indexPath == downloadDelegate?.selectedCellIndexPath {
-            cell.layer.borderWidth = 5.0
-            cell.layer.borderColor = UIColor.red.cgColor
+//            cell.layer.borderWidth = 5.0
+//            cell.layer.borderColor = UIColor.gray.cgColor
         }
         
         return cell
@@ -265,7 +268,7 @@ extension RoguesGalleryView:UICollectionViewDataSource{
 }
 extension RoguesGalleryView : RoguePro {
     internal func resetRogue() {
-        
+        rogues.removeAll()
     }
     
     func addRogue(r rogue:Rogue) {

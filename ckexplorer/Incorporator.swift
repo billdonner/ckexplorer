@@ -15,24 +15,6 @@
 
 import UIKit
 
-/**
- Executes the lefthand closure on a background thread and,
- upon completion, the righthand closure on the main thread.
- */
-func doThis(
-    _ dothis: @escaping () -> (),
-    thenThat:@escaping () -> ())
-{
-    let _queue = DispatchQueue(label: "serial-worker")
-    
-    _queue.async {
-        dothis()
-        DispatchQueue.main.async(execute: {
-            thenThat()
-        })
-    }
-}
-
 
 func timedClosure(_:String, closure:()->())->TimeInterval {
     let startTime = Date()
@@ -43,9 +25,7 @@ func timedClosure(_:String, closure:()->())->TimeInterval {
 
 public typealias FilePath = String
 public typealias FilePaths = [FilePath]
-public typealias selectorFunc = (String)->(Bool)
 
-typealias compleet = (String,Int,Int,Int) -> ()
 
 //MARK:- StorageModel is all that the Incorporator Sees
 //
@@ -54,7 +34,7 @@ protocol StorageModel {
     /// where to expand zip files
     func tempDirectoryForZip()->String
     /// do the expansions
-    func unzipFileAtPath(_ zipPath:String, toDestination: String)
+    //func unzipFileAtPath(_ zipPath:String, toDestination: String)
     /// cleanup titles into legacy normalized form
     func normalizeTitle(_ title:String)->String
     ///  add a bunch of bits as a document
@@ -76,10 +56,10 @@ extension StorageModel {
         return title2
         
     }
-    func unzipFileAtPath(_ zipPath:String, toDestination: String) {
-        
-        // ZipMain.unzipFile(atPath: zipPath, toDestination: FS.shared.TemporaryDirectory)
-    }
+//    func unzipFileAtPath(_ zipPath:String, toDestination: String) {
+//        
+//        // ZipMain.unzipFile(atPath: zipPath, toDestination: FS.shared.TemporaryDirectory)
+//    }
     func addDocumentWithBits(_ bits:AnyObject,title:String,type:String) -> (Bool,String,String) {
         //return Corpus.addDocumentWithBits(bits as! Data,title:title,type:type)
         if bits is Data {
@@ -117,7 +97,7 @@ final class Incorporator:StorageModel {
     var odupes = 0
     var ofilesread = 0
     
-    class func pathsForPrefix(_ dirPath:String) -> FilePaths {
+    private class func pathsForPrefix(_ dirPath:String) -> FilePaths {
         var error:NSError?
         var paths:NSArray?
         do {
@@ -158,7 +138,7 @@ final class Incorporator:StorageModel {
     }
     private func processIncomingFromPath(_ inboxPath:String,each:   @escaping ((URL,String)->())) {
         
-        func iassimilate(_ path:String,todo:selectorFunc,  x: inout Int) {
+        func iassimilate(_ path:String,todo:(String)->(Bool),  x: inout Int) {
             // delete the incoming if told to do so
             //var error:NSError?
             let toDelete = todo (path)
@@ -172,7 +152,7 @@ final class Incorporator:StorageModel {
             }
         }
         
-        func doFile(_ path:String) -> Bool {
+         func doFile(_ path:String) -> Bool {
             let nspath = path as NSString
             let r  = true
             autoreleasepool {
@@ -218,17 +198,23 @@ final class Incorporator:StorageModel {
         }
     }
     
-    func assimilateInBackground(_ documentsPath:String, each: @escaping ((URL,String)->()), completion:@escaping compleet) -> Bool {
-        
-        doThis( {
-            self.processIncomingFromPath(documentsPath, each: each)
-        }
-            , thenThat: {
-                self.saveAddedsAndRecents()
-                self.saveGorpus()
-                
-                completion ("Import Done",self.ofilesread,self.odupes,self.csv)
+  func assimilateInBackground(_ documentsPath:String,
+                              each: @escaping ((URL,String)->()),
+                              completion:@escaping (String,Int,Int,Int) -> ())
+                             -> Bool {
+                                
+    let queue = DispatchQueue(label: "serial-worker")
+    
+    queue.async {
+        self.processIncomingFromPath(documentsPath, each: each)
+        DispatchQueue.main.async(execute: {
+            self.saveAddedsAndRecents()
+            self.saveGorpus()
+            
+            completion ("Import Done",self.ofilesread,self.odupes,self.csv)
         })
+    }
+
         print ("--------------------grand total read: \(self.ofilesread) dupes: \(self.odupes) ")
         return true
     }
@@ -236,9 +222,8 @@ final class Incorporator:StorageModel {
 
 //////
 
-
-
-func loadfromitunes(each:@escaping(URL,String)->(),finally:@escaping ()->()) {
+func loadfromitunes(each:@escaping(URL,String)->(),
+                    finally:@escaping ()->()) {
     /// kick off background assimilation
     let documentsPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as String
     let	assim = Incorporator()
@@ -246,7 +231,6 @@ func loadfromitunes(each:@escaping(URL,String)->(),finally:@escaping ()->()) {
             each: { url,label  in
                     each(url,label)
     }, completion: { label,read,dupes,csv in
-        
-                                            finally()
+        finally()
     })
 }

@@ -37,6 +37,21 @@ struct Gfuncs {
         return String(format:"%0.\(digits)f", (t) )
     }
 }
+
+//MARK :- Conduit Connects to Cloudkit Model
+
+class Conduit {
+    
+    let container:CKContainer
+    let db:CKDatabase
+    let tableName: String // redasset,blueasset, ...
+    init(_ containerid:String, tableName: String, ispublic:Bool = false) {
+        container = CKContainer(identifier: containerid)
+        db = ispublic ? container.publicCloudDatabase : container.privateCloudDatabase
+        self.tableName = tableName
+    }
+    
+}
 //MARK: - PhotoAsset docs
 
 //final class PhotoAsset: NSObject  {
@@ -56,7 +71,33 @@ struct Gfuncs {
 //        return name
 //    }
 //}
-
+extension UIColor {
+    public convenience init?(hexString: String) {
+        let r, g, b, a: CGFloat
+        
+        if hexString.hasPrefix("#") {
+            let start = hexString.index(hexString.startIndex, offsetBy: 1)
+            let hexColor = hexString.substring(from: start)
+            
+            if hexColor.characters.count == 8 {
+                let scanner = Scanner(string: hexColor)
+                var hexNumber: UInt64 = 0
+                
+                if scanner.scanHexInt64(&hexNumber) {
+                    r = CGFloat((hexNumber & 0xff000000) >> 24) / 255
+                    g = CGFloat((hexNumber & 0x00ff0000) >> 16) / 255
+                    b = CGFloat((hexNumber & 0x0000ff00) >> 8) / 255
+                    a = CGFloat(hexNumber & 0x000000ff) / 255
+                    
+                    self.init(red: r, green: g, blue: b, alpha: a)
+                    return
+                }
+            }
+        }
+        
+        return nil
+    }
+}
 //MARK: - Conduit gathers all operations against one particular set of Record Types T
 
 /// generic parameter is only used for the type of record passed to CKRecord
@@ -79,10 +120,25 @@ public var containerTableName: String  { get {
     }
     return "PLEASE_SET_CLOUD-TABLE-NAME" }
 }
+/// "SPALSH-COLOR" depending on the actual app instancezzz
+public var splashColor: UIColor  { get {
+    if let iDict = Bundle.main.infoDictionary,
+        let w =  iDict["SPLASH-COLOR"] as? String {
+        if let c = UIColor(hexString: w) {
+            return c
+        }
+        return .black
+    }
+    return .clear
+}
+}
 /// combo name can be used for icloud.com
 public var titleName: String  { get {
-    let tail  = containerID.components(separatedBy: ".").last!
-    return tail + ":" + containerTableName }
+    let _  = containerID.components(separatedBy: ".").last!
+    //return //tail + ":" +
+        
+    return containerTableName
+}
 }
 
 public struct IOSSpecialOps { // only compiles in main app - ios bug?

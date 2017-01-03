@@ -24,9 +24,8 @@ protocol DeleteProt : class {
 public enum DeleteOpCode:Int  {
     case moreData
 }
-final class DeleteConduit {
-    let container:CKContainer
-    let db:CKDatabase
+final class DeleteConduit:Conduit {
+  
     
     weak var delete_delegate: DeleteProt?
     
@@ -34,13 +33,10 @@ final class DeleteConduit {
     fileprivate var  allrecids :[CKRecordID] = []
     
     fileprivate var querystarttime : Date?
-    
-    init(_ containerid:String, ispublic:Bool = false) {
-        container = CKContainer(identifier: containerid)
-        db = ispublic ? container.publicCloudDatabase : container.privateCloudDatabase
-    }
+ 
     /// gather the records IDs only
     func getRecIdsForDelete (comp:@escaping ([CKRecordID])->()) {
+        allrecids = []
         queryRecordsForDelete(forEachRecord:absorbRecordID) {[unowned self] _ in
             comp(self.allrecids) }
     }
@@ -127,29 +123,32 @@ final class DeleteConduit {
         self.getRecIdsForDelete( ) { recordIDsArray in
             
             print("will delete all \(recordIDsArray.count) records  ")
-            let operation = CKModifyRecordsOperation(recordsToSave: nil, recordIDsToDelete: recordIDsArray)
             
-            operation.modifyRecordsCompletionBlock = {
-                (savedRecords: [CKRecord]?, deletedRecordIDs: [CKRecordID]?, error: Error?) in
-                guard error == nil else {
-                    print("!!!error CKModifyRecordsOperation deleteAllRecords \(error)")
+            if let basevc = self.delete_delegate as? UIViewController {
+                IOSSpecialOps.ask(basevc, title: "Do you really want to delete  \(recordIDsArray.count) records", mess: "this can never be undone ") {
                     
-                    if let basevc = self.delete_delegate as? UIViewController {
-                        DispatchQueue.main.async {
+                    let operation = CKModifyRecordsOperation(recordsToSave: nil, recordIDsToDelete: recordIDsArray)
+                    
+                    operation.modifyRecordsCompletionBlock = {
+                        (savedRecords: [CKRecord]?, deletedRecordIDs: [CKRecordID]?, error: Error?) in
+                        guard error == nil else {
+                            print("!!!error CKModifyRecordsOperation deleteAllRecords \(error)")
                             
-                            IOSSpecialOps.blurt(basevc, title: "!!!CKModifyRecordsOperation deleteAllRecords error", mess: "cloudkit \(error)")
-                        }
-                    }
-                    return
-                }
-                
-                print("deleted all \(recordIDsArray.count) records \(deletedRecordIDs?.count)")
-                comp(recordIDsArray.count)
-            }
-            
-            self.db.add(operation)
-        }
-    }
+                            DispatchQueue.main.async {                             IOSSpecialOps.blurt(basevc, title: "!!!CKModifyRecordsOperation deleteAllRecords error", mess: "cloudkit \(error)")
+                            }
+                            return
+                        } // end guard fail
+                        
+                        print("deleted all \(recordIDsArray.count) records \(deletedRecordIDs?.count)")
+                        comp(recordIDsArray.count)
+                    }// set modifyRecordsCompletionBlock
+                    self.db.add(operation)
+                }  //ask is true
+            }// basevc
+        }// getRecIdsForDelete
+    }// end of deleteallrecords
+    
+    
     
     /// callback - just accumulate recordids for delete
     func absorbRecordID (record: CKRecord) {
@@ -159,7 +158,7 @@ final class DeleteConduit {
 
 final class DeletesViewController: UIViewController  {
     
-    var deleteConduit = DeleteConduit(containerID)
+    var deleteConduit = DeleteConduit(containerID,tableName:containerTableName)
     
     //MARK: repaint interface and start Download (again)
     private var countUp:Int = 0
@@ -188,6 +187,7 @@ final class DeletesViewController: UIViewController  {
         self.startTime = Date() // reset for this redo
         self.myTimer = Timer.scheduledTimer (timeInterval: 0.1, target: self, selector:#selector(DeletesViewController.countUpTick), userInfo: nil, repeats: true)
     }
+    
     @IBAction func deleteEm(_ sender: Any) {
         redo() // gets timer going
         downcounter.text = "...gathering..."
@@ -211,7 +211,7 @@ final class DeletesViewController: UIViewController  {
     @IBAction func cancelTheTest(_ sender: Any) {
         countUp = -1 // set the flag
     }
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -232,8 +232,8 @@ extension DeletesViewController : DeleteProt {
         switch opcode {
         case .moreData :
             self.downcounter.text = count == 0 ? "no more to delete" : "more data to delete anticipated"
-        default:
-            self.downcounter.text = "unknown opcode \(opcode)"
+            //default:
+            //  self.downcounter.text = "unknown opcode \(opcode)"
         }
     }
 }

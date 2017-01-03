@@ -4,6 +4,8 @@
 <dict>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
+	<key>CFBundleDisplayName</key>
+	<string>GreenCloud</string>
 	<key>CFBundleDocumentTypes</key>
 	<array>
 		<dict>
@@ -76,9 +78,11 @@
 	<key>CFBundleVersion</key>
 	<string>3</string>
 	<key>CLOUD-TABLE-NAME</key>
-	<string>PhotoAssets</string>
+	<string>BlueAssets</string>
 	<key>CONTAINER-ID</key>
 	<string>iCloud.com.midnightrambler.tvexplorer01</string>
+	<key>SPLASH-COLOR</key>
+	<string>#008040</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSAppTransportSecurity</key>

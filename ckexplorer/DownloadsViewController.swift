@@ -24,7 +24,8 @@ enum DownloadOpCode:Int  {
 protocol DownloadProt:class {
     func didAddRogue(r:Rogue)
     func insertIntoCollection(_ indices:[Int])
-    func publishEventDownload(opcode:DownloadOpCode, x:Int,t:TimeInterval)
+    func publishEventDownload(opcode:DownloadOpCode,
+                              x:Int,t:TimeInterval)
     func didSelectAsset(indexPath:IndexPath)
     func didFinishDownload ()
     var selectedCellIndexPath:IndexPath? {
@@ -33,24 +34,14 @@ protocol DownloadProt:class {
 }
 
 
-final class DownloadConduit {
+final class DownloadConduit: Conduit {
     
-    
-    let container:CKContainer
-    let db:CKDatabase
     weak var download_delegate: DownloadProt?
-    
     
     fileprivate var upcount = 0
     fileprivate var allrecids :[CKRecordID] = []
     fileprivate var querystarttime : Date?
     fileprivate var allind :[Int] = []
-   
-    init(_ containerid:String, ispublic:Bool = false) {
-        container = CKContainer(identifier: containerid)
-        db = ispublic ? container.publicCloudDatabase : container.privateCloudDatabase
-    }
-    
     
     /// load whole records
     func getTheRecordsForDownload  (limit:Int,comp:@escaping ([CKRecordID])->()) {
@@ -98,7 +89,7 @@ final class DownloadConduit {
     private func queryRecordsForDownload(limit:Int, forEachRecord: @escaping (CKRecord) -> (),finally:@escaping ([CKRecordID])->()) {
         
         let predicate = NSPredicate(value: true)
-        let query = CKQuery(recordType: containerTableName, predicate: predicate)
+        let query = CKQuery(recordType: super.tableName, predicate: predicate)
         
         querystarttime = Date()
         let reclim = limit > 0 ? limit : CKQueryOperationMaximumResults
@@ -167,23 +158,118 @@ final class DownloadConduit {
     }
 }
 
+enum AssetType{
+    case red
+    case yellow
+    case blue
+    case green
+    
+    var description: String {
+        switch self {
+        case .red: return "Red Assets"
+        case .yellow: return "Yellow Assets"
+        case .blue: return "Blue Assets"
+        case .green: return "Green Assets"
+        }
+    }
+    
+        var name: String {
+            switch self {
+            case .red: return "RedAssets"
+            case .yellow: return "YellowAssets"
+            case .blue: return "BlueAssets"
+            case .green: return "GreenAssets"
+            }
+    }
+}
+//MARK :- ViewViewController Starts Here DownloadsViewController
 final class DownloadsViewController: UIViewController {
+    var showingAssetType: AssetType = .blue
+    var assetsName : String = "????"
+    var toggle:Bool = true
    
+    @IBOutlet weak var outerSV: UIStackView! 
+    @IBOutlet var inandoutSV: UIView!
+    
+    @IBAction func red(_ sender: Any) {
+        redpushed(sender)
+    }
+    @IBAction func redpushed(_ sender: Any) {
+        roguesGalleryView.backgroundColor = .red
+        showingAssetType = .red
+        tableName.text = showingAssetType.description
+        assetsName = showingAssetType.name
+        downloadConduit = DownloadConduit(containerID,tableName:assetsName)
+         redo()
+    }
+    
+    @IBAction func blue(_ sender: Any) {
+        bluepushed(sender)
+    }
+    @IBAction func bluepushed(_ sender: Any) {
+        roguesGalleryView.backgroundColor = .blue
+        showingAssetType = .blue
+        tableName.text = showingAssetType.description
+        assetsName = showingAssetType.name
+        downloadConduit = DownloadConduit(containerID,tableName:assetsName)
+        redo()
+    }
+   
+    @IBAction func green(_ sender: Any) {
+        greenpushed(sender)
+    }
+    @IBAction func greenpushed(_ sender: Any) {
+        roguesGalleryView.backgroundColor = .green
+        showingAssetType = .green
+        tableName.text = showingAssetType.description
+        assetsName = showingAssetType.name
+        downloadConduit = DownloadConduit(containerID,tableName:assetsName)
+         redo()
+    }
+    @IBAction func yellow(_ sender: Any) {
+        yellowpushed(sender)
+    }
+    
+    @IBAction func yellowpushed(_ sender: Any) {
+        roguesGalleryView.backgroundColor = .yellow
+        showingAssetType =  .yellow
+        tableName.text = showingAssetType.description
+        assetsName = showingAssetType.name
+        downloadConduit = DownloadConduit(containerID,tableName:assetsName)
+         redo()
+    }
+    
+    @IBAction func more(_ sender: Any) {
+        morepushed(sender)
+    }
+    
+    @IBAction func morepushed(_ sender: Any) {
+        if toggle {
+        
+        roguesGalleryView.addSubview(inandoutSV)
+            inandoutSV.center = roguesGalleryView.center
+        } else {
+            inandoutSV.removeFromSuperview()
+        }
+        toggle = !toggle
+    }
+    
     @IBOutlet weak var downTime: UILabel!
     @IBOutlet weak var downCount: UILabel!
     @IBOutlet weak var moreDataIndicator: UILabel!
     @IBOutlet weak var elapsedWallTime: UILabel!
     @IBOutlet weak var startupDelay: UILabel!
     @IBOutlet weak var spinner: UIActivityIndicatorView!
-    @IBOutlet weak var segment: UISegmentedControl!
+   
     @IBOutlet weak var roguesGalleryView: RoguesGalleryView!
     @IBOutlet weak var refreshButton: UIButton!
     
     @IBAction func tapped(_ sender: Any) {
         redo()
     }
-    
-    
+
+    @IBOutlet weak var tableName: UILabel!
+    @IBOutlet weak var clearButton: UIButton!
     @IBAction func cancel(_ sender: Any) {
         countUp = -1 // set the flag
         
@@ -194,20 +280,17 @@ final class DownloadsViewController: UIViewController {
         
         countUp = -1 // set the flag
         
-          roguesGalleryView.setup(vc:self,pvc: self)
+        roguesGalleryView.setup(vc:self,pvc: self)
         roguesGalleryView.reloadData()
-        
-        //let t:CKRecordZoneID = nil
-        // samplesConduit.db.delete(withRecordZoneID: 0) {cKRecordZoneID, error in
-        // }
+  
     }
     
     
-    //MARK: connection to Cloudkit for sample records
-    var downloadConduit = DownloadConduit(containerID)
+    //MARK: connection to Cloudkit for records
+    fileprivate var downloadConduit = DownloadConduit(containerID,tableName:containerTableName)
     
     private var _currentValue: IndexPath? = nil
-    var selectedCellIndexPath:IndexPath? { // used from rogues gallery
+    internal var selectedCellIndexPath:IndexPath? { // used from rogues gallery
         get { return _currentValue }
         set { _currentValue = newValue }
         
@@ -231,7 +314,7 @@ final class DownloadsViewController: UIViewController {
             myTimer = nil
         }
         let netelapsedTime : TimeInterval = Date().timeIntervalSince(startTime)
-        elapsedWallTime.text = "\(Gfuncs.prettyFloat(netelapsedTime,digits:1)) secs elapsed"
+        elapsedWallTime.text = "\(Gfuncs.prettyFloat(netelapsedTime,digits:1)) secs"
     }
     
     
@@ -246,14 +329,16 @@ final class DownloadsViewController: UIViewController {
         
         
         DispatchQueue.main.async {
+            self.roguesGalleryView.resetRogue()
             self.firstload = true
             self.redoStartTime = Date()
             self.spinner.startAnimating() // starts on mainq
             self.refreshButton.isEnabled = false
-            self.refreshButton.setTitle("...downloading...", for: .normal)
+            self.clearButton.isEnabled = false
+            self.refreshButton.setTitle("...loading...", for: .normal)
             self.downTime.text = "...restarting..."
             self.downCount.text = "no items"
-            self.moreDataIndicator.text = "...thinking..."
+            self.moreDataIndicator.text = "......"
         }
         
         DispatchQueue.global(qos: DispatchQoS.QoSClass.background).async {
@@ -264,36 +349,48 @@ final class DownloadsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        self.navigationItem.title = "download from " + titleName
+        self.view.backgroundColor = splashColor
+        //self.navigationItem.title = "download from " + downloadConduit.tableName
         // pain the screen, including the image assets
-        
+    
+        selectedCellIndexPath = IndexPath(row:0,section:0)
         roguesGalleryView.setup(vc:self,pvc: self)
+        roguesGalleryView.backgroundColor = splashColor
+        showingAssetType = .blue
+        assetsName = showingAssetType.name
+        tableName.text = downloadConduit.tableName//showingAssetType.description
+        // on very first load auto-press
+        redo()
     }
     /// get all the records
     func downloadAllTest( ) {
         let startTime = Date()
         totalincoming = 0
         downloadConduit.download_delegate = self
-        var limit :Int
-        switch segment.selectedSegmentIndex {
-        case 1: limit = 10
-        case 2: limit = 100
-        case 3: limit = 1000
-        default: limit = 0
-        }
+        let limit :Int = 0
+//        switch segment.selectedSegmentIndex {
+//        case 1: limit = 10
+//        case 2: limit = 100
+//        case 3: limit = 1000
+//        default: limit = 0
+//        }
+        
         // kick off a bulky downlownload
         downloadConduit.getTheRecordsForDownload(limit: limit ){ recs in
             print ("downloadalltest finished with \(recs.count) items")
             self.spinner.stopAnimating() // starts on mainq
+                self.clearButton.isEnabled = true
             self.refreshButton.isEnabled = true
-            self.refreshButton.setTitle("Download", for: .normal)
+            self.refreshButton.setTitle("add", for: .normal)
             self.downTime.text = "...done..."
             self.moreDataIndicator.text = "idle"
-            self.myTimer?.invalidate()         }
+            self.myTimer?.invalidate()
+            self.roguesGalleryView.reloadData()
+        
+        }
         
         let netelapsedTime : TimeInterval = Date().timeIntervalSince(startTime)
-        print ("downloadAllTest records started \(netelapsedTime)ms, still fetching")
+       // print ("downloadAllTest records started \(netelapsedTime)ms, still fetching")
         DispatchQueue.main.async {
             self.publishEventDownload(opcode: DownloadOpCode.initialCountAndTime,x: 0,t: netelapsedTime)
         }
@@ -318,32 +415,29 @@ extension DownloadsViewController: DownloadProt {
         DispatchQueue.main.async {
             self.didSelectAsset(indexPath: indexPath)
         }
-        
-//        if roguesGalleryView.roguesCount() == 1 {
-//            // if first, then select it
-//            let cell = roguesGalleryView.cellForItem(at: indexPath)
-//            cell?.layer.borderWidth = 5.0
-//            cell?.layer.borderColor = UIColor.red.cgColor
-//            roguesGalleryView.reloadData() // only one item
-//        }
     }
     func insertIntoCollection(_ indices:[Int]){
-        
-        self.roguesGalleryView.reloadData()
+        if indices.count < 20 {
+              self.roguesGalleryView.reloadData()
+        }
     }
     func didFinishDownload () {
-         moreDataIndicator.text = "idle"
+        moreDataIndicator.text = "idle"
+        clearButton.isEnabled = true
         refreshButton.isEnabled = true
-        refreshButton.setTitle("Download Again?",for: .normal)
+        refreshButton.setTitle("add more",for: .normal)
         spinner.stopAnimating()
         myTimer?.invalidate()
+        roguesGalleryView.reloadData()
     }
     func publishEventDownload(opcode: DownloadOpCode, x count:Int, t mstime: TimeInterval) {
         switch opcode {
             
         case  .eventCountAndMs :
             totalincoming += count
-            downTime.text = "(\(selectedCellIndexPath!.section),\(selectedCellIndexPath!.row)) "//\(Gfuncs.prettyFloat(mstime,digits:3)) items/sec"
+            if let sel = selectedCellIndexPath {
+            downTime.text = "(\(sel.section),\(sel.row)) "
+            }//\(Gfuncs.prettyFloat(mstime,digits:3)) items/sec"
             downCount.text = "\(totalincoming):\(self.roguesGalleryView.roguesCount()) items"
             
         case  .initialCountAndTime :
@@ -355,8 +449,15 @@ extension DownloadsViewController: DownloadProt {
             //      if count == 0 {
             //        spinner.stopAnimating()
         //      }
-        default: fatalError("bad enum in download controller")
+       // default: fatalError("bad enum in download controller")
         }
         view.setNeedsDisplay()
     }
 }
+//        if roguesGalleryView.roguesCount() == 1 {
+//            // if first, then select it
+//            let cell = roguesGalleryView.cellForItem(at: indexPath)
+//            cell?.layer.borderWidth = 5.0
+//            cell?.layer.borderColor = UIColor.red.cgColor
+//            roguesGalleryView.reloadData() // only one item
+//        }
